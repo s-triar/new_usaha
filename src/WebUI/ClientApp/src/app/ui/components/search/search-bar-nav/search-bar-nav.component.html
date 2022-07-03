@@ -1,0 +1,27 @@
+<mat-form-field appearance="outline" class="search-box w-100p">
+
+    <input matInput placeholder="Cari">
+      <button mat-icon-button matSuffix color="primary" aria-label="Button search with scanner" (click)="openScanner()" >
+        <mat-icon>qr_code_scanner</mat-icon>
+      </button>
+      <!-- <button mat-icon-button matSuffix color="primary" aria-label="Button search with scanner" cdkOverlayOrigin #triggerScanner="cdkOverlayOrigin" (click)="openScanner()" *ngIf="isFeature===false">
+        <mat-icon>qr_code_scanner</mat-icon>
+      </button> -->
+</mat-form-field>
+<app-portal-container [querySelector]="'div#portal-top-page-feature'">
+  <div class="scanner-preview-push" *ngIf="isScannerOpen"></div>
+</app-portal-container>
+
+
+<!--   
+<ng-template
+      cdkConnectedOverlay
+      [cdkConnectedOverlayOrigin]="triggerScanner"
+      [cdkConnectedOverlayOpen]="isScannerOpen"
+      [cdkConnectedOverlayOffsetY]="16"
+      cdkConnectedOverlayPanelClass="scanner-preview-container"
+  >
+  <div class="bg-accent " fxFlexFill fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="0px">
+      <img src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__340.jpg" alt="">
+  </div>
+</ng-template> -->

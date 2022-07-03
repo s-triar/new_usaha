@@ -1,0 +1,11 @@
+<app-portal-container querySelector="#workspace-header">
+    <app-nav-page [title]="titlePage" ></app-nav-page>
+</app-portal-container>
+<app-form-info-product-ku 
+    [idUsaha]="idUsaha" 
+    [dataGoods]="dataGoods" 
+    (updateInfoClickEvent)="update()"
+    (updatePriceClickEvent)="updatePrice()"
+    (addStockClickEvent)="addStock()"
+    (adjustStockClickEvent)="adjustStock()"
+    ></app-form-info-product-ku>

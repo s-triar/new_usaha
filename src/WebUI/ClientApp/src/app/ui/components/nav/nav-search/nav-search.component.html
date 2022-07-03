@@ -1,0 +1,34 @@
+<mat-toolbar class="nav-search-page" [color]="color" [ngClass]="color==='' ? 'bg-color-white':''">
+    <button 
+        type="button"
+        mat-icon-button 
+        class="nav-page-action" 
+        [color]="color===''?'primary':''"
+        appButtonBack
+        [backLink]="linkBack"
+        [replaceUrl]="replaceUrl"
+    >
+    <fa-icon [icon]="backIcon"></fa-icon>
+        <!-- <i class="fa fa-arrow-left" [ngClass]="color==='' ? 'color-primary':''" aria-hidden="true"></i> -->
+    </button>
+    <form class="form-search">
+        <mat-form-field class="example-full-width" appearance="outline">
+          <input matInput
+                 aria-label="Form Cari"
+                 placeholder="Cari"
+                 [matAutocomplete]="auto"
+                 >
+          <mat-autocomplete #auto="matAutocomplete">
+            <!-- <mat-option *ngFor="let state of filteredStates | async" [value]="state.name">
+              <img class="example-option-img" aria-hidden [src]="state.flag" height="25">
+              <span>{{state.name}}</span> |
+              <small>Population: {{state.population}}</small>
+            </mat-option> -->
+          </mat-autocomplete>
+        </mat-form-field>
+      </form>
+      <button mat-icon-button>
+        <fa-icon [icon]="iconFilter"></fa-icon>
+        <!-- <i class="fa fa-filter" aria-hidden="true"></i> -->
+      </button>
+</mat-toolbar>

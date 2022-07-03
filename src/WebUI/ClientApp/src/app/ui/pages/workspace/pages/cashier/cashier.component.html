@@ -1,0 +1,59 @@
+<app-portal-container querySelector="#workspace-utility">
+    <form class="w-full" [formGroup]="formSearch" >
+        <app-search-input-barcode
+        labelName="Cari Produk"
+        [parentForm]="formSearch"
+        fieldName="Search"
+        formControlName="Search" class="w-full h-full"></app-search-input-barcode>
+    </form>
+    <mat-list class="list-search scrollbar-thin">
+        <mat-list-item  *ngFor="let item of searchList$ | async" style="width: 100%;border-top:1px rgba(194, 192, 192, 0.856) solid;border-bottom:1px rgba(194, 192, 192, 0.856) solid;" (click)="addItem(item.id)">
+            <app-cashier-item-search [item]="item" style="width: 100%;"></app-cashier-item-search>
+        </mat-list-item>
+    </mat-list>
+    <!-- <div class="absolute top-11 left-0 right-0 w-full max-h-60 bg-gray-100 overflow-y-auto">
+        <app-cashier-item-search *ngFor="let item of searchList$ | async" [item]="item" (click)="addItem(item.id)"></app-cashier-item-search>
+    </div> -->
+</app-portal-container>
+
+<button 
+    mat-fab 
+    id="cashier-queue-btn" 
+    color="primary" 
+    *ngIf="!bufferOpened" 
+    matTooltip="Buka buffer antrian kasir"
+    matTooltipClass="app-tooltip"
+    (click)="toggleBuffer('open')">
+    <fa-icon [icon]="icons.queue"></fa-icon>
+</button>
+<!-- <app-button-rectangle id="cashier-queue-btn" class="absolute left-0 bottom-16 order bg-dua z-20 shadow-lg " theme="dua" text="Buffer" *ngIf="!bufferOpened" (click)="toggleBuffer('open')"></app-button-rectangle> -->
+<div id="cashier-queue" class="absolute left-0 top-36 bottom-28 w-72 h-60vh border bg-white z-20 shadow-lg  flex flex-col mat-elevation-z8" *ngIf="bufferOpened">
+    <mat-toolbar class="buffer-header" color="primary">
+        <span>Buffer</span>
+        <button mat-icon-button (click)="toggleBuffer('close')">
+            <fa-icon [icon]="icons.close"></fa-icon>
+        </button>
+    </mat-toolbar>
+    <mat-action-list class="buffer-content scrollbar-thin">
+        <button mat-list-item *ngFor="let item of totalQueue; let i = index" [class]="indexQueueCurrent===item ? 'bg-color-accent' : ''" (click)="changeBuffer(item)"> {{item}} </button>
+        
+      </mat-action-list>
+    <div class="buffer-action">
+        <button mat-icon-button color="warn" (click)="removeBuffer()">
+            <fa-icon [icon]="icons.delete"></fa-icon>
+        </button>
+        <button mat-icon-button color="primary" (click)="addBuffer()">
+            <fa-icon [icon]="icons.add"></fa-icon>
+        </button>
+    </div>
+</div>   
+
+<div id="cashier-container" class="w-full h-full pt-3">
+    <app-cashier-item-container 
+        [index]="indexQueueCurrent"
+        [data]="posList"
+        (update)="update($event)"
+        (pay)="pay($event)"
+        (cancel)="cancel($event)"   
+    ></app-cashier-item-container>
+</div>

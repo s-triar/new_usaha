@@ -1,0 +1,56 @@
+<mat-sidenav-container class="app-sidenav-layout-container">
+  <!-- <mat-sidenav #drawer class="sidenav" fixedInViewport
+      [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+      [mode]="(isHandset$ | async) ? 'over' : 'over'"
+      [opened]="(isHandset$ | async) === false">
+    <mat-toolbar>Menu</mat-toolbar>
+    <mat-nav-list>
+      <a mat-list-item href="#">Link 1</a>
+      <a mat-list-item href="#">Link 2</a>
+      <a mat-list-item href="#">Link 3</a>
+    </mat-nav-list>
+  </mat-sidenav> -->
+  <mat-sidenav-content class="app-sidenav-content">
+    <nav id="main-header" class="app-sidenav-content-header"> 
+      <mat-toolbar>
+        <!-- <button
+          type="button"
+          aria-label="Toggle sidenav"
+          mat-icon-button
+          (click)="drawer.toggle()"
+          >
+          <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+        </button> -->
+        <span class="app-title">Wirausahaku</span>
+        <a mat-icon-button [routerLink]="navListTop[0].link">
+          <!-- <mat-icon>search</mat-icon> -->
+          <!-- <i [class]="navListTop[0].data.icon"></i> -->
+          <fa-icon [icon]="navListTop[0].data.icon"></fa-icon>
+        </a>
+      </mat-toolbar>
+    </nav>
+    <!-- <div id="main-utility" class="app-sidenav-content-utility"></div> -->
+    <div id="main-content" class="app-sidenav-content-route" cdkScrollable >
+      <ng-content select="#main-route"></ng-content>
+    </div>
+    <nav id="main-footer" class="app-sidenav-content-footer" *ngIf="viewState.isFooterBarNeedToBeShown">
+      <mat-toolbar class="toolbar-footer">
+        <ng-container *ngFor="let item of navListDown">
+          <a [routerLink]="item.link" mat-raised-button color="primary" class="btn-nav"  *ngIf="router.isActive(item.link, false)" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+            <!-- <i [class]="item.data.icon"></i> -->
+          <fa-icon [icon]="item.data.icon"></fa-icon>
+
+            <span class="text-btn">{{item.data.text}}</span>
+          </a>
+          <a [routerLink]="item.link" mat-button color="primary" class="btn-nav" *ngIf="!router.isActive(item.link, false)" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+            <!-- <i [class]="item.data.icon"></i> -->
+          <fa-icon [icon]="item.data.icon"></fa-icon>
+
+            <span class="text-btn">{{item.data.text}}</span>
+          </a>
+        </ng-container>
+  
+      </mat-toolbar>
+    </nav>
+  </mat-sidenav-content>
+</mat-sidenav-container>

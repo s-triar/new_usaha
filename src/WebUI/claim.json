@@ -1,0 +1,93 @@
+[
+  {
+    "EnterpriseType": "Toko",
+    "Context": "Dashboard",
+    "Feature": "Pegawai",
+    "Action": "Lihat",
+    "Description": "Hak untuk melihat daftar pegawai."
+  },
+  {
+    "EnterpriseType": "Toko",
+    "Context": "Dashboard",
+    "Feature": "Pegawai",
+    "Action": "Buat",
+    "Description": "Hak untuk menambah pegawai."
+  },
+  {
+    "EnterpriseType": "Toko",
+    "Context": "Dashboard",
+    "Feature": "Pegawai",
+    "Action": "Ubah",
+    "Description": "Hak untuk mengubah pegawai."
+  },
+  {
+    "EnterpriseType": "Toko",
+    "Context": "Dashboard",
+    "Feature": "Pegawai",
+    "Action": "Hapus",
+    "Description": "Hak untuk menghapus pegawai."
+  },
+  {
+    "EnterpriseType": "Toko",
+    "Context": "Dashboard",
+    "Feature": "Peran",
+    "Action": "Lihat",
+    "Description": "Hak untuk melihat daftar peran pegawai."
+  },
+  {
+    "EnterpriseType": "Toko",
+    "Context": "Dashboard",
+    "Feature": "Peran",
+    "Action": "Buat",
+    "Description": "Hak untuk membuat peran pegawai."
+  },
+  {
+    "EnterpriseType": "Toko",
+    "Context": "Dashboard",
+    "Feature": "Peran",
+    "Action": "Ubah",
+    "Description": "Hak untuk mengubah peran pegawai."
+  },
+  {
+    "EnterpriseType": "Toko",
+    "Context": "Dashboard",
+    "Feature": "Peran",
+    "Action": "Hapus",
+    "Description": "Hak untuk menghapus peran pegawai."
+  },
+  {
+    "EnterpriseType": "Toko",
+    "Context": "Workspace",
+    "Feature": "Kasir",
+    "Action": "Lihat",
+    "Description": "Hak untuk menggunakan fitur kasir."
+  },
+  {
+    "EnterpriseType": "Toko",
+    "Context": "Workspace",
+    "Feature": "Kasir",
+    "Action": "Buat",
+    "Description": "Hak untuk menambah struk ke sistem."
+  },
+  {
+    "EnterpriseType": "Toko",
+    "Context": "Workspace",
+    "Feature": "Produk",
+    "Action": "Lihat",
+    "Description": "Hak untuk melihat daftar produk."
+  },
+  {
+    "EnterpriseType": "Toko",
+    "Context": "Workspace",
+    "Feature": "Produk",
+    "Action": "Buat",
+    "Description": "Hak untuk menambah daftar produk."
+  },
+  {
+    "EnterpriseType": "Toko",
+    "Context": "Workspace",
+    "Feature": "Produk",
+    "Action": "Ubah",
+    "Description": "Hak untuk mengubah daftar produk."
+  }
+]

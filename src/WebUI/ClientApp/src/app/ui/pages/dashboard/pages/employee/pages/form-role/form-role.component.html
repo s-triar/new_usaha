@@ -1,0 +1,64 @@
+<app-portal-container querySelector="#dashboard-header">
+    <app-nav-page title="Form Peran" color="primary"></app-nav-page>
+</app-portal-container>
+
+<form style="padding:0.5rem 1rem;" [formGroup]="form" (ngSubmit)="submitForm()">
+    <mat-form-field appearance="fill" shouldLabelFloat="true" floatLabel="always">
+        <mat-label>Nama Peran</mat-label>
+        <input matInput placeholder="Nama Peran" formControlName="Name" autocomplete="off">
+        <mat-hint class="color-warn" *ngIf="(form.get('Name')?.dirty || form.get('Name')?.touched) && form.get('Name')?.errors?.required">Nama peran harus diisi.</mat-hint>
+        <mat-hint class="color-warn" *ngIf="(form.get('Name')?.dirty || form.get('Name')?.touched) && form.get('Name')?.errors?.maxlength">Maksimal panjang nama peran 255 karakter.</mat-hint>
+        <mat-hint class="color-warn" *ngIf="(form.get('Name')?.dirty || form.get('Name')?.touched) && form.get('Name')?.errors?.duplicateRoleNameError">Nama peran sudah dipakai.</mat-hint>
+        
+    </mat-form-field>
+    <section formArrayName="Claims">
+        <ul>
+          <li *ngFor="let item of claimTree|keyvalue">
+              <mat-checkbox
+                      [id]="'mcb-'+item.key"
+                      [disabled]="mode === 'info'" 
+                      [checked]="claimTreeCheckStatus[item.key]==='checked'"
+                      [indeterminate]="claimTreeCheckStatus[item.key]==='indeterminated'"
+                      (change)="setAllContext($event, item.key)">
+                    {{item.key}}
+              </mat-checkbox>
+              <ul>
+                  <li *ngFor="let item2 of item.value |keyvalue">
+                      <mat-checkbox 
+                      [id]="'mcb2-'+item2.key"
+                      [disabled]="mode === 'info'"
+                      [checked]="claimTreeCheckStatusChild[item.key][item2.key]==='checked'"
+                      [indeterminate]="claimTreeCheckStatusChild[item.key][item2.key]==='indeterminated'"
+                      (change)="setAllFeature($event, item.key, item2.key)"
+                      >
+                          {{item2.key}}
+                      </mat-checkbox>
+                      <ul>
+                          <li *ngFor="let item3 of item2.value |keyvalue">
+                              <div [formGroup]="getFormGroupClaims(item3.value.id)">
+                                  <mat-checkbox formControlName="Authorize" (change)="updateCheck($event, item.key, item2.key, item3.key)">
+                                      {{item3.key}}
+                                  </mat-checkbox>
+                              </div>
+                          </li>
+                      </ul>
+                  </li>
+              </ul>
+          </li>
+        </ul>
+    </section>
+
+    <div class="form-action" *ngIf="mode==='add'">
+      <button mat-stroked-button color="primary" type="button" appButtonBack>Batal</button>
+      <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">Submit</button>
+    </div>
+    <div class="form-action" *ngIf="mode==='edit'">
+        <button mat-stroked-button color="primary" type="button" (click)="cancelEdit()">Batal</button>
+        <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">Submit</button>
+    </div>
+    <div class="form-action" *ngIf="mode==='info'">
+        <button mat-stroked-button color="warn" type="submit" >Hapus</button>
+        <button mat-stroked-button color="primary" type="button" appButtonBack>Kembali</button>
+        <button mat-raised-button color="primary" type="button" (click)="editMode()">Ubah</button>
+    </div>
+</form>

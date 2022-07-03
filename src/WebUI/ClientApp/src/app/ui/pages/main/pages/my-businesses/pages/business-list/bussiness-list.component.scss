@@ -1,0 +1,23 @@
+.container-card-list{
+    margin-left: 1rem;
+    margin-right: 1rem;
+    padding-top: 0.5rem;
+    padding-bottom: 5rem;
+    display: grid;
+    row-gap: 1rem;
+    column-gap: 1rem;
+    &.handset{
+        grid-template-columns: 1fr;
+        
+    }
+    &.tablet{
+        grid-template-columns: repeat(3, 1fr);
+    }
+    &.web{
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+.card-list-item{
+    width: 100%;
+}

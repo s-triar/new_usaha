@@ -1,0 +1,36 @@
+<app-portal-container querySelector="#dashboard-utility">
+    <form class="w-full" [formGroup]="formSearch" >
+        <app-search-input-barcode
+        labelName="Cari Transaksi"
+        [parentForm]="formSearch"
+        fieldName="Search"
+        formControlName="Search" class="w-full h-full"></app-search-input-barcode>
+    </form>
+    
+</app-portal-container>
+
+<mat-action-list *ngIf="list.length>0; else noItem">
+    <button mat-list-item *ngFor="let item of list" (click)="goToDetail(item.id)">
+        <i mat-list-icon [class]="item.isOnline ? 'fas fa-wifi': 'fas fa-cash-register'"></i>
+        <div mat-line class="id-item">{{item.id}}</div>
+        <div mat-line class="info-item"> 
+            <span>{{item.createdAt | date}} </span>
+            <span>{{item.orderProgress}}</span>
+        </div>
+        <div mat-line >Total: {{item.total|currency:'Rp.  ':'symbol':'0.0-0'}}
+            
+        </div>
+    </button>
+</mat-action-list>
+<ng-template #noItem >
+    <div class="no-item-container">
+        <span>Tidak ada transaksi.</span>
+    </div>
+ </ng-template>
+
+<app-portal-container querySelector="#dashboard-footer">
+    <app-pagination
+    (pageSelectedChanged)="pageSelectedChanged($event)"
+    (nPageChanged)="paginationNChanged($event)"
+    ></app-pagination>
+</app-portal-container>

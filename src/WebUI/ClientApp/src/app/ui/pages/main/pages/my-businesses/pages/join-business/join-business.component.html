@@ -1,0 +1,51 @@
+<app-portal-container querySelector="#main-header">
+    <app-nav-page title="Gabung Usaha"></app-nav-page>
+</app-portal-container>
+<form class="form-input-container">
+    <div class="text-center">
+        <h3>Mohon cek email anda.</h3>
+        <p>Kami telah mengirim kode kepada anda melalui email.</p>
+        <p> Mohon masukkan kode tersebut pada isian di bawah untuk melanjutkan pendaftaran usaha.</p>
+
+        <div class="input-container" >
+<!-- (paste)="onDigitPaste($event)" -->
+            <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="0px" >
+                <div fxFlex="auto">
+                    <mat-form-field appearance="outline" controlType="number" class="input-code">
+                        <input #digitOne  (keyup)="onDigitInput($event,null,digitTwo)" matInput type="tel" min="0" max="9" maxlength="1" minlength="1" style="text-align:center;">
+                    </mat-form-field>
+                </div>
+                <div fxFlex="auto">
+                    <mat-form-field appearance="outline" controlType="number" class="input-code">
+                        <input #digitTwo (keyup)="onDigitInput($event,digitOne,digitThree)" matInput type="tel" min="0" max="9" maxlength="1" minlength="1" style="text-align:center;">
+                    </mat-form-field>
+                </div>
+                <div fxFlex="auto">
+                    <mat-form-field appearance="outline" controlType="number" class="input-code">
+                        <input #digitThree (keyup)="onDigitInput($event,digitTwo,digitFour)" matInput type="tel" min="0" max="9" maxlength="1" minlength="1" style="text-align:center;">
+                    </mat-form-field>
+                </div>
+                <div fxFlex="auto">
+                    <mat-form-field appearance="outline" controlType="number" class="input-code">
+                        <input #digitFour (keyup)="onDigitInput($event,digitThree,digitFive)" matInput type="tel" min="0" max="9" maxlength="1" minlength="1" style="text-align:center;">
+                    </mat-form-field>
+                </div>
+                <div fxFlex="auto">
+                    <mat-form-field appearance="outline" controlType="number" class="input-code">
+                        <input #digitFive (keyup)="onDigitInput($event,digitFour,digitSix)" matInput type="tel" min="0" max="9" maxlength="1" minlength="1" style="text-align:center;">
+                    </mat-form-field>
+                </div>
+                <div fxFlex="auto">
+                    <mat-form-field appearance="outline" controlType="number" class="input-code">
+                        <input #digitSix (keyup)="onDigitInput($event,digitFive,null)" matInput type="tel" min="0" max="9" maxlength="1" minlength="1" style="text-align:center;">
+                    </mat-form-field>
+                </div>
+            </div>
+            <!-- <p class="mat-small">04:34</p> -->
+
+        </div>
+
+        <!-- <p class="mat-small">Tidak mendapat kode?</p>
+        <button mat-stroked-button type="button" color="accent">Kirim Ulang</button> -->
+    </div>
+</form>

@@ -1,0 +1,41 @@
+<app-portal-container querySelector="#dashboard-header">
+    <app-nav-page title="Daftar Peran" color="primary"></app-nav-page>
+</app-portal-container>
+<app-portal-container querySelector="#dashboard-utility">
+    <form class="w-full" [formGroup]="formSearch" >
+        <app-search-input-barcode
+        labelName="Cari Peran"
+        [parentForm]="formSearch"
+        fieldName="Search"
+        formControlName="Search" class="w-full h-full"></app-search-input-barcode>
+    </form>
+    
+</app-portal-container>
+<mat-action-list class="app-list-container" *ngIf="list.length>0; else noRole;">
+    <button mat-list-item class="app-item-list-container" *ngFor="let item of list" (click)="goToDetail(item.id)"> 
+        {{item.name}}
+    </button>
+ </mat-action-list>
+ <ng-template #noRole >
+    <div class="app-no-item-container">
+        <span>Tidak ada peran.</span>
+    </div>
+ </ng-template>
+
+ <button 
+ mat-fab color="primary"
+ class="app-btn-add" 
+ matTooltip="Tambah produk toko"
+ matTooltipPosition="before"
+ matTooltipClass="app-tooltip"
+ (click)="goToForm()"
+ >
+ <mat-icon>add</mat-icon>
+</button>
+
+<app-portal-container querySelector="#dashboard-footer">
+    <app-pagination
+    (pageSelectedChanged)="pageSelectedChanged($event)"
+    (nPageChanged)="paginationNChanged($event)"
+    ></app-pagination>
+</app-portal-container>

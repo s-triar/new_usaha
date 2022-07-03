@@ -1,0 +1,185 @@
+@import "@angular/material/theming";
+/* For use in src/lib/core/theming/_palette.scss */
+$md-chocolate: (
+    50 : #efe8e0,
+    100 : #d7c5b3,
+    200 : #bd9f80,
+    300 : #a3794d,
+    400 : #8f5c26,
+    500 : #7b3f00,
+    600 : #733900,
+    700 : #683100,
+    800 : #5e2900,
+    900 : #4b1b00,
+    A100 : #ff9f7f,
+    A200 : #ff794c,
+    A400 : #ff5319,
+    A700 : #fe4100,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #ffffff,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #ffffff,
+        A700 : #ffffff,
+    )
+);
+
+$md-cream: (
+    50 : #fffefc,
+    100 : #fffcf7,
+    200 : #fffbf2,
+    300 : #fff9ed,
+    400 : #fff7e9,
+    500 : #fff6e5,
+    600 : #fff5e2,
+    700 : #fff3de,
+    800 : #fff2da,
+    900 : #ffefd3,
+    A100 : #ffffff,
+    A200 : #ffffff,
+    A400 : #ffffff,
+    A700 : #ffffff,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #000000,
+        500 : #000000,
+        600 : #000000,
+        700 : #000000,
+        800 : #000000,
+        900 : #000000,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+
+$md-cinnebar: (
+    50 : #fce9e6,
+    100 : #f8c7c1,
+    200 : #f3a298,
+    300 : #ee7d6f,
+    400 : #ea6150,
+    500 : #e64531,
+    600 : #e33e2c,
+    700 : #df3625,
+    800 : #db2e1f,
+    900 : #d51f13,
+    A100 : #ffffff,
+    A200 : #ffd3d1,
+    A400 : #ffa39e,
+    A700 : #ff8a85,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #000000,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+
+$md-mimosa: (
+    50 : #fcf9f2,
+    100 : #f9efdd,
+    200 : #f5e5c7,
+    300 : #f0dab1,
+    400 : #edd2a0,
+    500 : #eaca8f,
+    600 : #e7c587,
+    700 : #e4bd7c,
+    800 : #e1b772,
+    900 : #dbab60,
+    A100 : #ffffff,
+    A200 : #ffffff,
+    A400 : #fff3e0,
+    A700 : #ffe8c7,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #000000,
+        500 : #000000,
+        600 : #000000,
+        700 : #000000,
+        800 : #000000,
+        900 : #000000,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+
+$md-ebony: (
+    50 : #e6e3e2,
+    100 : #c0b9b8,
+    200 : #968a88,
+    300 : #6c5b58,
+    400 : #4d3735,
+    500 : #2d1411,
+    600 : #28120f,
+    700 : #220e0c,
+    800 : #1c0b0a,
+    900 : #110605,
+    A100 : #ff5353,
+    A200 : #ff2020,
+    A400 : #ec0000,
+    A700 : #d30000,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #ffffff,
+        400 : #ffffff,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #ffffff,
+        A400 : #ffffff,
+        A700 : #ffffff,
+    )
+);
+
+@mixin rule($key, $value, $prefix) {
+    #{$prefix}-#{$key}: $value;
+}
+@mixin map-to-string($map, $prefix) {
+    @each $key, $value in $map {
+        @if($key != "contrast"){
+            @include rule($key, $value, $prefix);
+        }
+    }
+}
+
+:export {  
+    @include map-to-string($md-ebony, "ebony");
+    @include map-to-string($md-mimosa, "mimosa");
+    @include map-to-string($md-cinnebar, "cinnebar");
+    @include map-to-string($md-cream, "cream");
+    @include map-to-string($md-chocolate, "chocolate");
+}

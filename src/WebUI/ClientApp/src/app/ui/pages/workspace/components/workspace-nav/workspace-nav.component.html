@@ -1,0 +1,54 @@
+<mat-sidenav-container class="app-sidenav-layout-container">
+  <mat-sidenav #drawer class="app-sidenav-container" [ngClass]="{'handset':(isHandset$|async)}" fixedInViewport
+      position="end"
+      [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+      [mode]="(isHandset$ | async) ? 'over' : 'over'">
+    <mat-toolbar color="primary" class="side-nav-header">
+      <span>Pengaturan</span>
+      <button mat-icon-button (click)="drawer.toggle()">
+        <fa-icon [icon]="icons.close"></fa-icon>
+      </button>
+    </mat-toolbar>
+    <app-workspace-setting></app-workspace-setting>
+  </mat-sidenav>
+  <mat-sidenav-content id="workspace" class="app-sidenav-content">
+    <nav id="workspace-header" class="app-sidenav-content-header"> 
+      <mat-toolbar class="workspace-page-nav">
+        <div>
+          <button 
+            type="button"
+            mat-icon-button color="primary" class="nav-page-action"
+            appButtonBack
+            [backLink]="linkBackModule"
+            [replaceUrl]="true"
+          >
+          <fa-icon [icon]="icons.back"></fa-icon>
+          </button>
+          <span class="nav-page-title">Workspace</span>
+        </div>
+        <div>
+          <button 
+            type="button"
+            aria-label="Toggle sidenav"
+            (click)="drawer.toggle()" 
+            mat-icon-button color="primary">
+            <fa-icon [icon]="icons.setting"></fa-icon>
+          </button>
+        </div>
+      </mat-toolbar>
+    </nav>
+    <nav (wheel)="onWheel($event)" id="workspace-tab" class="workspace-sidenav-content-tabs" mat-tab-nav-bar color="primary" *ngIf="viewState.isTabBarNeedToBeShown===true">
+      <a mat-tab-link *ngFor="let item of navListDown"
+      [routerLink]="item.link"
+      [active]="router.isActive(item.link, false)"
+      
+      > <i [class]="item.data.icon" style="margin-right: 4px;"></i> {{item.data.text}} </a>
+    </nav>
+    <div id="workspace-utility" class="app-sidenav-content-utility"></div>
+    <div id="workspace-content" class="app-sidenav-content-route" cdkScrollable >
+      <ng-content select="#workspace-route"></ng-content>
+    </div>
+    <div id="workspace-footer" class="app-sidenav-content-footer" *ngIf="viewState.isFooterBarNeedToBeShown">
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

@@ -1,0 +1,47 @@
+<app-portal-container querySelector="#dashboard-header-toolbar-right">
+    <button mat-flat-button class="btn-role" color="accent" (click)="gotoRole()">
+        <mat-icon>supervisor_account</mat-icon>
+        Role
+    </button>
+</app-portal-container>
+
+
+<app-portal-container querySelector="#dashboard-utility">
+    <form class="w-full" [formGroup]="formSearch" >
+        <app-search-input-barcode
+        labelName="Cari Karyawan"
+        [parentForm]="formSearch"
+        fieldName="Search"
+        formControlName="Search" class="w-full h-full"></app-search-input-barcode>
+    </form>
+    
+</app-portal-container>
+
+
+<mat-action-list class="app-list-container" *ngIf="(list.length>0); else noEmployee;">
+    <button mat-list-item class="app-item-list-continer" *ngFor="let item of list"> 
+        <mat-icon mat-list-icon>folder</mat-icon>
+        <div mat-line>{{item.employeeName}}</div>
+        <div mat-line> {{item.enterpriseRoleName}} </div>
+    </button>
+ </mat-action-list>
+ <ng-template #noEmployee >
+    <div class="app-no-item-container">
+        <span>Tidak ada karyawan.</span>
+    </div>
+</ng-template>
+<button 
+mat-fab color="primary"
+class="app-btn-add" 
+matTooltip="Tambah karyawan toko"
+matTooltipPosition="before"
+matTooltipClass="app-tooltip"
+(click)="openForm()">
+    <mat-icon>add</mat-icon>
+</button>
+<app-portal-container querySelector="#dashboard-footer">
+    <app-pagination
+    (pageSelectedChanged)="pageSelectedChanged($event)"
+    (nPageChanged)="paginationNChanged($event)"
+    ></app-pagination>
+</app-portal-container>

@@ -1,0 +1,17 @@
+<!-- <mat-list style="overflow-x: hidden;"  ngClass.gt-sm="list-prod-md-up" ngClass.lt-md="list-prod-sm-down">
+    <a  mat-list-item *ngFor="let p of products$ | async" style="background-color: white;" [routerLink]="generateUrlInfo(p.id)" >
+      <div mat-line class="mat-small">{{p.barcode}}</div>
+      <div mat-line class="text-new-line">{{p.name}}</div>
+      <div mat-line class="mat-small text-new-line">{{p.stock}}</div>
+      <div mat-line> <span style="font-weight: bold;">Rp {{p.price}}</span> /{{p.goodsPackaging}} </div>
+    </a>
+</mat-list>
+<a mat-fab class="add-product-button-wk" fxHide.lt-md [routerLink]="linkToAdd"><mat-icon>add</mat-icon></a>
+<a mat-mini-fab class="add-product-button-wk" fxHide.gt-sm [routerLink]="linkToAdd"><mat-icon>add</mat-icon></a> -->
+
+<div  class="item-container">
+    <div class="mat-small"><span>{{item.barcode}}</span></div>
+    <div class="item-name"><span>{{item.name}}</span></div>
+    <div class="item-price"><span>{{item.price|currency:'Rp.  ':'symbol':'0.0-0'}}</span></div>
+    <div class="mat-small">{{item.stock}}</div>
+</div>
