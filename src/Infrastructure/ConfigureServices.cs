@@ -1,6 +1,7 @@
-﻿using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
+﻿//using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
@@ -38,55 +39,46 @@ namespace Microsoft.Extensions.DependencyInjection
 
             services.AddDbContext<ApplicationDbContext>(options =>
                    options.UseMySql(configuration.GetConnectionString(connectionStringApp), new MySqlServerVersion(new Version(10, 1, 40))));
-            services.AddDbContext<AppApiAuthorizationDbContext>(options =>
+            services.AddDbContext<AuthDbContext>(options =>
                     options.UseMySql(configuration.GetConnectionString(connectionStringAuth), new MySqlServerVersion(new Version(10, 1, 40))));
 
             services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());
-            services.AddScoped<AppApiAuthorizationDbContext>();
+            services.AddScoped<AuthDbContext>(provider => provider.GetRequiredService<AuthDbContext>());
             services.AddScoped<ApplicationDbContextInitialiser>();
             services.AddScoped<AppApiAuthorizationDbContextInitialiser>();
             services.AddScoped<IDomainEventService, DomainEventService>();
-            services.AddDefaultIdentity<ApplicationUser>(
-                options =>
-                {
-                    options.Password.RequireDigit = false;
-                    options.Password.RequiredLength = 3;
-                    options.Password.RequireLowercase = false;
-                    options.Password.RequireNonAlphanumeric = false;
-                    options.Password.RequireUppercase = false;
-                    options.Password.RequiredUniqueChars = 0;
+           
 
-                    //Disable account confirmation.
-                    options.SignIn.RequireConfirmedAccount = false;
-                    options.SignIn.RequireConfirmedEmail = false;
-                    options.SignIn.RequireConfirmedPhoneNumber = false;
-                })
-                .AddEntityFrameworkStores<AppApiAuthorizationDbContext>();
-
-            services.AddIdentityServer()
-                .AddJwtBearerClientAuthentication()
-                .AddApiAuthorization<ApplicationUser, AppApiAuthorizationDbContext>()
-                .AddConfigurationStore<AppApiAuthorizationDbContext>()
-                .AddOperationalStore<AppApiAuthorizationDbContext>();
+            //services.AddIdentityServer(
+            ////    opt =>
+            ////{
+            ////    opt.Authentication.CookieLifetime   = TimeSpan.FromDays(1);
+            ////    opt.Authentication.CookieSlidingExpiration = true;
+            ////    opt.PersistentGrants.DataProtectData = true;
+            ////    opt.Authentication.CookieSameSiteMode = AspNetCore.Http.SameSiteMode.None;
+            ////}
+            //)
+            //    .AddJwtBearerClientAuthentication()
+            //    .AddApiAuthorization<ApplicationUser, AppApiAuthorizationDbContext>()
+            //    .AddConfigurationStore<AppApiAuthorizationDbContext>()
+            //    .AddOperationalStore<AppApiAuthorizationDbContext>();
 
             services.AddTransient<IDateTime, DateTimeService>();
             services.AddTransient<IIdentityService, IdentityService>();
             services.AddTransient<ICsvFileBuilder, CsvFileBuilder>();
 
-            services.AddAuthentication()
-                .AddIdentityServerJwt();
+            //services.AddAuthentication()
+            //    .AddIdentityServerJwt();
 
             var handler = new HttpClientHandler();
-            handler.CheckCertificateRevocationList = false;
+            //handler.CheckCertificateRevocationList = false;
             handler.ServerCertificateCustomValidationCallback +=
                             (sender, certificate, chain, errors) =>
                             {
                                 return true;
                             };
-
-            services.Configure<JwtBearerOptions>(
-                IdentityServerJwtConstants.IdentityServerJwtBearerScheme,
-                options =>
+            services.AddAuthentication()
+                .AddJwtBearer("default-jwt", options =>
                 {
                     options.SaveToken = true;
                     options.Audience = configuration.GetSection("ClientInfo").GetValue<string>("Audience");
@@ -94,14 +86,55 @@ namespace Microsoft.Extensions.DependencyInjection
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateAudience = false,
-
                     };
-
                     options.BackchannelHttpHandler = handler; //bypass certificate
                 });
-            
+            services.AddDefaultIdentity<ApplicationUser>(
+               options =>
+               {
+                   options.Password.RequireDigit = false;
+                   options.Password.RequiredLength = 3;
+                   options.Password.RequireLowercase = false;
+                   options.Password.RequireNonAlphanumeric = false;
+                   options.Password.RequireUppercase = false;
+                   options.Password.RequiredUniqueChars = 0;
+
+                    //Disable account confirmation.
+                   options.SignIn.RequireConfirmedAccount = false;
+                   options.SignIn.RequireConfirmedEmail = false;
+                   options.SignIn.RequireConfirmedPhoneNumber = false;
+
+               })
+               .AddEntityFrameworkStores<AuthDbContext>()
+               .AddDefaultUI()
+               .AddDefaultTokenProviders();
+
+
+            //services.Configure<JwtBearerOptions>(
+            //    IdentityServerJwtConstants.IdentityServerJwtBearerScheme,
+            //    options =>
+            //    {
+            //        options.SaveToken = true;
+            //        options.Audience = configuration.GetSection("ClientInfo").GetValue<string>("Audience");
+            //        options.Authority = configuration.GetSection("ClientInfo").GetValue<string>("Authority");
+            //        options.TokenValidationParameters = new TokenValidationParameters
+            //        {
+            //            ValidateAudience = false,
+            //        };
+            //        options.BackchannelHttpHandler = handler; //bypass certificate
+            //    });
+
             services.AddAuthorization(options =>
-                options.AddPolicy("CanPurge", policy => policy.RequireRole("Administrator")));
+            {
+                options.DefaultPolicy = new AuthorizationPolicyBuilder()
+                        .RequireAuthenticatedUser()
+                        .AddAuthenticationSchemes("default-jwt"
+                        //, yang lain
+                        )
+            .Build();
+                options.AddPolicy("CanPurge", policy => policy.RequireRole("Administrator"));
+                //.Build());
+            });
 
             //services.AddTransient<IEmailSender, EmailSenderService>();
             services.Configure<EmailSenderOption>(options =>
@@ -114,6 +147,7 @@ namespace Microsoft.Extensions.DependencyInjection
                 options.Sender_Name = configuration["ExternalProviders:MailKit:SMTP:SenderName"];
             });
             //services.AddTransient<ISendEmailTemplateService, SendEmailTemplateService>();
+            
             return services;
         }
     }

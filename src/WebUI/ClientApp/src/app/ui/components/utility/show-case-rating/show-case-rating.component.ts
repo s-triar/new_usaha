@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import {faStar, faStarHalf} from '@fortawesome/free-solid-svg-icons';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-show-case-rating',
@@ -11,15 +10,15 @@ import {faStar, faStarHalf} from '@fortawesome/free-solid-svg-icons';
   standalone: true,
   imports: [
     CommonModule,
-    FontAwesomeModule
+    MatIconModule
   ]
 })
 export class ShowCaseRatingComponent implements OnInit {
 
   @Input() rating = 0;
   stars: number[] = [];
-  fullstar = faStar;
-  halfstar = faStarHalf;
+  fullstar = 'star';
+  halfstar = 'star_half';
   constructor() { }
 
   ngOnInit(): void {

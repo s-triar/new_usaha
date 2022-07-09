@@ -1,20 +1,21 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, HostListener, OnInit, Output, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faCamera } from '@fortawesome/free-solid-svg-icons';
 import { FileConversionService } from 'src/app/application/utility/file-conversion.service';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+// import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+// import { faCamera } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-camera',
   standalone: true,
-  imports: [CommonModule, FontAwesomeModule, MatButtonModule],
+  imports: [CommonModule, MatIconModule, MatButtonModule],
   templateUrl: './camera.component.html',
   styleUrls: ['./camera.component.scss']
 })
 export class CameraComponent implements OnInit, AfterViewInit {
-  iconCamera = faCamera;
+  iconCamera = 'camera';
   @Output() captured: EventEmitter<File[]> = new EventEmitter();
 
   @ViewChild('video')

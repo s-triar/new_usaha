@@ -32,22 +32,22 @@ export class AppComponent implements OnInit {
   ) {
 
     // Remember the selected configuration
-    // if (sessionStorage.getItem('flow') === 'code') {
-    // this.configureCodeFlow();
-    // } else {
-    // this.configureImplicitFlow();
-    // }
+    if (sessionStorage.getItem('flow') === 'code') {
+    this.configureCodeFlow();
+    } else {
+    this.configureImplicitFlow();
+    }
 
     // Automatically load user profile
-    // this.oauthService.events
-    //   .pipe(filter((e) => e.type === 'token_received'))
-    //   .subscribe((_) => {
-    //     console.log('state', this.oauthService.state);
-    //     this.oauthService.loadUserProfile();
+    this.oauthService.events
+      .pipe(filter((e) => e.type === 'token_received'))
+      .subscribe((_) => {
+        console.log('state', this.oauthService.state);
+        this.oauthService.loadUserProfile();
 
-    //     const scopes = this.oauthService.getGrantedScopes();
-    //     console.log('scopes', scopes);
-    //   });
+        const scopes = this.oauthService.getGrantedScopes();
+        console.log('scopes', scopes);
+      });
   }
   ngOnInit(): void {
     this.breakpointObserver.observe([

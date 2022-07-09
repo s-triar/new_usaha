@@ -42,6 +42,7 @@
       "operationProcessorTypes": [],
       "typeNameGeneratorType": null,
       "schemaNameGeneratorType": null,
+      "aspNetCoreEnvironment": "Development",
       "contractResolverType": null,
       "serializerSettingsType": null,
       "useDocumentProvider": true,

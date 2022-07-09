@@ -10,7 +10,10 @@
           {{data.description}}
         </p>
         <app-show-case-rating [rating]="data.rating"></app-show-case-rating>
-        <span> <fa-icon [icon]="iconLoc"></fa-icon>&nbsp;{{data.distance}} km</span>
+        <span> 
+          <mat-icon>{{iconLoc}}</mat-icon>
+          <!-- <fa-icon [icon]="iconLoc"></fa-icon> -->
+          &nbsp;{{data.distance}} km</span>
       </mat-card-content>
   </mat-card>
 </a>

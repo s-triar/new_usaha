@@ -25,7 +25,8 @@
         <a mat-icon-button [routerLink]="navListTop[0].link">
           <!-- <mat-icon>search</mat-icon> -->
           <!-- <i [class]="navListTop[0].data.icon"></i> -->
-          <fa-icon [icon]="navListTop[0].data.icon"></fa-icon>
+          <!-- <fa-icon [icon]="navListTop[0].data.icon"></fa-icon> -->
+          <mat-icon>{{navListTop[0].data.icon}}</mat-icon>
         </a>
       </mat-toolbar>
     </nav>
@@ -38,14 +39,14 @@
         <ng-container *ngFor="let item of navListDown">
           <a [routerLink]="item.link" mat-raised-button color="primary" class="btn-nav"  *ngIf="router.isActive(item.link, false)" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
             <!-- <i [class]="item.data.icon"></i> -->
-          <fa-icon [icon]="item.data.icon"></fa-icon>
-
+          <!-- <fa-icon [icon]="item.data.icon"></fa-icon> -->
+            <mat-icon>{{item.data.icon}}</mat-icon>
             <span class="text-btn">{{item.data.text}}</span>
           </a>
           <a [routerLink]="item.link" mat-button color="primary" class="btn-nav" *ngIf="!router.isActive(item.link, false)" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
             <!-- <i [class]="item.data.icon"></i> -->
-          <fa-icon [icon]="item.data.icon"></fa-icon>
-
+          <!-- <fa-icon [icon]="item.data.icon"></fa-icon> -->
+            <mat-icon>{{item.data.icon}}</mat-icon>
             <span class="text-btn">{{item.data.text}}</span>
           </a>
         </ng-container>

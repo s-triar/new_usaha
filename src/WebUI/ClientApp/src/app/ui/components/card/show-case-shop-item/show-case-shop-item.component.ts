@@ -1,10 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faLocationPin } from '@fortawesome/free-solid-svg-icons';
 import { MatCardModule } from '@angular/material/card';
 import { ShowCaseRatingComponent } from '../../utility/show-case-rating/show-case-rating.component';
+import { MatIconModule } from '@angular/material/icon';
 export type EnterpriseItemShow = {
   name: string;
   category: string;
@@ -23,7 +22,7 @@ export type EnterpriseItemShow = {
   imports: [
     CommonModule,
     MatCardModule,
-    FontAwesomeModule,
+    MatIconModule,
     RouterModule,
     ShowCaseRatingComponent
   ]
@@ -38,7 +37,7 @@ export class ShowCaseShopItemComponent implements OnInit {
     rating: 4,
     image: 'https://material.angular.io/assets/img/examples/shiba2.jpg'
   };
-  iconLoc = faLocationPin;
+  iconLoc = 'place';
   constructor() { }
 
   ngOnInit(): void {

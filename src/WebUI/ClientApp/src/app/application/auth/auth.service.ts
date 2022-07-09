@@ -18,6 +18,7 @@ export class AuthService {
   private isDoneLoadingSubject$ = new BehaviorSubject<boolean>(false);
   public isDoneLoading$ = this.isDoneLoadingSubject$.asObservable();
 
+  
   /**
    * Publishes `true` if and only if (a) all the asynchronous initial
    * login calls have completed or errorred, and (b) the user ended up
@@ -31,7 +32,9 @@ export class AuthService {
   public canActivateProtectedRoutes$: Observable<boolean> = combineLatest([
     this.isAuthenticated$,
     this.isDoneLoading$
-  ]).pipe(map(values => values.every(b => b)));
+  ]).pipe(
+      map(values => values.every(b => b))
+    );
 
   private navigateToLoginPage(): void {
     // TODO: Remember current URL
@@ -126,7 +129,7 @@ export class AuthService {
     return this.oauthService.loadDiscoveryDocument()
 
       // For demo purposes, we pretend the previous call was very slow
-      .then(() => new Promise<void>(resolve => setTimeout(() => resolve(), 1500)))
+      // .then(() => new Promise<void>(resolve => setTimeout(() => resolve(), 1500)))
 
       // 1. HASH LOGIN:
       // Try to log in via hash fragment after redirect back
@@ -201,6 +204,7 @@ export class AuthService {
     // Note: before version 9.1.0 of the library you needed to
     // call encodeURIComponent on the argument to the method.
     this.oauthService.initLoginFlow(targetUrl || this.router.url);
+    // this.runInitialLoginSequence();
   }
 
   public logout(): void {

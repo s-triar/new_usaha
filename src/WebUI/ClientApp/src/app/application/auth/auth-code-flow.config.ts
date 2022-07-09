@@ -19,10 +19,13 @@ export const authCodeFlowConfig: AuthConfig = {
   showDebugInformation: true,
   sessionChecksEnabled: true,
   timeoutFactor: 0.90,
-  // disablePKCI: true,
-  sessionCheckIntervall: 3600000,
-
+  // disablePKCE: true,
   clearHashAfterLogin: true,
-  silentRefreshTimeout: 5000,
+  // sessionCheckIntervall: 3600000,
+  // silentRefreshTimeout: 5000,
+  sessionCheckIntervall: 10000,
+  silentRefreshTimeout: 20000,
+  // customQueryParams:{prompt:'login'}
+  // oidc:false,
   // nonceStateSeparator : 'semicolon'
 };

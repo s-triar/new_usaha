@@ -33,9 +33,14 @@ import { EnterpriseInterceptor } from './application/interceptors/enterprise.int
 import { AuthorizeServerInterceptor } from './application/interceptors/authorize-server.interceptor';
 import { NotificationInterceptor } from './application/interceptors/notification.interceptor';
 import { MatDialogModule } from '@angular/material/dialog';
-import { NgChartsModule } from 'ng2-charts';
+// import { NgxEchartsModule } from 'ngx-echarts';
 export const BASE_URL = new InjectionToken<string>('BASE_URL');
+import { AgChartsAngularModule } from 'ag-charts-angular';
 
+// Import echarts extensions
+// import 'echarts-gl';
+// Import echarts themes
+// import 'echarts/theme/macarons.js';
 
 @NgModule({
   declarations: [
@@ -53,9 +58,12 @@ export const BASE_URL = new InjectionToken<string>('BASE_URL');
     ThermalPrintModule,
     // PopUpKuModule,
     SplashComponent,
-    FontAwesomeModule,
+    // FontAwesomeModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
-    NgChartsModule,
+    AgChartsAngularModule
+    // NgxEchartsModule.forRoot({
+    //   echarts: () => import('echarts')
+    // }),
   ],
   providers: [
     PrintService,

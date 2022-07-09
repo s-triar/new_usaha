@@ -19,7 +19,7 @@
       var message = isResponse(location.hash)
         ? location.hash
         : '#' + location.search;
-
+      console.log("messgage sr",message,location.hash)
       if (window.parent && window.parent !== window) {
           // if loaded as an iframe during silent refresh
           window.parent.postMessage(message, location.origin);

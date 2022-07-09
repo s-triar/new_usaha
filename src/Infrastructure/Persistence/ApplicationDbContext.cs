@@ -3,14 +3,14 @@ using new_usaha.Application.Common.Interfaces;
 using new_usaha.Domain.Common;
 using new_usaha.Domain.Entities;
 using new_usaha.Infrastructure.Identity;
-using Duende.IdentityServer.EntityFramework.Options;
-using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore.Query;
 using Microsoft.EntityFrameworkCore.Storage;
 using System.Data;
+using MediatR;
+using new_usaha.Infrastructure.Persistence.Interceptors;
 
 namespace new_usaha.Infrastructure.Persistence;
 
@@ -20,16 +20,22 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
     private readonly IDateTime _dateTime;
     private readonly IDomainEventService _domainEventService;
     private IDbContextTransaction? _currentTransaction;
+    private readonly IMediator _mediator;
+    private readonly AuditableEntitySaveChangesInterceptor _auditableEntitySaveChangesInterceptor;
 
     public ApplicationDbContext(
         DbContextOptions<ApplicationDbContext> options,
         ICurrentUserService currentUserService,
         IDomainEventService domainEventService,
+        IMediator mediator,
+        AuditableEntitySaveChangesInterceptor auditableEntitySaveChangesInterceptor,
         IDateTime dateTime) : base(options)
     {
         _currentUserService = currentUserService;
         _domainEventService = domainEventService;
         _dateTime = dateTime;
+        _mediator = mediator;
+        _auditableEntitySaveChangesInterceptor = auditableEntitySaveChangesInterceptor;
     }
 
     public DbSet<AddStockHistory> AddStockHistories => Set<AddStockHistory>();
@@ -128,41 +134,41 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
         }
     }
 
-    public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
-    {
-        foreach (var entry in ChangeTracker.Entries<AuditableEntity>())
-        {
-            switch (entry.State)
-            {
-                case EntityState.Added:
-                    entry.Entity.CreatedBy = _currentUserService.UserId;
-                    entry.Entity.CreatedAt = _dateTime.Now;
-                    break;
+    //public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
+    //{
+    //    foreach (var entry in ChangeTracker.Entries<AuditableEntity>())
+    //    {
+    //        switch (entry.State)
+    //        {
+    //            case EntityState.Added:
+    //                entry.Entity.CreatedBy = _currentUserService.UserId;
+    //                entry.Entity.CreatedAt = _dateTime.Now;
+    //                break;
 
-                case EntityState.Modified:
-                    entry.Entity.LastModifiedBy = _currentUserService.UserId;
-                    entry.Entity.LastModifiedAt = _dateTime.Now;
-                    break;
-                case EntityState.Deleted:
-                    entry.State = EntityState.Modified;
-                    entry.Entity.DeletedBy = _currentUserService.UserId;
-                    entry.Entity.DeletedAt = _dateTime.Now;
-                    break;
-            }
-        }
+    //            case EntityState.Modified:
+    //                entry.Entity.LastModifiedBy = _currentUserService.UserId;
+    //                entry.Entity.LastModifiedAt = _dateTime.Now;
+    //                break;
+    //            case EntityState.Deleted:
+    //                entry.State = EntityState.Modified;
+    //                entry.Entity.DeletedBy = _currentUserService.UserId;
+    //                entry.Entity.DeletedAt = _dateTime.Now;
+    //                break;
+    //        }
+    //    }
 
-        var events = ChangeTracker.Entries<IHasDomainEvent>()
-                .Select(x => x.Entity.DomainEvents)
-                .SelectMany(x => x)
-                .Where(domainEvent => !domainEvent.IsPublished)
-                .ToArray();
+    //    var events = ChangeTracker.Entries<IHasDomainEvent>()
+    //            .Select(x => x.Entity.DomainEvents)
+    //            .SelectMany(x => x)
+    //            .Where(domainEvent => !domainEvent.IsPublished)
+    //            .ToArray();
 
-        var result = await base.SaveChangesAsync(cancellationToken);
+    //    var result = await base.SaveChangesAsync(cancellationToken);
 
-        await DispatchEvents(events);
+    //    await DispatchEvents(events);
 
-        return result;
-    }
+    //    return result;
+    //}
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -212,12 +218,23 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
         base.OnModelCreating(builder);
     }
 
-    private async Task DispatchEvents(DomainEvent[] events)
+    //private async Task DispatchEvents(DomainEvent[] events)
+    //{
+    //    foreach (var @event in events)
+    //    {
+    //        @event.IsPublished = true;
+    //        await _domainEventService.Publish(@event);
+    //    }
+    //}
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        foreach (var @event in events)
-        {
-            @event.IsPublished = true;
-            await _domainEventService.Publish(@event);
-        }
+        optionsBuilder.AddInterceptors(_auditableEntitySaveChangesInterceptor);
+    }
+
+    public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+    {
+        await _mediator.DispatchDomainEvents(this);
+
+        return await base.SaveChangesAsync(cancellationToken);
     }
 }

@@ -18,8 +18,9 @@ import { MainStateService } from 'src/app/ui/pages/main/components/main-nav/main
 import { AddBusinessDialogComponent } from 'src/app/ui/components/pop-up/add-business-dialog/add-business-dialog.component';
 import { MyBusinessesListItemComponent } from 'src/app/ui/components/card/my-businesses-list-item/my-businesses-list-item.component';
 import { MatInputModule } from '@angular/material/input';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { MatIconModule } from '@angular/material/icon';
+// import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+// import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 @UntilDestroy()
 @Component({
@@ -33,12 +34,12 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
     MatInputModule,
     MatButtonModule,
     MyBusinessesListItemComponent,
-    FontAwesomeModule
+    MatIconModule
   ]
 })
 export class BussinessListComponent implements OnInit, OnDestroy {
   icons = {
-    add: faPlus
+    add: 'add'
   };
   messageStatusListDEFAULT = 'Belum ada usaha. <br/><br/> Ayo buat usahamu sendiri.';
   messageStatusList = this.messageStatusListDEFAULT;

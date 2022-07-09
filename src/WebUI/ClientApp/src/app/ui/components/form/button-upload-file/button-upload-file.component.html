@@ -1,18 +1,22 @@
 <div>
     <button type="button" mat-mini-fab color="accent" *ngIf="!(isWeb$|async); else btnWeb" [disabled]="disabled" (click)="chooseImg()">
-        <fa-icon [icon]="iconImage"></fa-icon>
+        <!-- <fa-icon [icon]="iconImage"></fa-icon> -->
+        <mat-icon>{{iconImage}}</mat-icon>
     </button>
     <ng-template #btnWeb>
         <button  mat-mini-fab color="accent" type="button" (click)="isOpen = !isOpen" [disabled]="disabled" [matMenuTriggerFor]="menu" >
-            <fa-icon [icon]="iconImage"></fa-icon>
+            <!-- <fa-icon [icon]="iconImage"></fa-icon> -->
+            <mat-icon>{{iconImage}}</mat-icon>
         </button>
         <mat-menu #menu="matMenu">
             <button mat-menu-item type="button"  (click)="takingPict()">
-                <fa-icon [icon]="iconCamera" style="margin-right: 4px;"></fa-icon>
+                <!-- <fa-icon [icon]="iconCamera" style="margin-right: 4px;"></fa-icon> -->
+                <mat-icon style="margin-right: 4px;">{{iconCamera}}</mat-icon>
               <span>Ambil Gambar</span>
             </button>
             <button mat-menu-item type="button" (click)="chooseImg()">
-                <fa-icon [icon]="iconFileImage" style="margin-right: 4px;"></fa-icon>
+                <!-- <fa-icon [icon]="iconFileImage" style="margin-right: 4px;"></fa-icon> -->
+                <mat-icon style="margin-right: 4px;">{{iconFileImage}}</mat-icon>
                 <span>Dari Folder</span>
               </button>
           </mat-menu>

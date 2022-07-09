@@ -37,19 +37,25 @@ namespace new_usaha.Infrastructure.Persistence.Interceptors
         {
             if (context == null) return;
 
-            foreach (var entry in context.ChangeTracker.Entries<BaseAuditableEntity>())
+            foreach (var entry in context.ChangeTracker.Entries<AuditableEntity>())
             {
                 if (entry.State == EntityState.Added)
                 {
                     entry.Entity.CreatedBy = _currentUserService.UserId;
-                    entry.Entity.Created = _dateTime.Now;
+                    entry.Entity.CreatedAt = _dateTime.Now;
                 }
-
-                if (entry.State == EntityState.Added || entry.State == EntityState.Modified || entry.HasChangedOwnedEntities())
+                if (EntityState.Deleted == entry.State)
+                {
+                    entry.State = EntityState.Modified;
+                    entry.Entity.DeletedBy = _currentUserService.UserId;
+                    entry.Entity.DeletedAt = _dateTime.Now;
+                }
+                if ( entry.State == EntityState.Modified || entry.HasChangedOwnedEntities())
                 {
                     entry.Entity.LastModifiedBy = _currentUserService.UserId;
-                    entry.Entity.LastModified = _dateTime.Now;
+                    entry.Entity.LastModifiedAt = _dateTime.Now;
                 }
+                
             }
         }
     }

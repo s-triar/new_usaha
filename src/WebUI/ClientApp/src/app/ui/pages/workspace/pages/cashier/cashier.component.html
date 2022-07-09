@@ -24,14 +24,16 @@
     matTooltip="Buka buffer antrian kasir"
     matTooltipClass="app-tooltip"
     (click)="toggleBuffer('open')">
-    <fa-icon [icon]="icons.queue"></fa-icon>
+    <!-- <fa-icon [icon]="icons.queue"></fa-icon> -->
+    <mat-icon>{{icons.queue}}</mat-icon>
 </button>
 <!-- <app-button-rectangle id="cashier-queue-btn" class="absolute left-0 bottom-16 order bg-dua z-20 shadow-lg " theme="dua" text="Buffer" *ngIf="!bufferOpened" (click)="toggleBuffer('open')"></app-button-rectangle> -->
 <div id="cashier-queue" class="absolute left-0 top-36 bottom-28 w-72 h-60vh border bg-white z-20 shadow-lg  flex flex-col mat-elevation-z8" *ngIf="bufferOpened">
     <mat-toolbar class="buffer-header" color="primary">
         <span>Buffer</span>
         <button mat-icon-button (click)="toggleBuffer('close')">
-            <fa-icon [icon]="icons.close"></fa-icon>
+            <!-- <fa-icon [icon]="icons.close"></fa-icon> -->
+            <mat-icon>{{icons.close}}</mat-icon>
         </button>
     </mat-toolbar>
     <mat-action-list class="buffer-content scrollbar-thin">
@@ -40,10 +42,13 @@
       </mat-action-list>
     <div class="buffer-action">
         <button mat-icon-button color="warn" (click)="removeBuffer()">
-            <fa-icon [icon]="icons.delete"></fa-icon>
+            <!-- <fa-icon [icon]="icons.delete"></fa-icon> -->
+            <mat-icon>{{icons.delete}}</mat-icon>
         </button>
         <button mat-icon-button color="primary" (click)="addBuffer()">
-            <fa-icon [icon]="icons.add"></fa-icon>
+            <!-- <fa-icon [icon]="icons.add"></fa-icon> -->
+            <mat-icon>{{icons.add}}</mat-icon>
+
         </button>
     </div>
 </div>   

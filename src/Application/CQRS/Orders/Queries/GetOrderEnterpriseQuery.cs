@@ -16,7 +16,7 @@ namespace new_usaha.Application.CQRS.Orders.Queries;
 
 public class GetOrderEnterpriseQuery : SearchPageRequest, IRequest<SearchPageResponse<OrderDto>>
 {
-    public Guid EnterpriseId { get; set; }
+    //public Guid EnterpriseId { get; set; }
     public DateTime? StartCreatedAt { get; set; }
     public DateTime? EndCreatedAt { get; set; }
 }
@@ -24,18 +24,21 @@ public class GetOrderEnterpriseQueryHandler : IRequestHandler<GetOrderEnterprise
 {
     private readonly IApplicationDbContext context;
     private readonly IMapper mapper;
+    private readonly ICurrentEnterpriseService ce;
 
-    public GetOrderEnterpriseQueryHandler(IApplicationDbContext context, IMapper mapper)
+    public GetOrderEnterpriseQueryHandler(IApplicationDbContext context, IMapper mapper, ICurrentEnterpriseService ce)
     {
         this.context = context;
         this.mapper = mapper;
+        this.ce = ce;
     }
     public async Task<SearchPageResponse<OrderDto>> Handle(GetOrderEnterpriseQuery request, CancellationToken cancellationToken)
     {
+
         var query = this.context.Orders
                             .Include(x => x.PaymentMethod)
                             .Include(x => x.OrderProgresses).ThenInclude(x => x.OrderStatus)
-                            .Where(x => x.EnterpriseId == request.EnterpriseId);
+                            .Where(x => x.EnterpriseId.ToString() == this.ce.EnterpriseId);
         if (!string.IsNullOrEmpty(request.Search))
         {
             query = query.Where(x => x.Id.ToString().Contains(request.Search));

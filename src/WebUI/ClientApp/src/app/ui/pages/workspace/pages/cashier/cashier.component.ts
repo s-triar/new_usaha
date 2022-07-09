@@ -3,12 +3,13 @@ import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { ActivatedRoute } from '@angular/router';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faClose, faList, faPlug, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
+// import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+// import { faClose, faList, faPlug, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { PrintService } from 'ng-thermal-print';
 import { Observable, of } from 'rxjs';
@@ -69,16 +70,16 @@ export type Receipt = {
     MatToolbarModule,
     MatButtonModule,
     CashierItemContainerComponent,
-    FontAwesomeModule,
+    MatIconModule,
     FormsModule
   ]
 })
 export class CashierComponent implements OnInit {
   icons = {
-    queue: faList,
-    close: faClose,
-    delete: faTrash,
-    add: faPlus
+    queue: 'format_list_numbered',
+    close: 'close',
+    delete: 'delete',
+    add: 'add'
   };
   printerConnectionStatus = false;
   idUsaha!: string;

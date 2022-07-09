@@ -1,12 +1,13 @@
 import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter, ElementRef } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { MatSelectChange, MatSelectModule } from '@angular/material/select';
-import { faStepBackward, faStepForward, faFastBackward, faFastForward } from '@fortawesome/free-solid-svg-icons';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { MatIconModule } from '@angular/material/icon';
+// import { faStepBackward, faStepForward, faFastBackward, faFastForward } from '@fortawesome/free-solid-svg-icons';
+// import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 
 export type currentPageDescription = {
@@ -34,7 +35,7 @@ export type PageSizeChangedEvent = {
     MatButtonModule,
     MatInputModule,
     MatFormFieldModule,
-    FontAwesomeModule
+    MatIconModule
   ]
 })
 export class PaginationComponent implements OnInit {
@@ -42,10 +43,10 @@ export class PaginationComponent implements OnInit {
   @Input() pageNumber = 1;
   @Output() pageSelectedChanged: EventEmitter<PageNumberChangedEvent> = new EventEmitter<PageNumberChangedEvent>();
   @Output() nPageChanged: EventEmitter<PageSizeChangedEvent> = new EventEmitter<PageSizeChangedEvent>();
-  iconBack = faStepBackward;
-  iconFullBack = faFastBackward;
-  iconForward = faStepForward;
-  iconFullForward = faFastForward;
+  iconBack = 'arrow_back_ios';
+  iconFullBack = 'first_page';
+  iconForward = 'arrow_forward_ios';
+  iconFullForward = 'last_page';
   currentPage: currentPageDescription = {
     isCurrentPageStartPage: true,
     isCurrentPageLastPage: true

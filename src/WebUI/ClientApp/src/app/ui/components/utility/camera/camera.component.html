@@ -3,7 +3,8 @@
     <video #video class="video-take-pic"  [width]="innerWidth" [height]="innerHeight" autoplay></video>
     <div *ngIf="isCameraReady" [class]="'panel-button-cam '+orientation">
         <button mat-fab color="primary" (click)="capture()">
-            <fa-icon [icon]="iconCamera"></fa-icon>
+            <!-- <fa-icon [icon]="iconCamera"></fa-icon> -->
+            <mat-icon>{{iconCamera}}</mat-icon>
         </button>
     </div>
     <canvas style="display:none;" #canvas id="canvas" [width]="canvasWidth" [height]="canvasHeight"></canvas>

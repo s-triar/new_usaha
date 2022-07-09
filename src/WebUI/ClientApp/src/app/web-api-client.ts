@@ -1820,7 +1820,7 @@ export interface IOrderClient {
     createOrderOnline(): Observable<string>;
     finishOrder(): Observable<string>;
     createOrderCashier(total: number | undefined, payment: number | undefined, return: number | undefined, to: string | null | undefined, items: ItemOrdered[] | null | undefined): Observable<string>;
-    getEnterpriseOrder(enterpriseId: string | undefined, startCreatedAt: Date | null | undefined, endCreatedAt: Date | null | undefined, search: string | null | undefined, pageNumber: number | undefined, pageSize: number | undefined): Observable<SearchPageResponseOfOrderDto>;
+    getEnterpriseOrder(startCreatedAt: Date | null | undefined, endCreatedAt: Date | null | undefined, search: string | null | undefined, pageNumber: number | undefined, pageSize: number | undefined): Observable<SearchPageResponseOfOrderDto>;
     getEnterpriseOrderDetail(id: string | undefined): Observable<DetailOrderDto>;
 }
 
@@ -2003,12 +2003,8 @@ export class OrderClient implements IOrderClient {
         return _observableOf(null as any);
     }
 
-    getEnterpriseOrder(enterpriseId: string | undefined, startCreatedAt: Date | null | undefined, endCreatedAt: Date | null | undefined, search: string | null | undefined, pageNumber: number | undefined, pageSize: number | undefined): Observable<SearchPageResponseOfOrderDto> {
+    getEnterpriseOrder(startCreatedAt: Date | null | undefined, endCreatedAt: Date | null | undefined, search: string | null | undefined, pageNumber: number | undefined, pageSize: number | undefined): Observable<SearchPageResponseOfOrderDto> {
         let url_ = this.baseUrl + "/api/Order/GetEnterpriseOrder?";
-        if (enterpriseId === null)
-            throw new Error("The parameter 'enterpriseId' cannot be null.");
-        else if (enterpriseId !== undefined)
-            url_ += "EnterpriseId=" + encodeURIComponent("" + enterpriseId) + "&";
         if (startCreatedAt !== undefined && startCreatedAt !== null)
             url_ += "StartCreatedAt=" + encodeURIComponent(startCreatedAt ? "" + startCreatedAt.toISOString() : "") + "&";
         if (endCreatedAt !== undefined && endCreatedAt !== null)

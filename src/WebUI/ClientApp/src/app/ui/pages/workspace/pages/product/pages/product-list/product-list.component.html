@@ -16,7 +16,8 @@
  matTooltipPosition="before"
  matTooltipClass="app-tooltip"
  (click)="goto(linkToAdd)">
-    <fa-icon [icon]="icons.add"></fa-icon>
+    <!-- <fa-icon [icon]="icons.add"></fa-icon> -->
+    <mat-icon>{{icons.add}}</mat-icon>
 </button>
 
 <mat-nav-list #listProductContainer class="app-list-container" *ngIf="(productList.length>0); else noProduct;">

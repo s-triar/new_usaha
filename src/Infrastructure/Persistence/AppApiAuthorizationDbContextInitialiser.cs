@@ -12,9 +12,9 @@ namespace new_usaha.Infrastructure.Persistence;
 public class AppApiAuthorizationDbContextInitialiser
 {
     private readonly ILogger<AppApiAuthorizationDbContextInitialiser> _logger;
-    private readonly AppApiAuthorizationDbContext _auth_context;
+    private readonly AuthDbContext _auth_context;
 
-    public AppApiAuthorizationDbContextInitialiser(ILogger<AppApiAuthorizationDbContextInitialiser> logger, AppApiAuthorizationDbContext context)
+    public AppApiAuthorizationDbContextInitialiser(ILogger<AppApiAuthorizationDbContextInitialiser> logger, AuthDbContext context)
     {
         _logger = logger;
         _auth_context = context;
@@ -53,10 +53,10 @@ public class AppApiAuthorizationDbContextInitialiser
 
     public async Task TrySeedAsync()
     {
-        await AppConfigurationDbContextSeed.SeedIdentityResource(_auth_context);
-        await AppConfigurationDbContextSeed.SeedApiResoureces(_auth_context);
-        await AppConfigurationDbContextSeed.SeedApiScope(_auth_context);
-        await AppConfigurationDbContextSeed.SeedApiResouceScope(_auth_context);
-        await AppConfigurationDbContextSeed.SeedClient(_auth_context);
+        //await AppConfigurationDbContextSeed.SeedIdentityResource(_auth_context);
+        //await AppConfigurationDbContextSeed.SeedApiResoureces(_auth_context);
+        //await AppConfigurationDbContextSeed.SeedApiScope(_auth_context);
+        //await AppConfigurationDbContextSeed.SeedApiResouceScope(_auth_context);
+        //await AppConfigurationDbContextSeed.SeedClient(_auth_context);
     }
 }

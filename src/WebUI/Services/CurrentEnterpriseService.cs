@@ -7,11 +7,13 @@ namespace new_usaha.WebUI.Services;
 public class CurrentEnterpriseService : ICurrentEnterpriseService
 {
     private IHttpContextAccessor _httpContextAccessor;
-    private IHttpClientFactory _httpClientFactory;
-    public CurrentEnterpriseService(IHttpContextAccessor httpContextAccessor, IHttpClientFactory httpClientFactory)
+    //private IHttpClientFactory _httpClientFactory;
+    public CurrentEnterpriseService(IHttpContextAccessor httpContextAccessor
+        //, IHttpClientFactory httpClientFactory
+        )
     {
         this._httpContextAccessor = httpContextAccessor;
-        this._httpClientFactory = httpClientFactory;
+        //this._httpClientFactory = httpClientFactory;
         this.getUserInfo();
     }
 

@@ -6,17 +6,22 @@
     <mat-toolbar class="side-nav-header" style="background-color: white;">
       <div style="display: flex; flex-direction: row;align-items: center;" class="color-primary">
         <button mat-icon-button appButtonBack [replaceUrl]="true" [backLink]="linkBack" style="margin-right: 1rem;">
-          <fa-icon [icon]="icons.home"></fa-icon>
+          <!-- <fa-icon [icon]="icons.home"></fa-icon> -->
+          <mat-icon>{{icons.home}}</mat-icon>
         </button>
         <span>Dashboard</span>
       </div>
       <button mat-icon-button (click)="drawer.toggle()" cdkFocusInitial>
-        <fa-icon [icon]="icons.close"></fa-icon>
+        <!-- <fa-icon [icon]="icons.close"></fa-icon> -->
+        <mat-icon>{{icons.close}}</mat-icon>
+
       </button>
     </mat-toolbar>
     <mat-nav-list role="navigation">
       <a mat-list-item *ngFor="let item of navlist" [routerLink]="item.link" routerLinkActive="bg-color-primary color-white" > 
-        <i [class]="item.data.icon" style="margin-right: 4px;"></i> {{item.data.text}}
+        <!-- <i [class]="item.data.icon" style="margin-right: 4px;"></i>  -->
+        <mat-icon style="margin-right: 4px;">{{item.data.icon}}</mat-icon>
+        {{item.data.text}}
       </a>
     </mat-nav-list>
   </mat-sidenav>
@@ -31,7 +36,9 @@
             (click)="drawer.toggle()"
             style="margin-right: 1rem;"
             >
-            <fa-icon [icon]="icons.menu"></fa-icon>
+          <mat-icon>{{icons.menu}}</mat-icon>
+
+            <!-- <fa-icon [icon]="icons.menu"></fa-icon> -->
           </button>
           <span>{{viewState.currentTab}}</span>
         </div>

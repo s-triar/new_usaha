@@ -35,7 +35,7 @@ export class TransactionListComponent implements OnInit {
   @ViewChild(PaginationComponent, {static: true}) pagination!: PaginationComponent;
   idUsaha!: string;
   formSearch: FormGroup = this.formBuilder.group({
-    EnterpriseId: [null, [Validators.required]],
+    // EnterpriseId: [null, [Validators.required]],
     Search: [''],
     StartCreatedAt: [null],
     EndCreatedAt: [null],
@@ -54,8 +54,9 @@ export class TransactionListComponent implements OnInit {
   ngOnInit(): void {
     this.dashboardStateService.changeViewState({currentTab: 'Daftar Transaksi', isFooterBarNeedToBeShown: true});
     // tslint:disable-next-line:no-non-null-assertion
-    this.idUsaha = this.routes.parent?.parent?.parent?.snapshot.paramMap.get(DASHBOARD_ROUTE._ID_USAHA.substr(1))!;
+    this.idUsaha = this.routes.parent?.parent?.snapshot.paramMap.get(DASHBOARD_ROUTE._ID_USAHA.substr(1))!;
     this.formSearch.controls.Search.valueChanges.pipe(
+      startWith(''),
       untilDestroyed(this),
       debounceTime(700),
       tap(x => {
@@ -72,7 +73,7 @@ export class TransactionListComponent implements OnInit {
       this.pagination.setPagesNumbers(x.totalPages);
     });
 
-    this.formSearch.controls.EnterpriseId.setValue(this.idUsaha);
+    // this.formSearch.controls.EnterpriseId.setValue(this.idUsaha);
     this.setPaginationConfig();
   }
 

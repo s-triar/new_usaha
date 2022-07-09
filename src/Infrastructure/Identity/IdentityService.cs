@@ -24,7 +24,7 @@ namespace new_usaha.Infrastructure.Identity
 
         public async Task<string> GetUserNameAsync(string userId)
         {
-            var user = await _userManager.Users.FirstAsync(u => u.Id == userId);
+            var user = await _userManager.Users.FirstAsync(u => u.Id == Guid.Parse(userId));
 
             return user.UserName;
         }
@@ -44,19 +44,19 @@ namespace new_usaha.Infrastructure.Identity
 
             var result = await _userManager.CreateAsync(user, password);
 
-            return (result.ToApplicationResult(), user.Id);
+            return (result.ToApplicationResult(), user.Id.ToString());
         }
 
         public async Task<bool> IsInRoleAsync(string userId, string role)
         {
-            var user = _userManager.Users.SingleOrDefault(u => u.Id == userId);
+            var user = _userManager.Users.SingleOrDefault(u => u.Id == Guid.Parse(userId));
 
             return user != null && await _userManager.IsInRoleAsync(user, role);
         }
 
         public async Task<bool> AuthorizeAsync(string userId, string policyName)
         {
-            var user = _userManager.Users.SingleOrDefault(u => u.Id == userId);
+            var user = _userManager.Users.SingleOrDefault(u => u.Id == Guid.Parse(userId));
 
             if (user == null)
             {
@@ -72,7 +72,7 @@ namespace new_usaha.Infrastructure.Identity
 
         public async Task<Result> DeleteUserAsync(string userId)
         {
-            var user = _userManager.Users.SingleOrDefault(u => u.Id == userId);
+            var user = _userManager.Users.SingleOrDefault(u => u.Id == Guid.Parse(userId));
 
             return user != null ? await DeleteUserAsync(user) : Result.Success();
         }
@@ -90,19 +90,19 @@ namespace new_usaha.Infrastructure.Identity
             return user==null? null:  new UserMinimalInfo
             {
                 Email = user?.Email,
-                Id = user?.Id,
+                Id = user?.Id.ToString(),
                 Name = user?.UserName
             };
         }
 
         public async Task<UserMinimalInfo> GetMinimalInfoUserByIdAsync(string userId)
         {
-            var user = await _userManager.Users.FirstOrDefaultAsync(u => u.Id == userId);
+            var user = await _userManager.Users.FirstOrDefaultAsync(u => u.Id == Guid.Parse(userId));
 
             return user == null? null : new UserMinimalInfo
             {
                 Email = user?.Email,
-                Id = user?.Id,
+                Id = user?.Id.ToString(),
                 Name = user?.UserName
             };
         }

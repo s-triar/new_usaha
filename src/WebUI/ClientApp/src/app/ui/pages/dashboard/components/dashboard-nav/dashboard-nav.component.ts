@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { DashboardStateService, DashboardViewState } from 'src/app/ui/pages/dashboard/components/dashboard-nav/dashboard-state.service';
 import { DASHBOARD_EMPLOYEE_ROUTE, DASHBOARD_ROUTE, DB_OVERVIEW, DB_TRANS_ROUTE, GLOBAL_PATH } from 'src/app/application/constant/routes';
@@ -12,9 +12,8 @@ import { MatListModule } from '@angular/material/list';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { ButtonBackDirective } from 'src/app/ui/directives/button-back/button-back.directive';
 import { DataNavList } from 'src/app/application/types';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faBars, faClose, faHome } from '@fortawesome/free-solid-svg-icons';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 @UntilDestroy()
 @Component({
@@ -29,16 +28,16 @@ import { MatButtonModule } from '@angular/material/button';
     MatListModule,
     MatToolbarModule,
     ButtonBackDirective,
-    FontAwesomeModule,
-    MatButtonModule
+    MatButtonModule,
+    MatIconModule
   ]
 
 })
 export class DashboardNavComponent implements OnInit {
   icons = {
-    home: faHome,
-    menu: faBars,
-    close: faClose
+    home: 'home',
+    menu: 'menu',
+    close: 'close'
   };
   @Input() idUsaha!: string;
   linkBack = GLOBAL_PATH.MAIN_MY_BUSSINESSES_LIST;
@@ -57,12 +56,13 @@ export class DashboardNavComponent implements OnInit {
     GLOBAL_PATH.DASHBOARD_OVERVIEW,
     GLOBAL_PATH.DASHBOARD_TRANSACTION_LIST,
     GLOBAL_PATH.DASHBOARD_EMPLOYEE_LIST,
+    GLOBAL_PATH.DASHBOARD_EMPLOYEE_LIST,
   ];
   navlist: DataNavList[] = [
     {
       link: GLOBAL_PATH.DASHBOARD_OVERVIEW,
       data: {
-        icon: 'fab fa-delicious',
+        icon: 'dashboard',
         text: 'Overview'
       },
       type: DB_OVERVIEW._KEY_
@@ -70,7 +70,7 @@ export class DashboardNavComponent implements OnInit {
     {
       link: GLOBAL_PATH.DASHBOARD_TRANSACTION_LIST,
       data: {
-        icon: 'fas fa-receipt',
+        icon: 'receipt',
         text: 'Transaksi'
       },
       type: DB_TRANS_ROUTE._KEY_
@@ -78,8 +78,16 @@ export class DashboardNavComponent implements OnInit {
     {
       link: GLOBAL_PATH.DASHBOARD_EMPLOYEE_LIST,
       data: {
-        icon: 'fas fa-users',
+        icon: 'supervisor_account',
         text: 'Karyawan'
+      },
+      type:  DASHBOARD_EMPLOYEE_ROUTE._KEY_
+    },
+    {
+      link: GLOBAL_PATH.DASHBOARD_EMPLOYEE_LIST,
+      data: {
+        icon: 'diversity_1',
+        text: 'Pelanggan'
       },
       type:  DASHBOARD_EMPLOYEE_ROUTE._KEY_
     },

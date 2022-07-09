@@ -1,13 +1,25 @@
 import { CdkConnectedOverlay, CdkOverlayOrigin, Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { Component, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import {FormControl} from '@angular/forms';
-import { MatButton } from '@angular/material/button';
+import { MatButton, MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
+import { PortalContainerComponent } from '../../utility/portal-container/portal-container.component';
 @Component({
   selector: 'app-search-bar-nav',
   templateUrl: './search-bar-nav.component.html',
-  styleUrls: ['./search-bar-nav.component.scss']
+  styleUrls: ['./search-bar-nav.component.scss'],
+  standalone:true,
+  imports:[
+    MatFormFieldModule,
+    MatInputModule,
+    MatIconModule,
+    MatButtonModule,
+    PortalContainerComponent
+  ]
 })
 export class SearchBarNavComponent implements OnInit {
   @Input() isFeature = false;

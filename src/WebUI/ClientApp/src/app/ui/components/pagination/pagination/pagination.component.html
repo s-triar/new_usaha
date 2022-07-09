@@ -1,11 +1,13 @@
 <div class="product-list-page">
     <button mat-icon-button color="primary" (click)="fastPreviousPage()" [disabled]="currentPage.isCurrentPageStartPage">
         <!-- <i class="fa fa-fast-backward" aria-hidden="true" ></i> -->
-        <fa-icon [icon]="iconFullBack"></fa-icon>
+        <!-- <fa-icon [icon]="iconFullBack"></fa-icon> -->
+        <mat-icon>{{iconFullBack}}</mat-icon>
     </button>
     <button mat-icon-button color="primary" (click)="previousPage()" [disabled]="currentPage.isCurrentPageStartPage">
         <!-- <i class="fa fa-step-backward" aria-hidden="true" ></i> -->
-        <fa-icon [icon]="iconBack"></fa-icon>
+        <!-- <fa-icon [icon]="iconBack"></fa-icon> -->
+        <mat-icon>{{iconBack}}</mat-icon>
     </button>
     <form [formGroup]="formSearch">
             <mat-label>Page</mat-label>
@@ -15,12 +17,14 @@
     </form>
     
     <button mat-icon-button color="primary" (click)="nextPage()" [disabled]="currentPage.isCurrentPageLastPage">
-        <fa-icon [icon]="iconForward"></fa-icon>
+        <!-- <fa-icon [icon]="iconForward"></fa-icon> -->
+        <mat-icon>{{iconForward}}</mat-icon>
 
         <!-- <i class="fa fa-step-forward" aria-hidden="true" ></i> -->
     </button>
     <button mat-icon-button color="primary" (click)="fastNextPage()" [disabled]="currentPage.isCurrentPageLastPage">
-        <fa-icon [icon]="iconFullForward"></fa-icon>
+        <!-- <fa-icon [icon]="iconFullForward"></fa-icon> -->
+        <mat-icon>{{iconFullForward}}</mat-icon>
 
         <!-- <i class="fa fa-fast-forward" aria-hidden="true" ></i> -->
     </button>

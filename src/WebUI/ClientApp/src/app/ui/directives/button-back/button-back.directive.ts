@@ -15,7 +15,7 @@ export class ButtonBackDirective {
   constructor(private navigation: NavigationBackService) { }
   @HostListener('click')
   onClick(): void {
-    console.log('click back');
+    // console.log('click back');
     this.navigation.back(this.backLink, this.replaceUrl);
   }
 }

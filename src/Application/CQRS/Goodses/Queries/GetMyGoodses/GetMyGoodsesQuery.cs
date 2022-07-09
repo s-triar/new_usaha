@@ -35,20 +35,23 @@ public class GetMyGoodsesQueryHandler : IRequestHandler<GetMyGoodsesQuery, Searc
     public async Task<SearchPageResponse<MyGoodsDto>> Handle(GetMyGoodsesQuery request, CancellationToken cancellationToken)
     {
         request.Search = request.Search == null ? "" : request.Search.Trim().ToLower();
-       return await _context.Goodses
-                                       .Include(x => x.GoodsType)
-                                       .Include(x => x.GoodsPrices)
-                                       .Include(x => x.GoodsStock)
-                                       .Include(x => x.ParentGoods).ThenInclude(z => z.GoodsStock)
-                                       .Include(x => x.ChildrenGoods).ThenInclude(z => z.GoodsStock)
-                                       .Where(x => x.EnterpriseId.ToString() == this._currentEnterpriseService.EnterpriseId)
-                                       .Where(x => x.Barcode.ToLower().Contains(request.Search) || (x.Name).ToLower().Contains(request.Search))
-                                       .OrderBy(x => x.Name)
-                                       .ProjectTo<MyGoodsDto>(_mapper.ConfigurationProvider)
-                                       .ToSearchPageResponseAsync(request.PageNumber, request.PageSize);
+        var entities = await _context.Goodses
+                                        .Include(x => x.GoodsType)
+                                        .Include(x => x.GoodsPrices)
+                                        .Include(x => x.GoodsStock)
+                                        .Include(x => x.ParentGoods).ThenInclude(z => z.GoodsStock)
+                                        .Include(x => x.ChildrenGoods).ThenInclude(z => z.GoodsStock)
+                                        .Where(x => x.EnterpriseId.ToString() == this._currentEnterpriseService.EnterpriseId)
+                                        .Where(x => x.Barcode.ToLower().Contains(request.Search) || (x.Name).ToLower().Contains(request.Search))
+                                        .OrderBy(x => x.Name)
+                                        //.ProjectTo<MyGoodsDto>(_mapper.ConfigurationProvider)
+                                        .ToSearchPageResponseAsync(request.PageNumber, request.PageSize);
+        //.ToListAsync(cancellationToken); ;
 
-        //var res = entities.Select(_mapper.Map<MyGoodsDto>);//.OrderBy(x=>x.Name).ToList();
 
+        //entities.Items = entities.Items.Select(_mapper.Map<MyGoodsDto>);//.OrderBy(x=>x.Name).ToList();
+        var res = new SearchPageResponse<MyGoodsDto>(entities.Items.Select(_mapper.Map<MyGoodsDto>).ToList(), entities.TotalCount, entities.PageNumber, request.PageSize);
+        return res;
         //var n = await _context.Goodses
         //                        .Where(x => x.EnterpriseId == request.EnterpriseId)
         //                        .Where(x => x.Barcode.ToLower().Contains(request.Search) || (x.Name).ToLower().Contains(request.Search))

@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { Router, RouterModule } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { faSearch, faComment, faBell, faHome, faUser, faUsers, faShoppingBasket, faBuilding } from '@fortawesome/free-solid-svg-icons';
 import { CommonModule } from '@angular/common';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -12,7 +11,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { GLOBAL_PATH } from 'src/app/application/constant/routes';
 import { DataNavList } from 'src/app/application/types';
 import { MainStateState, MainStateService } from './main-state.service';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { MatIconModule } from '@angular/material/icon';
+// import { faSearch, faComment, faBell, faHome, faUser, faUsers, faShoppingBasket, faBuilding } from '@fortawesome/free-solid-svg-icons';
+// import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @UntilDestroy()
 @Component({
@@ -25,7 +26,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     MatSidenavModule,
     MatToolbarModule,
     MatButtonModule,
-    FontAwesomeModule,
+    MatIconModule,
     RouterModule
   ]
 })
@@ -40,7 +41,7 @@ export class MainNavComponent implements OnInit {
       link: GLOBAL_PATH.MAIN_SEARCH,
       data: {
         // icon: 'fa fa-search',
-        icon: faSearch,
+        icon: 'search',
         text: 'Pencarian'
       },
       type: 'default'
@@ -49,7 +50,7 @@ export class MainNavComponent implements OnInit {
       link: GLOBAL_PATH.MAIN_QUICK_CHAT,
       data: {
         // icon: 'fa fa-comments',
-        icon: faComment,
+        icon: 'question_answer',
         text: 'Chat'
       },
       type: 'default'
@@ -57,7 +58,7 @@ export class MainNavComponent implements OnInit {
     {
       link: GLOBAL_PATH.MAIN_NOTIFICATION,
       data: {
-        icon: faBell,
+        icon: 'notifications',
         text: 'Notifikasi'
       },
       type: 'default'
@@ -68,7 +69,7 @@ export class MainNavComponent implements OnInit {
     {
       link: GLOBAL_PATH.MAIN_HOME,
       data: {
-        icon: faHome,
+        icon: 'window',
         text: 'Home'
       },
       type: 'default'
@@ -76,7 +77,7 @@ export class MainNavComponent implements OnInit {
     {
       link: GLOBAL_PATH.MAIN_PROFILE,
       data: {
-        icon: faUser,
+        icon: 'person',
         text: 'Profil'
       },
       type: 'default'
@@ -84,7 +85,7 @@ export class MainNavComponent implements OnInit {
     {
       link: GLOBAL_PATH.SOCIAL,
       data: {
-        icon: faUsers,
+        icon: 'diversity_2',
         text: 'Sosial'
       },
       type: 'default'
@@ -92,7 +93,7 @@ export class MainNavComponent implements OnInit {
     {
       link: '/main/remote',
       data: {
-        icon: faShoppingBasket,
+        icon: 'local_grocery_store',
         text: 'Keranjang'
       },
       type: 'default'
@@ -100,7 +101,7 @@ export class MainNavComponent implements OnInit {
     {
       link: GLOBAL_PATH.MAIN_MY_BUSSINESSES_LIST,
       data: {
-        icon: faBuilding,
+        icon: 'store',
         text: 'Usaha'
       },
       type: 'active'

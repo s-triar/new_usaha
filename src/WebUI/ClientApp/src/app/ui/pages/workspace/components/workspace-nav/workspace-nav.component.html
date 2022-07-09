@@ -6,7 +6,9 @@
     <mat-toolbar color="primary" class="side-nav-header">
       <span>Pengaturan</span>
       <button mat-icon-button (click)="drawer.toggle()">
-        <fa-icon [icon]="icons.close"></fa-icon>
+        <!-- <fa-icon [icon]="icons.close"></fa-icon> -->
+        <mat-icon>{{icons.close}}</mat-icon>
+
       </button>
     </mat-toolbar>
     <app-workspace-setting></app-workspace-setting>
@@ -22,7 +24,8 @@
             [backLink]="linkBackModule"
             [replaceUrl]="true"
           >
-          <fa-icon [icon]="icons.back"></fa-icon>
+          <!-- <fa-icon [icon]="icons.back"></fa-icon> -->
+          <mat-icon>{{icons.back}}</mat-icon>
           </button>
           <span class="nav-page-title">Workspace</span>
         </div>
@@ -32,7 +35,9 @@
             aria-label="Toggle sidenav"
             (click)="drawer.toggle()" 
             mat-icon-button color="primary">
-            <fa-icon [icon]="icons.setting"></fa-icon>
+            <!-- <fa-icon [icon]="icons.setting"></fa-icon> -->
+            <mat-icon>{{icons.setting}}</mat-icon>
+
           </button>
         </div>
       </mat-toolbar>

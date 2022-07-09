@@ -2,11 +2,12 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { AbstractControl, FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatSelectChange } from '@angular/material/select';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+// import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+// import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, ignoreElements, switchMap, tap } from 'rxjs/operators';
@@ -35,12 +36,13 @@ import { MyProductListItemComponent } from '../../components/my-product-list-ite
     PaginationComponent,
     MyProductListItemComponent,
     RouterModule,
-    FontAwesomeModule
+    // FontAwesomeModule
+    MatIconModule
   ]
 })
 export class ProductListComponent implements OnInit {
   icons = {
-    add: faPlus
+    add: 'add'
   };
   @ViewChild(PaginationComponent, {static: true}) pagination!: PaginationComponent;
 

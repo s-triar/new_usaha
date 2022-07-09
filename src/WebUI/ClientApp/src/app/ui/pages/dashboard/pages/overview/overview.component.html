@@ -1,1 +1,50 @@
-<p>overview works!</p>
+
+<div fxLayout="row"  style="height: 400px;">
+    <mat-card fxFlex="grow" style="margin:1rem;" class="mat-elevation-z4">
+        <!-- <div style="display: block;background-color: bisque;"> -->
+            <ag-charts-angular
+                style="position: absolute; top: 0; right: 0; bottom: 0; left: 0;"
+                [options]="optionsSales">
+            </ag-charts-angular>
+        <!-- </div> -->
+    </mat-card>
+</div>
+<div fxLayout="row wrap"  style="height: 400px;">
+        <mat-card fxFlex fxFlex.lt-md="grow" style="margin:1rem;" class="mat-elevation-z4">
+            <!-- <div style="display: block;background-color: bisque;"> -->
+                <ag-charts-angular
+                    style="position: absolute; top: 1rem; right: 1rem; bottom: 1rem; left: 1rem;"
+                    [options]="optionsNProductPerCategory">
+                </ag-charts-angular>
+            <!-- </div> -->
+        </mat-card>
+        <mat-card fxFlex fxFlex.lt-md="grow" style="margin:1rem;" class="mat-elevation-z4">
+            <!-- <div style="display: block;background-color: bisque;"> -->
+                <ag-charts-angular
+                    style="position: absolute; top: 1rem; right: 1rem; bottom: 1rem; left: 1rem;"
+                    [options]="optionsNEmployeePerRole">
+                </ag-charts-angular>
+            <!-- </div> -->
+        </mat-card>
+</div>
+<div fxLayout="row"  style="height: 400px;">
+    <mat-card class="mat-elevation-z4" *ngFor="let item of listCards" style="margin:1rem;" fxFlex="grow" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="2rem">
+        <div style="text-align: center;font-size: 1rem;font-weight: 400;">{{item.title}}</div>
+        <mat-icon style="font-size: 7rem;line-height: 7rem;height: unset;width: unset;">{{item.icon}}</mat-icon>
+        <div style="text-align: center;font-size: 2rem; font-weight: 500;">{{item.n}}</div>
+    </mat-card>
+    
+</div>
+<div fxLayout="row wrap" style="height: 400px;" >
+    <mat-card fxFlex fxFlex.lt-md="grow" style="margin:1rem;" class="mat-elevation-z4">
+        <app-list-product-under-threshold ></app-list-product-under-threshold>
+    </mat-card>
+    <mat-card fxFlex fxFlex.lt-md="grow" style="margin:1rem;" class="mat-elevation-z4">
+        <!-- <div style="display: block;background-color: bisque;"> -->
+            <ag-charts-angular
+                style="position: absolute; top: 0; right: 0; bottom: 0; left: 0;"
+                [options]="optionsSalesOnAnonymous">
+            </ag-charts-angular>
+        <!-- </div> -->
+    </mat-card>
+</div>

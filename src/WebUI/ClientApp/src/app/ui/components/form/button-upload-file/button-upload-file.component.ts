@@ -7,15 +7,16 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { NgxImageCompressService } from 'ngx-image-compress';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
-import {faImage, faFileImage, faCamera} from '@fortawesome/free-solid-svg-icons';
 import { CommonModule } from '@angular/common';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+// import {faImage, faFileImage, faCamera} from '@fortawesome/free-solid-svg-icons';
+// import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ObserversModule } from '@angular/cdk/observers';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { FileConversionService } from 'src/app/application/utility/file-conversion.service';
 import { CustomUploadFileEventChange } from 'src/app/application/types';
 import { CameraComponent } from '../../utility/camera/camera.component';
+import { MatIconModule } from '@angular/material/icon';
 
 @UntilDestroy()
 @Component({
@@ -29,7 +30,7 @@ import { CameraComponent } from '../../utility/camera/camera.component';
     OverlayModule,
     ObserversModule,
     MatMenuModule,
-    FontAwesomeModule,
+    MatIconModule,
     CameraComponent
   ],
   providers: [
@@ -47,9 +48,9 @@ export class ButtonUploadFileComponent implements OnInit, ControlValueAccessor {
   // @Input() errors!: {[error: string]: string};
   // @Input() parentForm!: FormGroup;
   // @Input() fieldName!: string;
-  iconImage = faImage;
-  iconCamera = faCamera;
-  iconFileImage = faFileImage;
+  iconImage = 'image';
+  iconCamera = 'photo_camera';
+  iconFileImage = 'folder';
   scrollStrategy!: ScrollStrategy ;
   isOpen = false;
   @ViewChild('img', { read: ElementRef }) imgInput!: ElementRef;

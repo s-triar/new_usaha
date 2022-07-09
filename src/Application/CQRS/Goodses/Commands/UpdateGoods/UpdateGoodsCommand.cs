@@ -78,7 +78,7 @@ public class UpdateGoodsCommandHandler : AlterGoodsCommand, IRequestHandler<Upda
                                        .Include(x => x.GoodsPhotos)
                                        .Include(x => x.GoodsStock)
                                        .FirstOrDefaultAsync(x => x.Id == request.Id);
-        goods.ParentGoodsId = string.IsNullOrEmpty(request.ParentBarcode) ? null : this._context.Goodses.FirstOrDefault(x => x.EnterpriseId.ToString() == this._ce.EnterpriseId && x.Barcode == request.Barcode).Id;
+        goods.ParentGoodsId = string.IsNullOrEmpty(request.ParentBarcode) ? null : this._context.Goodses.FirstOrDefault(x => x.EnterpriseId.ToString() == this._ce.EnterpriseId && x.Barcode == request.ParentBarcode).Id;
         goods.Name = request.Name;
         goods.GoodsTypeId = request.GoodsTypeId;
         goods.Description = request.Description;

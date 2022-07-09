@@ -8,8 +8,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { Router, RouterModule } from '@angular/router';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faArrowLeft, faClose, faCog } from '@fortawesome/free-solid-svg-icons';
+
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Observable } from 'rxjs';
 import { delay, map, shareReplay } from 'rxjs/operators';
@@ -19,6 +18,9 @@ import { ButtonBackDirective } from 'src/app/ui/directives/button-back/button-ba
 
 import { WorkspaceSettingComponent } from '../workspace-setting/workspace-setting.component';
 import { WorkspaceStateService, WorkspaceViewState } from './workspace-state.service';
+
+// import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+// import { faArrowLeft, faClose, faCog } from '@fortawesome/free-solid-svg-icons';
 
 @UntilDestroy()
 @Component({
@@ -35,7 +37,6 @@ import { WorkspaceStateService, WorkspaceViewState } from './workspace-state.ser
     RouterModule,
     ButtonBackDirective,
     MatIconModule,
-    FontAwesomeModule,
     MatTabsModule,
     MatSnackBarModule
   ]
@@ -44,9 +45,9 @@ export class WorkspaceNavComponent implements OnInit {
   @Input()
   idUsaha!: string;
   icons = {
-    back: faArrowLeft,
-    close: faClose,
-    setting: faCog
+    back: 'arrow_back',
+    close: 'close',
+    setting: 'settings'
   };
   viewState: WorkspaceViewState = {
     currentTab: '',

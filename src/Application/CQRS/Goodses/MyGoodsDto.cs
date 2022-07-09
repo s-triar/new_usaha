@@ -8,6 +8,7 @@ using new_usaha.Application.Common.Interfaces;
 using new_usaha.Application.Common.Mappings;
 using new_usaha.Application.Common.Models;
 using new_usaha.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace new_usaha.Application.CQRS.Goodses;
 
@@ -33,7 +34,8 @@ public class MyGoodsDto : IMapFrom<Goods>
                //.ConvertUsing<MyGoodsConverter>()
                .ForMember(dest=>dest.GoodsType, opts=>opts.MapFrom(x=>x.GoodsType.Name))
                .ForMember(dest => dest.N, opts => opts.MapFrom(x => x.GoodsStock.N))
-               .ForMember(dest => dest.Stock, opts => opts.MapFrom(x => $"Stok: {x.GoodsStock.N}"))
+               //.ForMember(dest => dest.Stock, opts => opts.MapFrom(x => $"Stok: {x.GoodsStock.N}"))
+               .ForMember(dest => dest.Stock, opts => opts.MapFrom<MyGoodsStockResolver>())
                .ForMember(dest => dest.Photo, opts => opts.MapFrom(x => x.GoodsPhotos.Count() > 0 ? x.GoodsPhotos.OrderBy(y=>y.CreatedAt).LastOrDefault()!.Url : null))
                .ForMember(dest => dest.Price, opts => opts.MapFrom(x => x.GoodsPrices.OrderBy(y=>y.CreatedAt).LastOrDefault()!.Price))
                .ForMember(dest => dest.WholesalerPrice, opts => opts.MapFrom(x => x.GoodsPrices.OrderBy(y=>y.CreatedAt).LastOrDefault()!.WholesalerPrice))
@@ -44,13 +46,61 @@ public class MyGoodsDto : IMapFrom<Goods>
 
     }
 }
+public class MyGoodsStockResolver : IValueResolver<Goods, MyGoodsDto, string>
+{
+    //public string Resolve(Enterprise source, MyEnterpriseDto destination, string destMember, ResolutionContext context)
+    //{
+    //    return "alamakkk";
+    //}
+    private readonly IApplicationDbContext _context;
+    public MyGoodsStockResolver(IApplicationDbContext context)
+    {
+        _context = context;
+    }
+    public string Resolve(Goods source, MyGoodsDto destination, string destMember, ResolutionContext context)
+    {
+        string stock = "";
+        stock += $"Stok: {source.GoodsStock.N} << ";
+
+        Goods? pt = source.ParentGoods;
+        decimal n_stock = source.GoodsStock.N;
+        decimal n_contain = 1;
+        while (pt != null)
+        {
+            n_contain *= pt.Contain;
+            var temp = this._context.Goodses.Include(x => x.ParentGoods).Include(x => x.GoodsStock).FirstOrDefault(x => x.Id == pt.Id);
+            n_stock += n_contain * temp.GoodsStock.N;
+            pt = pt.ParentGoods;
+        }
+        stock += $"{n_stock}";
+        return stock;
+    }
+}
+
 public class MyGoodsConverter : ITypeConverter<Goods, MyGoodsDto>
 {
-
+    private readonly IApplicationDbContext _context;
+    public MyGoodsConverter(IApplicationDbContext context)
+    {
+        _context = context;
+    }
     public MyGoodsDto Convert(Goods source, MyGoodsDto destination, ResolutionContext context)
     {
         string stock = "";
-        stock += $"Stok: {source.GoodsStock.N}";
+        stock += $"Stok: {source.GoodsStock.N} yy ";
+
+        Goods? pt = source.ParentGoods;
+        decimal n_stock = source.GoodsStock.N;
+        decimal n_contain = 1;
+        while (pt != null)
+        {
+            n_contain *= pt.Contain;
+            var temp = this._context.Goodses.Include(x=>x.ParentGoods).Include(x => x.GoodsStock).FirstOrDefault(x => x.Id == pt.Id);
+            n_stock += n_contain * temp.GoodsStock.N;
+            pt = pt.ParentGoods;
+        }
+        stock += $"{n_stock}";
+
         return new MyGoodsDto
         {
             Id = source.Id,

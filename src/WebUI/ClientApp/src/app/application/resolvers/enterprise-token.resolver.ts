@@ -24,7 +24,10 @@ export class EnterpriseTokenResolver implements Resolve<void> {
 
   resolve(routes: ActivatedRouteSnapshot, state: RouterStateSnapshot): void {
     const p = routes.firstChild;
-    const id =  p?.params[WORKSPACE_ROUTE._ID_USAHA.substring(1)]; // === DASHBOARD_ROUTE._ID_USAHA
+    console.log(p);
+    console.log(routes);
+    const id =  routes?.params[WORKSPACE_ROUTE._ID_USAHA.substring(1)]; // === DASHBOARD_ROUTE._ID_USAHA
+    console.log("EnterpriseTokenResolver",id)
     this.enterpriseService.getEnterpriseToken({EnterpriseId: id})
                           .subscribe((x: EnterpriseTokenDto) => {
                             this.enterpriseTokenService.setItem(x.token);

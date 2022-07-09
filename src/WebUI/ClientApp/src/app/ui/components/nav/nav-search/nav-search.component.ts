@@ -8,8 +8,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faArrowLeft, faFilter } from '@fortawesome/free-solid-svg-icons';
+// import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+// import { faArrowLeft, faFilter } from '@fortawesome/free-solid-svg-icons';
 import { ButtonBackDirective } from 'src/app/ui/directives/button-back/button-back.directive';
 
 @Component({
@@ -29,7 +29,7 @@ import { ButtonBackDirective } from 'src/app/ui/directives/button-back/button-ba
     MatInputModule,
     MatFormFieldModule,
     MatOptionModule,
-    FontAwesomeModule,
+    MatIconModule,
   ]
 
 })
@@ -38,8 +38,8 @@ export class NavSearchComponent implements OnInit {
   @Input() linkBack: string|null = null;
   @Input() title!: string;
   @Input() color = '';
-  backIcon = faArrowLeft;
-  iconFilter = faFilter;
+  backIcon = 'arrow_back';
+  iconFilter = 'filter_alt';
   constructor() { }
 
   ngOnInit(): void {

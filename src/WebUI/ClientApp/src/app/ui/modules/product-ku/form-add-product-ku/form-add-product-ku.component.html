@@ -10,7 +10,7 @@
             <mat-form-field appearance="fill" shouldLabelFloat="true" floatLabel="always" >
                 <mat-label>Barcode Produk</mat-label>
                 <input matInput placeholder="Barcode Produk" formControlName="Barcode" autocomplete="off">
-                <button matSuffix mat-icon-button color="primary" (click)="openScanner()" type="button"><i class="fas fa-qrcode"></i></button>
+                <button matSuffix mat-icon-button color="primary" (click)="openScanner()" type="button"><mat-icon>qr_code</mat-icon> </button>
                 <mat-hint class="color-warn" *ngIf="(BarcodeProduct?.dirty || BarcodeProduct?.touched) && BarcodeProduct?.errors?.required">Barcode harus diisi.</mat-hint>
                 <mat-hint class="color-warn" *ngIf="BarcodeProduct?.errors?.duplicateBarcodeError">Barang dengan barcode tersebut sudah ada.</mat-hint>
                 <mat-hint class="color-warn" *ngIf="BarcodeProduct?.errors?.maxlength">Maksimal panjang barcode 255 karakter.</mat-hint>

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using new_usaha.Infrastructure.Persistence;
 
@@ -10,9 +11,10 @@ using new_usaha.Infrastructure.Persistence;
 namespace new_usaha.Infrastructure.Migrations.ApplicationDb
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220709020407_test")]
+    partial class test
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -65,7 +67,7 @@ namespace new_usaha.Infrastructure.Migrations.ApplicationDb
 
                     b.HasIndex("GoodsStockId");
 
-                    b.ToTable("AddStockHistories", (string)null);
+                    b.ToTable("AddStockHistories");
                 });
 
             modelBuilder.Entity("new_usaha.Domain.Entities.EmployeeJoin", b =>
@@ -117,7 +119,7 @@ namespace new_usaha.Infrastructure.Migrations.ApplicationDb
 
                     b.HasIndex("EnterpriseRoleId");
 
-                    b.ToTable("EmployeeJoins", (string)null);
+                    b.ToTable("EmployeeJoins");
                 });
 
             modelBuilder.Entity("new_usaha.Domain.Entities.EmployeePresence", b =>
@@ -186,7 +188,7 @@ namespace new_usaha.Infrastructure.Migrations.ApplicationDb
 
                     b.HasIndex("EnterpriseEmployeeId");
 
-                    b.ToTable("EmployeePresences", (string)null);
+                    b.ToTable("EmployeePresences");
                 });
 
             modelBuilder.Entity("new_usaha.Domain.Entities.EmployeePresenceCode", b =>
@@ -237,7 +239,7 @@ namespace new_usaha.Infrastructure.Migrations.ApplicationDb
 
                     b.HasIndex("EnterpriseId");
 
-                    b.ToTable("EmployeePresenceCodes", (string)null);
+                    b.ToTable("EmployeePresenceCodes");
                 });
 
             modelBuilder.Entity("new_usaha.Domain.Entities.EmployeeSchedule", b =>
@@ -283,7 +285,7 @@ namespace new_usaha.Infrastructure.Migrations.ApplicationDb
 
                     b.HasIndex("EnterpriseEmployeeId1");
 
-                    b.ToTable("EmployeeSchedules", (string)null);
+                    b.ToTable("EmployeeSchedules");
                 });
 
             modelBuilder.Entity("new_usaha.Domain.Entities.EmployeeScheduleType", b =>
@@ -316,7 +318,7 @@ namespace new_usaha.Infrastructure.Migrations.ApplicationDb
 
                     b.HasKey("Id");
 
-                    b.ToTable("EmployeeScheduleTypes", (string)null);
+                    b.ToTable("EmployeeScheduleTypes");
                 });
 
             modelBuilder.Entity("new_usaha.Domain.Entities.Enterprise", b =>
@@ -379,7 +381,7 @@ namespace new_usaha.Infrastructure.Migrations.ApplicationDb
 
                     b.HasIndex("EnterpriseTypeId");
 
-                    b.ToTable("Enterprises", (string)null);
+                    b.ToTable("Enterprises");
                 });
 
             modelBuilder.Entity("new_usaha.Domain.Entities.EnterpriseAddress", b =>
@@ -425,7 +427,7 @@ namespace new_usaha.Infrastructure.Migrations.ApplicationDb
 
                     b.HasIndex("EnterpriseId");
 
-                    b.ToTable("EnterpriseAddresses", (string)null);
+                    b.ToTable("EnterpriseAddresses");
                 });
 
             modelBuilder.Entity("new_usaha.Domain.Entities.EnterpriseClaim", b =>
@@ -475,7 +477,7 @@ namespace new_usaha.Infrastructure.Migrations.ApplicationDb
 
                     b.HasIndex("EnterpriseTypeId");
 
-                    b.ToTable("EnterpriseClaims", (string)null);
+                    b.ToTable("EnterpriseClaims");
                 });
 
             modelBuilder.Entity("new_usaha.Domain.Entities.EnterpriseEmployee", b =>
@@ -526,7 +528,7 @@ namespace new_usaha.Infrastructure.Migrations.ApplicationDb
 
                     b.HasIndex("EnterpriseRoleId");
 
-                    b.ToTable("EnterpriseEmployees", (string)null);
+                    b.ToTable("EnterpriseEmployees");
                 });
 
             modelBuilder.Entity("new_usaha.Domain.Entities.EnterpriseEmployeeRole", b =>
@@ -565,7 +567,7 @@ namespace new_usaha.Infrastructure.Migrations.ApplicationDb
 
                     b.HasIndex("EnterpriseRoleId");
 
-                    b.ToTable("EnterpriseEmployeeRoles", (string)null);
+                    b.ToTable("EnterpriseEmployeeRoles");
                 });
 
             modelBuilder.Entity("new_usaha.Domain.Entities.EnterpriseRole", b =>
@@ -603,7 +605,7 @@ namespace new_usaha.Infrastructure.Migrations.ApplicationDb
 
                     b.HasIndex("EnterpriseId");
 
-                    b.ToTable("EnterpriseRoles", (string)null);
+                    b.ToTable("EnterpriseRoles");
                 });
 
             modelBuilder.Entity("new_usaha.Domain.Entities.EnterpriseRoleClaim", b =>
@@ -642,7 +644,7 @@ namespace new_usaha.Infrastructure.Migrations.ApplicationDb
 
                     b.HasIndex("EnterpriseRoleId");
 
-                    b.ToTable("EnterpriseRoleClaims", (string)null);
+                    b.ToTable("EnterpriseRoleClaims");
                 });
 
             modelBuilder.Entity("new_usaha.Domain.Entities.EnterpriseShift", b =>
@@ -685,7 +687,7 @@ namespace new_usaha.Infrastructure.Migrations.ApplicationDb
 
                     b.HasIndex("EnterpriseId");
 
-                    b.ToTable("EnterpriseShifts", (string)null);
+                    b.ToTable("EnterpriseShifts");
                 });
 
             modelBuilder.Entity("new_usaha.Domain.Entities.EnterpriseType", b =>
@@ -722,7 +724,7 @@ namespace new_usaha.Infrastructure.Migrations.ApplicationDb
 
                     b.HasKey("Id");
 
-                    b.ToTable("EnterpriseTypes", (string)null);
+                    b.ToTable("EnterpriseTypes");
                 });
 
             modelBuilder.Entity("new_usaha.Domain.Entities.Goods", b =>
@@ -783,7 +785,7 @@ namespace new_usaha.Infrastructure.Migrations.ApplicationDb
 
                     b.HasIndex("ParentGoodsId");
 
-                    b.ToTable("Goodses", (string)null);
+                    b.ToTable("Goodses");
                 });
 
             modelBuilder.Entity("new_usaha.Domain.Entities.GoodsAdjustment", b =>
@@ -820,7 +822,7 @@ namespace new_usaha.Infrastructure.Migrations.ApplicationDb
 
                     b.HasIndex("GoodsId");
 
-                    b.ToTable("GoodsAdjustments", (string)null);
+                    b.ToTable("GoodsAdjustments");
                 });
 
             modelBuilder.Entity("new_usaha.Domain.Entities.GoodsGroup", b =>
@@ -861,7 +863,7 @@ namespace new_usaha.Infrastructure.Migrations.ApplicationDb
 
                     b.HasIndex("EnterpriseId");
 
-                    b.ToTable("GoodsGroups", (string)null);
+                    b.ToTable("GoodsGroups");
                 });
 
             modelBuilder.Entity("new_usaha.Domain.Entities.GoodsGroupMember", b =>
@@ -900,7 +902,7 @@ namespace new_usaha.Infrastructure.Migrations.ApplicationDb
 
                     b.HasIndex("GoodsId");
 
-                    b.ToTable("GoodsGroupMembers", (string)null);
+                    b.ToTable("GoodsGroupMembers");
                 });
 
             modelBuilder.Entity("new_usaha.Domain.Entities.GoodsOrdered", b =>
@@ -952,7 +954,7 @@ namespace new_usaha.Infrastructure.Migrations.ApplicationDb
 
                     b.HasIndex("OrderId");
 
-                    b.ToTable("GoodsOrdereds", (string)null);
+                    b.ToTable("GoodsOrdereds");
                 });
 
             modelBuilder.Entity("new_usaha.Domain.Entities.GoodsPhoto", b =>
@@ -990,7 +992,7 @@ namespace new_usaha.Infrastructure.Migrations.ApplicationDb
 
                     b.HasIndex("GoodsId");
 
-                    b.ToTable("GoodsPhotos", (string)null);
+                    b.ToTable("GoodsPhotos");
                 });
 
             modelBuilder.Entity("new_usaha.Domain.Entities.GoodsPrice", b =>
@@ -1042,7 +1044,7 @@ namespace new_usaha.Infrastructure.Migrations.ApplicationDb
 
                     b.HasIndex("GoodsId");
 
-                    b.ToTable("GoodsPrices", (string)null);
+                    b.ToTable("GoodsPrices");
                 });
 
             modelBuilder.Entity("new_usaha.Domain.Entities.GoodsStock", b =>
@@ -1065,7 +1067,7 @@ namespace new_usaha.Infrastructure.Migrations.ApplicationDb
                     b.HasIndex("GoodsId")
                         .IsUnique();
 
-                    b.ToTable("GoodsStocks", (string)null);
+                    b.ToTable("GoodsStocks");
                 });
 
             modelBuilder.Entity("new_usaha.Domain.Entities.GoodsType", b =>
@@ -1103,7 +1105,7 @@ namespace new_usaha.Infrastructure.Migrations.ApplicationDb
 
                     b.HasIndex("ParentGoodsTypeId");
 
-                    b.ToTable("GoodsTypes", (string)null);
+                    b.ToTable("GoodsTypes");
                 });
 
             modelBuilder.Entity("new_usaha.Domain.Entities.Order", b =>
@@ -1160,7 +1162,7 @@ namespace new_usaha.Infrastructure.Migrations.ApplicationDb
 
                     b.HasIndex("PaymentMethodId");
 
-                    b.ToTable("Orders", (string)null);
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("new_usaha.Domain.Entities.OrderProgress", b =>
@@ -1199,7 +1201,7 @@ namespace new_usaha.Infrastructure.Migrations.ApplicationDb
 
                     b.HasIndex("OrderStatusId");
 
-                    b.ToTable("OrderProgresses", (string)null);
+                    b.ToTable("OrderProgresses");
                 });
 
             modelBuilder.Entity("new_usaha.Domain.Entities.OrderStatus", b =>
@@ -1235,7 +1237,7 @@ namespace new_usaha.Infrastructure.Migrations.ApplicationDb
 
                     b.HasKey("Id");
 
-                    b.ToTable("OrderStatuses", (string)null);
+                    b.ToTable("OrderStatuses");
                 });
 
             modelBuilder.Entity("new_usaha.Domain.Entities.PaymentMethod", b =>
@@ -1268,7 +1270,7 @@ namespace new_usaha.Infrastructure.Migrations.ApplicationDb
 
                     b.HasKey("Id");
 
-                    b.ToTable("PaymentMethods", (string)null);
+                    b.ToTable("PaymentMethods");
                 });
 
             modelBuilder.Entity("new_usaha.Domain.Entities.Profit", b =>
@@ -1309,7 +1311,7 @@ namespace new_usaha.Infrastructure.Migrations.ApplicationDb
 
                     b.HasIndex("GoodsId");
 
-                    b.ToTable("Profit", (string)null);
+                    b.ToTable("Profit");
                 });
 
             modelBuilder.Entity("new_usaha.Domain.Entities.AddStockHistory", b =>
