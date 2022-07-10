@@ -1,4 +1,5 @@
 ﻿//using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
+using System.Text;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -20,7 +21,7 @@ namespace Microsoft.Extensions.DependencyInjection
     public static class ConfigureServices
     {
         private static readonly string connectionStringApp = "MySqlConnectionApp";
-        private static readonly string connectionStringAuth = "MySqlConnectionAuth";
+        private static readonly string connectionStringIdentity = "MySqlConnectionIdentity";
         public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddScoped<AuditableEntitySaveChangesInterceptor>();
@@ -35,15 +36,14 @@ namespace Microsoft.Extensions.DependencyInjection
                         builder.WithOrigins(temp_split).AllowAnyHeader().AllowAnyMethod();
                     });
             });
-            
 
+            services.AddDbContext<AppIdentityDbContext>(options =>
+                   options.UseMySql(configuration.GetConnectionString(connectionStringIdentity), new MySqlServerVersion(new Version(10, 1, 40))));
             services.AddDbContext<ApplicationDbContext>(options =>
                    options.UseMySql(configuration.GetConnectionString(connectionStringApp), new MySqlServerVersion(new Version(10, 1, 40))));
-            services.AddDbContext<AuthDbContext>(options =>
-                    options.UseMySql(configuration.GetConnectionString(connectionStringAuth), new MySqlServerVersion(new Version(10, 1, 40))));
 
             services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());
-            services.AddScoped<AuthDbContext>(provider => provider.GetRequiredService<AuthDbContext>());
+            services.AddScoped<AppIdentityDbContext>(provider => provider.GetRequiredService<AppIdentityDbContext>());
             services.AddScoped<ApplicationDbContextInitialiser>();
             services.AddScoped<AppApiAuthorizationDbContextInitialiser>();
             services.AddScoped<IDomainEventService, DomainEventService>();
@@ -80,12 +80,29 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddAuthentication()
                 .AddJwtBearer("default-jwt", options =>
                 {
+
+                    var secretBytes = Encoding.UTF8.GetBytes(configuration.GetSection("DefaultJWT").GetValue<string>("Secret"));
+                    var key = new SymmetricSecurityKey(secretBytes);
                     options.SaveToken = true;
-                    options.Audience = configuration.GetSection("ClientInfo").GetValue<string>("Audience");
-                    options.Authority = configuration.GetSection("ClientInfo").GetValue<string>("Authority");
+                    //options.Audience = configuration.GetSection("ClientInfo").GetValue<string>("Audience");
+                    //options.Authority = configuration.GetSection("ClientInfo").GetValue<string>("Authority");
+                    options.Events = new JwtBearerEvents()
+                    {
+                        OnMessageReceived = context =>
+                        {
+                            if (context.Request.Query.ContainsKey("access_token"))
+                            {
+                                context.Token = context.Request.Query["access_token"];
+                            }
+                            return Task.CompletedTask;
+                        }
+                    };
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
-                        ValidateAudience = false,
+                        //ValidateAudience = false,
+                        IssuerSigningKey=key,
+                        ValidIssuer= configuration.GetSection("DefaultJWT").GetValue<string>("Issuer"),
+                        ValidAudience= configuration.GetSection("DefaultJWT").GetValue<string>("Audience"),
                     };
                     options.BackchannelHttpHandler = handler; //bypass certificate
                 });
@@ -99,15 +116,16 @@ namespace Microsoft.Extensions.DependencyInjection
                    options.Password.RequireUppercase = false;
                    options.Password.RequiredUniqueChars = 0;
 
-                    //Disable account confirmation.
+                   //Disable account confirmation.
                    options.SignIn.RequireConfirmedAccount = false;
                    options.SignIn.RequireConfirmedEmail = false;
                    options.SignIn.RequireConfirmedPhoneNumber = false;
 
                })
-               .AddEntityFrameworkStores<AuthDbContext>()
-               .AddDefaultUI()
-               .AddDefaultTokenProviders();
+               .AddRoles<IdentityRole<Guid>>()
+               .AddEntityFrameworkStores<AppIdentityDbContext>();
+               //.AddDefaultUI()
+               //.AddDefaultTokenProviders();
 
 
             //services.Configure<JwtBearerOptions>(

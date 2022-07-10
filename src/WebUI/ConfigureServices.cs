@@ -4,8 +4,8 @@ using new_usaha.Application.Common.Interfaces;
 using new_usaha.Infrastructure.Persistence;
 using new_usaha.WebUI.Filters;
 using new_usaha.WebUI.Services;
-//using NSwag;
-//using NSwag.Generation.Processors.Security;
+using NSwag;
+using NSwag.Generation.Processors.Security;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -24,8 +24,8 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddDatabaseDeveloperPageExceptionFilter();
 
             services.AddHealthChecks()
-                .AddDbContextCheck<ApplicationDbContext>("App Db")
-                .AddDbContextCheck<AuthDbContext>("Auth Db"); ;
+                .AddDbContextCheck<AppIdentityDbContext>("App Identity")
+                .AddDbContextCheck<ApplicationDbContext>("App Db");
 
             services.AddControllersWithViews(options =>
                 options.Filters.Add<ApiExceptionFilterAttribute>())
@@ -34,21 +34,21 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddRazorPages();
             
             // Customise default API behaviour
-            services.Configure<ApiBehaviorOptions>(options =>
-                options.SuppressModelStateInvalidFilter = true);
+            //services.Configure<ApiBehaviorOptions>(options =>
+            //    options.SuppressModelStateInvalidFilter = true);
 
             //services.AddOpenApiDocument(configure =>
             //{
             //    configure.Title = "new_usaha API";
-            //    configure.AddSecurity("JWT", Enumerable.Empty<string>(), new OpenApiSecurityScheme
-            //    {
-            //        Type = OpenApiSecuritySchemeType.ApiKey,
-            //        Name = "Authorization",
-            //        In = OpenApiSecurityApiKeyLocation.Header,
-            //        Description = "Type into the textbox: Bearer {your JWT token}."
-            //    });
+                //configure.AddSecurity("default-jwt", Enumerable.Empty<string>(), new OpenApiSecurityScheme
+                //{
+                //    Type = OpenApiSecuritySchemeType.ApiKey,
+                //    Name = "Authorization",
+                //    In = OpenApiSecurityApiKeyLocation.Header,
+                //    Description = "Type into the textbox: Bearer {your JWT token}."
+                //});
 
-            //    configure.OperationProcessors.Add(new AspNetCoreOperationSecurityScopeProcessor("JWT"));
+                //configure.OperationProcessors.Add(new AspNetCoreOperationSecurityScopeProcessor("default-jwt"));
             //});
 
             return services;

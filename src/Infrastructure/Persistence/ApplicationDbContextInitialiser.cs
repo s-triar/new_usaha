@@ -66,7 +66,7 @@ namespace new_usaha.Infrastructure.Persistence
 
             await ApplicationAuthorizationSeeder.SeedEnterpriseClaimAsync(_context);
 
-            await AppIdentityDbContextSeed.SeedDefaultUserAsync(_userManager);
+            //await AppIdentityDbContextSeed.SeedDefaultUserAsync(_userManager);
         }
     }
 }

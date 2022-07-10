@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace new_usaha.Infrastructure.Migrations.ApplicationDb
 {
-    public partial class InitialApp : Migration
+    public partial class init_app : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -289,38 +289,6 @@ namespace new_usaha.Infrastructure.Migrations.ApplicationDb
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "EnterpriseEmployees",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    EnterpriseId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    UserId = table.Column<string>(type: "varchar(255)", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Status = table.Column<string>(type: "varchar(255)", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    CreatedBy = table.Column<string>(type: "varchar(255)", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    LastModifiedAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    LastModifiedBy = table.Column<string>(type: "varchar(255)", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    DeletedBy = table.Column<string>(type: "varchar(255)", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    DeletedAt = table.Column<DateTime>(type: "datetime(6)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_EnterpriseEmployees", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_EnterpriseEmployees_Enterprises_EnterpriseId",
-                        column: x => x.EnterpriseId,
-                        principalTable: "Enterprises",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
                 name: "EnterpriseRoles",
                 columns: table => new
                 {
@@ -505,103 +473,17 @@ namespace new_usaha.Infrastructure.Migrations.ApplicationDb
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "EmployeePresences",
+                name: "EmployeeJoins",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    EnterpriseEmployeeId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    Status = table.Column<string>(type: "varchar(255)", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    EmployeePresenceCode_Start_Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    EmployeePresenceCode_StartId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    EmployeePresenceCode_End_Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    EmployeePresenceCode_EndId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    Description = table.Column<string>(type: "text", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Approval = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    ApprovalDate = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    UserApproverId = table.Column<string>(type: "varchar(255)", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    NumberHours = table.Column<long>(type: "bigint", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    CreatedBy = table.Column<string>(type: "varchar(255)", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    LastModifiedAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    LastModifiedBy = table.Column<string>(type: "varchar(255)", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    DeletedBy = table.Column<string>(type: "varchar(255)", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    DeletedAt = table.Column<DateTime>(type: "datetime(6)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_EmployeePresences", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_EmployeePresences_EmployeePresenceCodes_EmployeePresenceCod~1",
-                        column: x => x.EmployeePresenceCode_StartId,
-                        principalTable: "EmployeePresenceCodes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_EmployeePresences_EmployeePresenceCodes_EmployeePresenceCode~",
-                        column: x => x.EmployeePresenceCode_EndId,
-                        principalTable: "EmployeePresenceCodes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_EmployeePresences_EnterpriseEmployees_EnterpriseEmployeeId",
-                        column: x => x.EnterpriseEmployeeId,
-                        principalTable: "EnterpriseEmployees",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
-                name: "EmployeeSchedules",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    EnterpriseEmployeeId = table.Column<ulong>(type: "bigint unsigned", nullable: false),
-                    EnterpriseEmployeeId1 = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    Schedule = table.Column<string>(type: "varchar(255)", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    EmployeeScheduleTypeId = table.Column<int>(type: "int", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    CreatedBy = table.Column<string>(type: "varchar(255)", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    LastModifiedAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    LastModifiedBy = table.Column<string>(type: "varchar(255)", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    DeletedBy = table.Column<string>(type: "varchar(255)", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    DeletedAt = table.Column<DateTime>(type: "datetime(6)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_EmployeeSchedules", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_EmployeeSchedules_EmployeeScheduleTypes_EmployeeScheduleType~",
-                        column: x => x.EmployeeScheduleTypeId,
-                        principalTable: "EmployeeScheduleTypes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_EmployeeSchedules_EnterpriseEmployees_EnterpriseEmployeeId1",
-                        column: x => x.EnterpriseEmployeeId1,
-                        principalTable: "EnterpriseEmployees",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
-                name: "EnterpriseEmployeeRoles",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    EnterpriseId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     EnterpriseRoleId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    EnterpriseEmployeeId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    UserId = table.Column<string>(type: "varchar(255)", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Code = table.Column<int>(type: "int", nullable: false),
+                    ExpiredTime = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    IsUsed = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     CreatedBy = table.Column<string>(type: "varchar(255)", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
@@ -614,17 +496,58 @@ namespace new_usaha.Infrastructure.Migrations.ApplicationDb
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_EnterpriseEmployeeRoles", x => x.Id);
+                    table.PrimaryKey("PK_EmployeeJoins", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_EnterpriseEmployeeRoles_EnterpriseEmployees_EnterpriseEmploy~",
-                        column: x => x.EnterpriseEmployeeId,
-                        principalTable: "EnterpriseEmployees",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_EnterpriseEmployeeRoles_EnterpriseRoles_EnterpriseRoleId",
+                        name: "FK_EmployeeJoins_EnterpriseRoles_EnterpriseRoleId",
                         column: x => x.EnterpriseRoleId,
                         principalTable: "EnterpriseRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_EmployeeJoins_Enterprises_EnterpriseId",
+                        column: x => x.EnterpriseId,
+                        principalTable: "Enterprises",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "EnterpriseEmployees",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    EnterpriseId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    EnterpriseRoleId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    UserId = table.Column<string>(type: "varchar(255)", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    UserName = table.Column<string>(type: "varchar(255)", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Status = table.Column<string>(type: "varchar(255)", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    CreatedBy = table.Column<string>(type: "varchar(255)", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    LastModifiedAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    LastModifiedBy = table.Column<string>(type: "varchar(255)", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    DeletedBy = table.Column<string>(type: "varchar(255)", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    DeletedAt = table.Column<DateTime>(type: "datetime(6)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EnterpriseEmployees", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_EnterpriseEmployees_EnterpriseRoles_EnterpriseRoleId",
+                        column: x => x.EnterpriseRoleId,
+                        principalTable: "EnterpriseRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_EnterpriseEmployees_Enterprises_EnterpriseId",
+                        column: x => x.EnterpriseId,
+                        principalTable: "Enterprises",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 })
@@ -918,6 +841,132 @@ namespace new_usaha.Infrastructure.Migrations.ApplicationDb
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
+                name: "EmployeePresences",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    EnterpriseEmployeeId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    Status = table.Column<string>(type: "varchar(255)", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    EmployeePresenceCode_Start_Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    EmployeePresenceCode_StartId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    EmployeePresenceCode_End_Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    EmployeePresenceCode_EndId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    Description = table.Column<string>(type: "text", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Approval = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    ApprovalDate = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    UserApproverId = table.Column<string>(type: "varchar(255)", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    NumberHours = table.Column<long>(type: "bigint", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    CreatedBy = table.Column<string>(type: "varchar(255)", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    LastModifiedAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    LastModifiedBy = table.Column<string>(type: "varchar(255)", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    DeletedBy = table.Column<string>(type: "varchar(255)", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    DeletedAt = table.Column<DateTime>(type: "datetime(6)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EmployeePresences", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_EmployeePresences_EmployeePresenceCodes_EmployeePresenceCod~1",
+                        column: x => x.EmployeePresenceCode_StartId,
+                        principalTable: "EmployeePresenceCodes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_EmployeePresences_EmployeePresenceCodes_EmployeePresenceCode~",
+                        column: x => x.EmployeePresenceCode_EndId,
+                        principalTable: "EmployeePresenceCodes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_EmployeePresences_EnterpriseEmployees_EnterpriseEmployeeId",
+                        column: x => x.EnterpriseEmployeeId,
+                        principalTable: "EnterpriseEmployees",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "EmployeeSchedules",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    EnterpriseEmployeeId = table.Column<ulong>(type: "bigint unsigned", nullable: false),
+                    EnterpriseEmployeeId1 = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    Schedule = table.Column<string>(type: "varchar(255)", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    EmployeeScheduleTypeId = table.Column<int>(type: "int", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    CreatedBy = table.Column<string>(type: "varchar(255)", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    LastModifiedAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    LastModifiedBy = table.Column<string>(type: "varchar(255)", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    DeletedBy = table.Column<string>(type: "varchar(255)", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    DeletedAt = table.Column<DateTime>(type: "datetime(6)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EmployeeSchedules", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_EmployeeSchedules_EmployeeScheduleTypes_EmployeeScheduleType~",
+                        column: x => x.EmployeeScheduleTypeId,
+                        principalTable: "EmployeeScheduleTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_EmployeeSchedules_EnterpriseEmployees_EnterpriseEmployeeId1",
+                        column: x => x.EnterpriseEmployeeId1,
+                        principalTable: "EnterpriseEmployees",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "EnterpriseEmployeeRoles",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    EnterpriseRoleId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    EnterpriseEmployeeId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    CreatedBy = table.Column<string>(type: "varchar(255)", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    LastModifiedAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    LastModifiedBy = table.Column<string>(type: "varchar(255)", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    DeletedBy = table.Column<string>(type: "varchar(255)", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    DeletedAt = table.Column<DateTime>(type: "datetime(6)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EnterpriseEmployeeRoles", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_EnterpriseEmployeeRoles_EnterpriseEmployees_EnterpriseEmploy~",
+                        column: x => x.EnterpriseEmployeeId,
+                        principalTable: "EnterpriseEmployees",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_EnterpriseEmployeeRoles_EnterpriseRoles_EnterpriseRoleId",
+                        column: x => x.EnterpriseRoleId,
+                        principalTable: "EnterpriseRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
                 name: "AddStockHistories",
                 columns: table => new
                 {
@@ -954,6 +1003,16 @@ namespace new_usaha.Infrastructure.Migrations.ApplicationDb
                 name: "IX_AddStockHistories_GoodsStockId",
                 table: "AddStockHistories",
                 column: "GoodsStockId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EmployeeJoins_EnterpriseId",
+                table: "EmployeeJoins",
+                column: "EnterpriseId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EmployeeJoins_EnterpriseRoleId",
+                table: "EmployeeJoins",
+                column: "EnterpriseRoleId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_EmployeePresenceCodes_EnterpriseId",
@@ -1009,6 +1068,11 @@ namespace new_usaha.Infrastructure.Migrations.ApplicationDb
                 name: "IX_EnterpriseEmployees_EnterpriseId",
                 table: "EnterpriseEmployees",
                 column: "EnterpriseId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EnterpriseEmployees_EnterpriseRoleId",
+                table: "EnterpriseEmployees",
+                column: "EnterpriseRoleId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_EnterpriseRoleClaims_EnterpriseClaimId",
@@ -1139,6 +1203,9 @@ namespace new_usaha.Infrastructure.Migrations.ApplicationDb
                 name: "AddStockHistories");
 
             migrationBuilder.DropTable(
+                name: "EmployeeJoins");
+
+            migrationBuilder.DropTable(
                 name: "EmployeePresences");
 
             migrationBuilder.DropTable(
@@ -1193,9 +1260,6 @@ namespace new_usaha.Infrastructure.Migrations.ApplicationDb
                 name: "EnterpriseClaims");
 
             migrationBuilder.DropTable(
-                name: "EnterpriseRoles");
-
-            migrationBuilder.DropTable(
                 name: "GoodsGroups");
 
             migrationBuilder.DropTable(
@@ -1208,13 +1272,16 @@ namespace new_usaha.Infrastructure.Migrations.ApplicationDb
                 name: "Goodses");
 
             migrationBuilder.DropTable(
+                name: "EnterpriseRoles");
+
+            migrationBuilder.DropTable(
                 name: "PaymentMethods");
 
             migrationBuilder.DropTable(
-                name: "Enterprises");
+                name: "GoodsTypes");
 
             migrationBuilder.DropTable(
-                name: "GoodsTypes");
+                name: "Enterprises");
 
             migrationBuilder.DropTable(
                 name: "EnterpriseTypes");

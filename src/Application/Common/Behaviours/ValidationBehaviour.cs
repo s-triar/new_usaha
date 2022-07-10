@@ -5,7 +5,7 @@ using ValidationException = new_usaha.Application.Common.Exceptions.ValidationEx
 namespace new_usaha.Application.Common.Behaviours
 {
     public class ValidationBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
-         where TRequest : notnull
+         where TRequest : IRequest<TResponse>
     {
         private readonly IEnumerable<IValidator<TRequest>> _validators;
 

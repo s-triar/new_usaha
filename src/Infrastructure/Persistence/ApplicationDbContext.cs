@@ -11,6 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage;
 using System.Data;
 using MediatR;
 using new_usaha.Infrastructure.Persistence.Interceptors;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace new_usaha.Infrastructure.Persistence;
 

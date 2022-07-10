@@ -11,8 +11,8 @@ using new_usaha.Infrastructure.Persistence;
 namespace new_usaha.Infrastructure.Migrations.ApplicationDb
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220709020407_test")]
-    partial class test
+    [Migration("20220710005644_init_app")]
+    partial class init_app
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
