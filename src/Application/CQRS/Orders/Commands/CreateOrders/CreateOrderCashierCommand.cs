@@ -9,8 +9,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using new_usaha.Application.Common.Interfaces;
-using new_usaha.Application.CQRS.Goodses;
 using new_usaha.Domain.Entities;
+using new_usaha.Application.CQRS.MyGoodses.Queries;
 
 namespace new_usaha.Application.CQRS.Orders.Commands.CreateOrders;
 

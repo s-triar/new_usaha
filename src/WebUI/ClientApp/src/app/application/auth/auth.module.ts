@@ -9,7 +9,7 @@ import { authAppInitializerFactory } from './auth-app-initializer.factory';
 import { authCodeFlowConfig } from './auth-code-flow.config';
 import { authModuleConfig } from './auth-module.config';
 import { AuthGuard } from '../guards/auth.guard';
-import { AuthWithForceLoginGuard } from '../guards/auth-with-force-login.guard';
+// import { AuthWithForceLoginGuard } from '../guards/auth-with-force-login.guard';
 
 
 export function storageFactory(): OAuthStorage {
@@ -26,7 +26,7 @@ export function storageFactory(): OAuthStorage {
   providers: [
     AuthService,
     AuthGuard,
-    AuthWithForceLoginGuard,
+    // AuthWithForceLoginGuard,
   ]
 })
 export class AuthModule {

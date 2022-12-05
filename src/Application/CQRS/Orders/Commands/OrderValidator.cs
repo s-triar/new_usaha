@@ -7,7 +7,7 @@ using AutoMapper;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using new_usaha.Application.Common.Interfaces;
-using new_usaha.Application.CQRS.Goodses;
+using new_usaha.Application.CQRS.MyGoodses.Queries;
 using new_usaha.Application.CQRS.Orders.Commands.CreateOrders;
 
 namespace new_usaha.Application.CQRS.Orders.Commands;

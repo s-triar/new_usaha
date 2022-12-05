@@ -31,6 +31,7 @@ namespace new_usaha.Application.Common.Interfaces
         public DbSet<GoodsPhoto> GoodsPhotos { get; }
         public DbSet<GoodsOrdered> GoodsOrdereds { get; }
         public DbSet<GoodsPrice> GoodsPrices { get; }
+        public DbSet<GoodsWholesalePrice> GoodsWholesalePrices { get; }
         public DbSet<GoodsStock> GoodsStocks { get; }
         public DbSet<GoodsType> GoodsTypes { get; }
         public DbSet<Order> Orders { get; }

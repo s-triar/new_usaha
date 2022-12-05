@@ -1,6 +1,12 @@
 import { environment } from 'src/environments/environment';
 
 const prefixApi = '/api';
+export const AccountAPI = {
+  Login : `${prefixApi}/Account/Login`, // POST
+  Register : `${prefixApi}/Account/Register`, // POST
+  CheckEmailExist : `${prefixApi}/Account/CheckDuplicateEmail`, // GET
+  CheckPhoneExist : `${prefixApi}/Account/CheckDuplicatePhone`, // GET
+}
 export const EnterpriseTypeAPI = {
     All: `${prefixApi}/EnterpriseType/GetAll` // GET
 };

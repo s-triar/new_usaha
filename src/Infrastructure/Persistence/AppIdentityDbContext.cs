@@ -16,32 +16,32 @@ using Microsoft.AspNetCore.Identity;
 
 namespace new_usaha.Infrastructure.Persistence;
 
-public class AppIdentityDbContext : IdentityDbContext<ApplicationUser, IdentityRole<Guid>, Guid>
+public class AppIdentityDbContext : IdentityDbContext<ApplicationUser>
 {
-    private readonly IMediator _mediator;
-    private readonly AuditableEntitySaveChangesInterceptor _auditableEntitySaveChangesInterceptor;
+    //private readonly IMediator _mediator;
+    //private readonly AuditableEntitySaveChangesInterceptor _auditableEntitySaveChangesInterceptor;
 
     public AppIdentityDbContext(
-        DbContextOptions<AppIdentityDbContext> options,
+        DbContextOptions<AppIdentityDbContext> options
       
-        IMediator mediator,
-        AuditableEntitySaveChangesInterceptor auditableEntitySaveChangesInterceptor
+        //IMediator mediator
+        //AuditableEntitySaveChangesInterceptor auditableEntitySaveChangesInterceptor
         ) : base(options)
     {
-        _mediator = mediator;
-        _auditableEntitySaveChangesInterceptor = auditableEntitySaveChangesInterceptor;
+        //_mediator = mediator;
+        //_auditableEntitySaveChangesInterceptor = auditableEntitySaveChangesInterceptor;
     }
     protected override void OnModelCreating(ModelBuilder builder)
     {
-        builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+        //builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
         base.OnModelCreating(builder);
     }
 
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        optionsBuilder.AddInterceptors(_auditableEntitySaveChangesInterceptor);
-    }
+    //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    //{
+    //    optionsBuilder.AddInterceptors(_auditableEntitySaveChangesInterceptor);
+    //}
 
 }

@@ -17,10 +17,14 @@ public class AppApiAuthorizationDbContextInitialiser
     private readonly AppIdentityDbContext _auth_context;
     private readonly UserManager<ApplicationUser> _userManager;
 
-    public AppApiAuthorizationDbContextInitialiser(ILogger<AppApiAuthorizationDbContextInitialiser> logger, AppIdentityDbContext context, UserManager<ApplicationUser> userManager)
+    public AppApiAuthorizationDbContextInitialiser(
+        ILogger<AppApiAuthorizationDbContextInitialiser> logger, 
+        AppIdentityDbContext context,
+        UserManager<ApplicationUser> userManager)
     {
         _logger = logger;
         _auth_context = context;
+        _userManager = userManager;
     }
 
     public async Task InitialiseAsync()

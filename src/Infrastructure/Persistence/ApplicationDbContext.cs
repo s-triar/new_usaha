@@ -79,6 +79,7 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
     public DbSet<GoodsPhoto> GoodsPhotos => Set<GoodsPhoto>();
     public DbSet<GoodsOrdered> GoodsOrdereds => Set<GoodsOrdered>();
     public DbSet<GoodsPrice> GoodsPrices => Set<GoodsPrice>();
+    public DbSet<GoodsWholesalePrice> GoodsWholesalePrices => Set<GoodsWholesalePrice>();
     public DbSet<GoodsStock> GoodsStocks => Set<GoodsStock>();
     public DbSet<GoodsType> GoodsTypes => Set<GoodsType>();
     public DbSet<Order> Orders => Set<Order>();

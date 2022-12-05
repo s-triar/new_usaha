@@ -7,7 +7,19 @@ builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices(builder.Configuration);
 builder.Services.AddWebUIServices();
 
+builder.Services.AddEndpointsApiExplorer();
+
+
 var app = builder.Build();
+
+app.UseOpenApi();
+
+app.UseSwaggerUi3(settings =>
+{
+
+    settings.Path = "/api";
+    settings.DocumentPath = "/api/specification.json";
+});
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -18,14 +30,19 @@ if (app.Environment.IsDevelopment())
     // Initialise and seed database
     using (var scope = app.Services.CreateScope())
     {
+        var initialiser_auth = scope.ServiceProvider.GetRequiredService<AppApiAuthorizationDbContextInitialiser>();
+        await initialiser_auth.InitialiseAsync();
+        await initialiser_auth.SeedAsync();
+
         var initialiser = scope.ServiceProvider.GetRequiredService<ApplicationDbContextInitialiser>();
         await initialiser.InitialiseAsync();
         await initialiser.SeedAsync();
 
-        var initialiser_auth = scope.ServiceProvider.GetRequiredService<AppApiAuthorizationDbContextInitialiser>();
-        await initialiser_auth.InitialiseAsync();
-        await initialiser_auth.SeedAsync();
+        
     }
+
+
+
 }
 else
 {
@@ -37,11 +54,6 @@ app.UseHealthChecks("/health");
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
-//app.UseSwaggerUi3(settings =>
-//{
-//    settings.Path = "/api";
-//    settings.DocumentPath = "/api/specification.json";
-//});
 
 app.UseRouting();
 app.UseCors();

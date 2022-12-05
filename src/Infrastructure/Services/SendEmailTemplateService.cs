@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
@@ -20,7 +21,30 @@ public class SendEmailTemplateService : ISendEmailTemplateService
         _env = env;
         _sender = sender;
     }
+    public async Task<string> GetTemplateHtmlAsStringAsync<T>(
+                string path_template, T model)
+    {
+        
+        StreamReader str = new StreamReader(path_template);
 
+        string mailText = str.ReadToEnd();
+
+        str.Close();
+        foreach (var prop in typeof(T).GetProperties())
+        {
+            var code = "@@" + prop.Name;
+            string propValue = this.GetPropertyValue(model, prop.Name).ToString();
+            mailText = mailText.Replace(code, propValue);
+        }
+
+        return mailText;
+
+    }
+    private object GetPropertyValue(object source, string propertyName)
+    {
+        PropertyInfo property = source.GetType().GetProperty(propertyName);
+        return property.GetValue(source, null);
+    }
     public async Task SendEmployeeFiredAsync(string to, string usahaName)
     {
         string path = _env + EmailTemplatePath.EMPLOYEE_FIRED_TEMPLATE;
@@ -54,4 +78,35 @@ public class SendEmailTemplateService : ISendEmailTemplateService
                         );
         await _sender.SendEmailAsync(to, "Anda direkrut.", msg);
     }
+
+    public async Task SendUserRegisterSuccessActiationAsync(string to, string name, string url)
+    {
+        string path = _env + EmailTemplatePath.ACCOUNT_REGISTER_SUCCESS_ACTIVATION;
+        var builder = new BodyBuilder();
+        using (StreamReader SourceReader = System.IO.File.OpenText(path))
+        {
+
+            builder.HtmlBody = SourceReader.ReadToEnd();
+
+        }
+        string msg = string.Format(builder.HtmlBody,
+                        name,
+                        url
+                        );
+        await _sender.SendEmailAsync(to, "Anda direkrut.", msg);
+    }
+
+    public async Task SendUserForgetPasswordOTPAsync(string to, UserOtpModel model)
+    {
+        string path = _env + EmailTemplatePath.USER_FORGET_PASSWORD_OTP;
+        var htmlTemplate = await this.GetTemplateHtmlAsStringAsync<UserOtpModel>(path, model);
+        await _sender.SendEmailAsync(to, "Anda direkrut.", htmlTemplate);
+    }
+}
+
+public class UserOtpModel
+{
+    public string Name { get; set; }
+    public string Email { get; set; }
+    public string Otp { get; set; }
 }

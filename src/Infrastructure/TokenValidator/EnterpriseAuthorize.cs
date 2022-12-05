@@ -11,7 +11,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using new_usaha.Application.Common.Interfaces;
-using new_usaha.Application.CQRS.Enterprises.Queries;
+using new_usaha.Application.CQRS.MyEnterprises.Queries;
 
 namespace new_usaha.Infrastructure.TokenValidator;
 

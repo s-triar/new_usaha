@@ -31,7 +31,7 @@ import { InfoRoleResolver } from './application/resolvers/info-role.resolver';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: GLOBAL_PATH.MAIN_HOME,
+    redirectTo: GLOBAL_PATH.AUTH_LOGIN,
     pathMatch: 'full',
   },
   {
@@ -65,7 +65,10 @@ const routes: Routes = [
           import(
             './ui/pages/main/pages/my-businesses/my-businesses.component'
           ).then((c) => c.MyBusinessesComponent),
-        canActivate: [AuthWithForceLoginGuard],
+        canActivate: [
+          // AuthWithForceLoginGuard
+          AuthGuard
+        ],
         children: [
           {
             path: '',
@@ -270,7 +273,7 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: GLOBAL_PATH.AUTH_lOGIN,
+        redirectTo: GLOBAL_PATH.AUTH_LOGIN,
         pathMatch: 'full',
       },
       {
@@ -280,6 +283,14 @@ const routes: Routes = [
             (c) => c.LoginComponent
           ),
         title: 'Login',
+      },
+      {
+        path: AUTH_ROUTE.REGISTER,
+        loadComponent: () =>
+          import('./ui/pages/auth/pages/register/register.component').then(
+            (c) => c.RegisterComponent
+          ),
+        title: 'Register',
       },
     ],
   },

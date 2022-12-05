@@ -1,4 +1,17 @@
-export type EnterpriseTypeDto= {
+export type Result = {
+    succeeded:boolean;
+    errors:string[];
+}
+
+export type ResultWithMessage = Result & {
+    message:string;
+}
+
+export type ResultUserLogin = ResultWithMessage & {
+  token: string|null;
+}
+
+export type EnterpriseTypeDto = {
     id: number;
     name: string;
     provide: string;
@@ -28,6 +41,7 @@ export type EnterpriseDto = {
 export type EnterpriseTokenDto = {
     token: string;
 };
+
 export type MyEnterpriseDto = {
     id: string;
     name: string;
@@ -38,6 +52,9 @@ export type MyEnterpriseDto = {
     code:string;
     address: string;
     owned: boolean;
+
+};
+export type MyEnterpriseContainerDto = SearchPageResponse<MyEnterpriseDto> & {
 
 };
 export type GoodsPackagingDto= {

@@ -10,6 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using new_usaha.Application.Common.Constants;
 using new_usaha.Application.Common.Interfaces;
+using new_usaha.Application.CQRS.Enterprises.Queries;
 
 namespace new_usaha.Application.Enterprises.Queries.GetEnterprises;
 

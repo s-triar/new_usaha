@@ -26,7 +26,7 @@ import { CommonModule, CurrencyPipe } from '@angular/common';
 import { FlexLayoutModule } from '@angular/flex-layout';
 // import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { AuthModule } from './application/auth/auth.module';
+// import { AuthModule } from './application/auth/auth.module';
 import { SplashComponent } from './ui/components/utility/splash/splash.component';
 import { AuthorizeInterceptor } from './application/interceptors/authorize.interceptor';
 import { EnterpriseInterceptor } from './application/interceptors/enterprise.interceptor';
@@ -54,7 +54,7 @@ import { AgChartsAngularModule } from 'ag-charts-angular';
     BrowserAnimationsModule,
     HttpClientModule,
     FlexLayoutModule,
-    AuthModule.forRoot(),
+    // AuthModule.forRoot(),
     ThermalPrintModule,
     // PopUpKuModule,
     SplashComponent,
@@ -72,7 +72,7 @@ import { AgChartsAngularModule } from 'ag-charts-angular';
     { provide: HTTP_INTERCEPTORS, useClass: AuthorizeInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: EnterpriseInterceptor, multi: true },
 
-    { provide: HTTP_INTERCEPTORS, useClass: AuthorizeServerInterceptor, multi: true },
+    // { provide: HTTP_INTERCEPTORS, useClass: AuthorizeServerInterceptor, multi: true },
     // { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: NotificationInterceptor, multi: true },
   ],

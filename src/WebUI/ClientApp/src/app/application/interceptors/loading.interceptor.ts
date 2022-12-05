@@ -6,8 +6,8 @@ import {
   HttpInterceptor
 } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { CUSTOM_HEADER } from '../values';
 import { catchError, tap } from 'rxjs/operators';
+import { CUSTOM_HEADER } from '../constant';
 
 @Injectable()
 export class LoadingInterceptor implements HttpInterceptor {

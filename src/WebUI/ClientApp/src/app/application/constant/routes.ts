@@ -8,6 +8,7 @@ export const APP_ROUTE = {
 };
 export const AUTH_ROUTE = {
     LOGIN: 'login',
+    REGISTER: 'register',
 };
 export const MAIN_ROUTE = {
     HOME: 'home',
@@ -98,7 +99,8 @@ export const DB_OVERVIEW = {
 };
 export const GLOBAL_PATH = {
     AUTH: `/${APP_ROUTE.AUTH}`,
-    AUTH_lOGIN: `/${APP_ROUTE.AUTH}/${AUTH_ROUTE.LOGIN}`,
+    AUTH_LOGIN: `/${APP_ROUTE.AUTH}/${AUTH_ROUTE.LOGIN}`,
+    AUTH_REGISTER: `/${APP_ROUTE.AUTH}/${AUTH_ROUTE.REGISTER}`,
 
     MAIN: `/${APP_ROUTE.MAIN}`,
     MAIN_HOME: `/${APP_ROUTE.MAIN}/${MAIN_ROUTE.HOME}`,

@@ -16,8 +16,8 @@ namespace new_usaha.Infrastructure.Persistence
         //private readonly RoleManager<IdentityRole> _roleManager;
 
         public ApplicationDbContextInitialiser(
-            ILogger<ApplicationDbContextInitialiser> logger, 
-            ApplicationDbContext context, 
+            ILogger<ApplicationDbContextInitialiser> logger,
+            ApplicationDbContext context,
             UserManager<ApplicationUser> userManager
             //, RoleManager<IdentityRole> roleManager
             )
@@ -34,7 +34,7 @@ namespace new_usaha.Infrastructure.Persistence
             {
                 //if (_context.Database.IsSqlServer())
                 //{
-                await _context.Database.MigrateAsync();
+                //await _context.Database.MigrateAsync();
                 //}
             }
             catch (Exception ex)

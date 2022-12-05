@@ -1,0 +1,105 @@
+<app-portal-container querySelector="#auth-header">
+  <app-nav-page title="Daftar"></app-nav-page>
+</app-portal-container>
+<div class="app-center-container">
+  <form class="app-form-flex vertical" [formGroup]="form" (ngSubmit)="submit()">
+    <div class="app-form-title">
+      <span>Daftar</span>
+    </div>
+    <div class="app-form-message" *ngIf="(formMessage$| async) as formMessage">
+      <span>{{formMessage.message}} </span>
+    </div>
+    <mat-form-field appearance="fill" class="auth-form-field">
+      <mat-icon class="auth-mat-form-field-prefix" matPrefix>person</mat-icon>
+      <mat-label>Nama Lengkap</mat-label>
+      <input matInput formControlName="Fullname" />
+      <mat-error *ngIf="form.getError('required', 'Fullname')">
+        Nama Lengkap  harus diisi
+      </mat-error>
+      <mat-error *ngIf="form.getError('maxlength', 'Fullname')">
+        Nama Lengkap harus kurang dari 256 karakter
+      </mat-error>
+    </mat-form-field>
+    <!-- <mat-form-field appearance="fill" class="auth-form-field">
+      <mat-icon class="auth-mat-form-field-prefix" matPrefix>badge</mat-icon>
+      <mat-label>Nama Pengguna Unik</mat-label>
+      <input matInput formControlName="Fullname" />
+      <mat-error *ngIf="form.getError('required', 'Fullname')">
+        Nama pengguna unik harus diisi
+      </mat-error>
+      <mat-error *ngIf="form.getError('maxlength', 'Fullname')">
+        Nama pengguna unik harus kurang dari 256 karakter
+      </mat-error>
+    </mat-form-field> -->
+    <mat-form-field appearance="fill" class="auth-form-field">
+      <mat-icon class="auth-mat-form-field-prefix" matPrefix>email</mat-icon>
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="Email" type="email" />
+      <mat-error *ngIf="form.getError('required', 'Email')">
+        Email harus diisi
+      </mat-error>
+      <mat-error *ngIf="form.getError('email', 'Email')">
+        Email harus valid
+      </mat-error>
+      <mat-error *ngIf="form.getError('maxlength', 'Email')">
+        Email harus kurang dari 256 karakter
+      </mat-error>
+      <mat-error *ngIf="form.getError('duplicateUserEmail', 'Email')">
+        Email sudah digunakan
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="fill" class="auth-form-field">
+        <mat-icon class="auth-mat-form-field-prefix" matPrefix>phone</mat-icon>
+        <mat-label>Nomor Telepon</mat-label>
+        <input matInput formControlName="Phone"  type="tel"/>
+        <mat-error *ngIf="form.getError('required', 'Phone')">
+          Nomor Telepon harus diisi
+        </mat-error>
+        <mat-error *ngIf="form.getError('maxlength', 'Phone')">
+          Nomor Telepon harus kurang dari 14 karakter
+        </mat-error>
+        <mat-error *ngIf="form.getError('duplicateUserPhone', 'Phone')">
+          Nomor Telepon sudah digunakan
+        </mat-error>
+      </mat-form-field>
+    <mat-form-field appearance="fill" class="auth-form-field">
+      <mat-icon class="auth-mat-form-field-prefix" matPrefix>password</mat-icon>
+      <mat-label>Password</mat-label>
+      <input matInput type="password" formControlName="Password" />
+      <mat-error *ngIf="form.getError('required', 'Password')">
+        Password harus diisi
+      </mat-error>
+      <mat-error *ngIf="form.getError('minlength', 'Password')">
+        Password harus lebih dari 5 karakter
+      </mat-error>
+      <mat-error *ngIf="form.getError('maxlength', 'Password')">
+        Password harus kurang dari 26 karakter
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="fill" class="auth-form-field">
+        <mat-icon class="auth-mat-form-field-prefix" matPrefix>password</mat-icon>
+        <mat-label>Konfirmasi Password</mat-label>
+        <input matInput type="password" formControlName="ConfirmPassword" />
+        <mat-error *ngIf="form.getError('required', 'ConfirmPassword')">
+          Konfirmasi Password harus diisi
+        </mat-error>
+        <mat-error *ngIf="form.getError('maxlength', 'Password')">
+          Konfirmasi Password harus kurang dari 26 karakter
+        </mat-error>
+        <mat-error *ngIf="form.hasError('notMatchPassword')">
+          Konfirmasi Password tidak cocok dengan password
+        </mat-error>
+      </mat-form-field>
+    <div class="app-form-action horizontal center">
+      <button
+        type="submit"
+        [disabled]="form.invalid || loading"
+        mat-raised-button
+        color="accent"
+      >
+        Daftar
+      </button>
+    </div>
+  </form>
+  <div style="margin-top: 1rem">Sudah punya akun? <a [routerLink]="pathToLogin">Masuk</a></div>
+</div>

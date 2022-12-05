@@ -1,6 +1,6 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using new_usaha.Application.Common.Interfaces;
-using new_usaha.Application.CQRS.Enterprises.Queries;
+using new_usaha.Application.CQRS.MyEnterprises.Queries;
 
 namespace new_usaha.WebUI.Services;
 

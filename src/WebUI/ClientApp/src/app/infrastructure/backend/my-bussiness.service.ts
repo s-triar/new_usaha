@@ -2,13 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { EnterpriseAPI } from 'src/app/application/constant/apis';
-import { MyEnterpriseDto } from 'src/app/domain/backend/Dtos';
-import { CheckAvailableEnterpriseCodeQuery, GetMyEnterprisesQuery } from 'src/app/domain/backend/Queries';
+import { MyEnterpriseContainerDto, MyEnterpriseDto } from 'src/app/domain/backend/Dtos';
+import { CheckAvailableEnterpriseCodeQuery,  GetMyEnterprisesSearchQuery } from 'src/app/domain/backend/Queries';
 
 
 export interface MyBussinessServiceInterface{
   checkAvailableEnterpriseCode(query: CheckAvailableEnterpriseCodeQuery): Observable<boolean>;
-  getOwned(query: GetMyEnterprisesQuery): Observable<MyEnterpriseDto[]>;
+  getOwned(query: GetMyEnterprisesSearchQuery): Observable<MyEnterpriseContainerDto>;
   create(data: FormData): Observable<string>;
 }
 
@@ -23,8 +23,8 @@ export class MyBussinessService  implements MyBussinessServiceInterface{
   checkAvailableEnterpriseCode(query: CheckAvailableEnterpriseCodeQuery): Observable<boolean>{
     return this.http.get<boolean>(EnterpriseAPI.CheckAvailableEnterpriseCode, {params:  query });
   }
-  getOwned(query: GetMyEnterprisesQuery): Observable<MyEnterpriseDto[]>{
-    return this.http.get<MyEnterpriseDto[]>(EnterpriseAPI.GetOwned, {params:  query });
+  getOwned(query: GetMyEnterprisesSearchQuery): Observable<MyEnterpriseContainerDto>{
+    return this.http.get<MyEnterpriseContainerDto>(EnterpriseAPI.GetOwned, {params:  query });
   }
   create(data: FormData): Observable<string>{
     return this.http.post<string>(EnterpriseAPI.Create, data);

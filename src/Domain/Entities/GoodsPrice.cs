@@ -14,9 +14,6 @@ public class GoodsPrice : AuditableEntity
     public Guid GoodsId { get; set; }
     public virtual Goods Goods { get; set; } 
     public decimal Price { get; set; }
-    public decimal WholesalerPrice { get; set; }
-    public int WholesalerMin { get; set; }
-    public bool IsWholesalerPriceAuto { get; set; }
     public DateTime Start { get; set; }
     public DateTime? End { get; set; }
 }

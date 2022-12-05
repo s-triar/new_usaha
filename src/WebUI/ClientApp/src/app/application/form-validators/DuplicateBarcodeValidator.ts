@@ -30,7 +30,7 @@ export class DuplicateBarcodeValidator{
 }
 
 
-export function barcodeCheck(goodsService: GoodsService, routes: ActivatedRoute): AsyncValidatorFn |null {
+export function barcodeCheck(goodsService: GoodsService): AsyncValidatorFn |null {
     return (c: AbstractControl): Observable<{ [key: string]: any } | null> => {
         return c.valueChanges.pipe(
             debounceTime(700),

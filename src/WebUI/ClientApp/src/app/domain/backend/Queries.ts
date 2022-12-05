@@ -3,8 +3,9 @@
 export type CheckAvailableEnterpriseCodeQuery = {
     Code: string
 };
-export type GetMyEnterprisesQuery = {
-    Name: string
+
+export type GetMyEnterprisesSearchQuery = SearchPageRequest & {
+
 };
 export type GetAvailableEnterpriseCodeQuery = {
     Name: string
@@ -20,6 +21,7 @@ export type SearchPageRequest = {
 export type GetMyGoodsesSearchQuery = SearchPageRequest & {
 
 };
+
 export type GetMyGoodsesRelationQuery = {
     EnterpriseId: string;
     Search: string;

@@ -38,7 +38,7 @@ export class AuthService {
 
   private navigateToLoginPage(): void {
     // TODO: Remember current URL
-    this.router.navigate([GLOBAL_PATH.AUTH_lOGIN]);
+    this.router.navigate([GLOBAL_PATH.AUTH_LOGIN]);
 
   }
 

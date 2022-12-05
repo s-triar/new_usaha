@@ -32,25 +32,25 @@ namespace Microsoft.Extensions.DependencyInjection
                     .AddFluentValidation(x => x.AutomaticValidationEnabled = false);
 
             services.AddRazorPages();
+
+            //Customise default API behaviour
+            services.Configure<ApiBehaviorOptions>(options =>
+                options.SuppressModelStateInvalidFilter = true);
+
+            services.AddOpenApiDocument(configure =>
+            {
+                configure.Title = "new_usaha API";
+                configure.AddSecurity("Bearer", Enumerable.Empty<string>(), new OpenApiSecurityScheme
+                {
+                    Type = OpenApiSecuritySchemeType.ApiKey,
+                    Name = "Authorization",
+                    In = OpenApiSecurityApiKeyLocation.Header,
+                    Description = "Type into the textbox: Bearer {your JWT token}."
+                });
+
+                configure.OperationProcessors.Add(new AspNetCoreOperationSecurityScopeProcessor("Bearer"));
+            });
             
-            // Customise default API behaviour
-            //services.Configure<ApiBehaviorOptions>(options =>
-            //    options.SuppressModelStateInvalidFilter = true);
-
-            //services.AddOpenApiDocument(configure =>
-            //{
-            //    configure.Title = "new_usaha API";
-                //configure.AddSecurity("default-jwt", Enumerable.Empty<string>(), new OpenApiSecurityScheme
-                //{
-                //    Type = OpenApiSecuritySchemeType.ApiKey,
-                //    Name = "Authorization",
-                //    In = OpenApiSecurityApiKeyLocation.Header,
-                //    Description = "Type into the textbox: Bearer {your JWT token}."
-                //});
-
-                //configure.OperationProcessors.Add(new AspNetCoreOperationSecurityScopeProcessor("default-jwt"));
-            //});
-
             return services;
         }
     }
