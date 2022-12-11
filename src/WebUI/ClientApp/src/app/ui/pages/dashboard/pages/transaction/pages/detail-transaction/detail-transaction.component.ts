@@ -9,6 +9,7 @@ import { DashboardStateService } from 'src/app/ui/pages/dashboard/components/das
 import { NavPageComponent } from 'src/app/ui/components/nav/nav-page/nav-page.component';
 import { PortalContainerComponent } from 'src/app/ui/components/utility/portal-container/portal-container.component';
 import { GoodsOrderedComponent } from './goods-ordered/goods-ordered.component';
+import { MatIconModule } from '@angular/material/icon';
 // import { DashboardStateService } from 'src/app/pages/dashboard/services/dashboard-state.service';
 // import { TransactionService } from 'src/app/pages/dashboard/services/transaction.service';
 // import { DetailOrderDto } from 'src/app/shared/types/Dtos';
@@ -24,6 +25,7 @@ import { GoodsOrderedComponent } from './goods-ordered/goods-ordered.component';
     NavPageComponent,
     MatTabsModule,
     GoodsOrderedComponent,
+    MatIconModule
   ]
 })
 export class DetailTransactionComponent implements OnInit {

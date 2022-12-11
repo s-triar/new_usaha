@@ -10,27 +10,27 @@ export const AccountAPI = {
 export const EnterpriseTypeAPI = {
     All: `${prefixApi}/EnterpriseType/GetAll` // GET
 };
-export const EnterpriseAPI = {
-    GetOwned: `${prefixApi}/Enterprise/GetOwned`, // GET
-    Create: `${prefixApi}/Enterprise/Create`, // POST
-    CheckAvailableEnterpriseCode: `${prefixApi}/Enterprise/CheckAvailableEnterpriseCode`, // GET
-    GetAvailableEnterpriseCode: `${prefixApi}/Enterprise/GetAvailableEnterpriseCode`, // GET
-    GetEnterpriseToken: `${prefixApi}/Enterprise/GetEnterpriseToken`, // GET
-    GetMyEnterpriseInfo:`${prefixApi}/Enterprise/GetMyEnterpriseInfo`, // GET
+export const MyEnterpriseAPI = {
+    GetOwned: `${prefixApi}/MyEnterprise/GetOwned`, // GET
+    Create: `${prefixApi}/MyEnterprise/Create`, // POST
+    CheckAvailableEnterpriseCode: `${prefixApi}/MyEnterprise/CheckAvailableEnterpriseCode`, // GET
+    GetAvailableEnterpriseCode: `${prefixApi}/MyEnterprise/GetAvailableEnterpriseCode`, // GET
+    GetMyEnterpriseToken: `${prefixApi}/MyEnterprise/GetEnterpriseToken`, // GET
+    GetMyEnterpriseInfo:`${prefixApi}/MyEnterprise/GetMyEnterpriseInfo`, // GET
 };
-export const GoodsAPI = {
-    Create: `${prefixApi}/Goods/Create`, // POST
-    UpdateInfo: `${prefixApi}/Goods/UpdateInfo`, // PUT
-    AddItem: `${prefixApi}/Goods/AddItem`, // POST
-    Update: `${prefixApi}/Goods/Update`, // PUT
-    UpdateSellingPrice: `${prefixApi}/Goods/UpdateSellingPrice`, // PUT
-    AddStock: `${prefixApi}/Goods/AddStock`, // PUT
-    AdjustStock: `${prefixApi}/Goods/AdjustStock`, // PUT
-    CheckDuplicateBarcode: `${prefixApi}/Goods/CheckDuplicateBarcode`, // GET
-    GetMyGoodses: `${prefixApi}/Goods/GetMyGoodses`, // GET
-    GetMyGoodsesRelation: `${prefixApi}/Goods/GetMyGoodsesRelation`, // GET
-    GetInfoOfGoodsForUpdating: `${prefixApi}/Goods/GetInfoOfGoodsForUpdating`, // GET
-    GetListProductForCashier: `${prefixApi}/Goods/GetListProductForCashier`, // GET
+export const MyGoodsAPI = {
+    Create: `${prefixApi}/MyGoods/Create`, // POST
+    UpdateInfo: `${prefixApi}/MyGoods/UpdateInfo`, // PUT
+    AddItem: `${prefixApi}/MyGoods/AddItem`, // POST
+    Update: `${prefixApi}/MyGoods/Update`, // PUT
+    UpdateSellingPrice: `${prefixApi}/MyGoods/UpdateSellingPrice`, // PUT
+    AddStock: `${prefixApi}/MyGoods/AddStock`, // PUT
+    AdjustStock: `${prefixApi}/MyGoods/AdjustStock`, // PUT
+    CheckDuplicateBarcode: `${prefixApi}/MyGoods/CheckDuplicateBarcode`, // GET
+    GetMyGoodses: `${prefixApi}/MyGoods/GetMyGoodses`, // GET
+    GetMyGoodsesRelation: `${prefixApi}/MyGoods/GetMyGoodsesRelation`, // GET
+    GetInfoOfGoodsForUpdating: `${prefixApi}/MyGoods/GetInfoOfGoodsForUpdating`, // GET
+    GetListProductForCashier: `${prefixApi}/MyGoods/GetListProductForCashier`, // GET
 };
 export const GoodsGroupAPI = {
     Create: `${prefixApi}/GoodsGroup/Create`, // POST

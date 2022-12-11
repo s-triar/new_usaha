@@ -16,8 +16,9 @@ public class MyGoodsForCashierDto : IMapFrom<Goods>
     public string Barcode { get; set; }
     public string Name { get; set; }
     public decimal Price { get; set; }
-    public decimal WholesalerPrice { get; set; }
-    public int WholesalerMin { get; set; }
+    public List<WholesalesPrice> WholessalePrices {get;set;}
+    //public decimal WholesalerPrice { get; set; }
+    //public int WholesalerMin { get; set; }
     public bool IsWholesalerPriceAuto { get; set; }
     public void Mapping(Profile profile)
     {
@@ -42,10 +43,11 @@ public class MyGoodsCashierConverter : ITypeConverter<Goods, MyGoodsForCashierDt
             EnterpriseId = source.EnterpriseId,
             Barcode = source.Barcode,
             Name = source.Name,
-            Price = source.GoodsPrices.LastOrDefault()!.Price,
-            WholesalerPrice = lastPrice.WholesalerPrice,
-            WholesalerMin = lastPrice.WholesalerMin,
-            IsWholesalerPriceAuto = lastPrice.IsWholesalerPriceAuto,
+            Price = source.GoodsPrices.Where(x=>x.End==null).OrderBy(x=>x.CreatedAt).LastOrDefault()!.Price,
+            WholessalePrices =  source.GoodsWholesalePrices.Where(x=>x.End == null).OrderBy(x=>x.WholesalerMin).Select(x=> new WholesalesPrice { WholesalerMin=x.WholesalerMin, WholesalerPrice=x.WholesalerPrice}).ToList()
+            //WholesalerPrice = lastPrice.WholesalerPrice,
+            //WholesalerMin = lastPrice.WholesalerMin,
+            //IsWholesalerPriceAuto = lastPrice.IsWholesalerPriceAuto,
         };
     }
 }

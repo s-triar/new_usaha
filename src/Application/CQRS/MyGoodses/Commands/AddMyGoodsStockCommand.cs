@@ -9,42 +9,46 @@ using System.Threading;
 using System.Threading.Tasks;
 using new_usaha.Application.Common.Interfaces;
 using new_usaha.Domain.Entities;
+using new_usaha.Application.Common.Models;
 
 namespace new_usaha.Application.CQRS.MyGoodses.Commands;
 
-public class AddStockCommand : IRequest<Guid>
+public class AddMyGoodsStockCommand : IRequest<ResultWithMessage>
 {
     public Guid Id { get; set; }
 
     public int Increment { get; set; }
     public decimal BuyPriceTotal { get; set; }
 }
-public class AddStockCommandValidator : GoodsValidator<AddStockCommand>
+public class AddMyGoodsStockCommandValidator : GoodsValidator<AddMyGoodsStockCommand>
 {
-    public AddStockCommandValidator(IApplicationDbContext context, ICurrentEnterpriseService currentEnterprise) : base(context, currentEnterprise)
+    public AddMyGoodsStockCommandValidator(IApplicationDbContext context, ICurrentEnterpriseService currentEnterprise) : base(context, currentEnterprise)
     {
         RuleFor(v => v.Id)
             .NotEmpty().WithMessage("Id produk harus diisi.")
             .MustAsync(CheckId).WithMessage("Id produk tidak ditemukan.");
     }
 }
-public class AddStockCommandHandler : IRequestHandler<AddStockCommand, Guid>
+public class AddMyGoodsStockCommandHandler : IRequestHandler<AddMyGoodsStockCommand, ResultWithMessage>
 {
     private readonly IApplicationDbContext _context;
 
-    public AddStockCommandHandler(IApplicationDbContext context)
+    public AddMyGoodsStockCommandHandler(IApplicationDbContext context)
     {
         _context = context;
     }
 
-    public async Task<Guid> Handle(AddStockCommand request, CancellationToken cancellationToken)
+    public async Task<ResultWithMessage> Handle(AddMyGoodsStockCommand request, CancellationToken cancellationToken)
     {
+        await this._context.BeginTransactionAsync();
         GoodsStock entity = AddGoodsStock(request);
         await _context.SaveChangesAsync(cancellationToken);
         //var gd = _context.Goodses.Where(x=>x.Id==entity.GoodsId).FirstOrDefault();
-        return entity.Id;
+        await this._context.CommitTransactionAsync();
+        return new ResultWithMessage(true, new List<string>() { }, "Berhasil menambah stock produk");
+
     }
-    private GoodsStock AddGoodsStock(AddStockCommand request)
+    private GoodsStock AddGoodsStock(AddMyGoodsStockCommand request)
     {
         var stock = _context.GoodsStocks.Where(x => x.GoodsId == request.Id).SingleOrDefault();
         var stockLastHistory = _context.AddStockHistories.Where(x => x.GoodsStockId == stock.Id).OrderBy(x => x.CreatedAt).LastOrDefault();

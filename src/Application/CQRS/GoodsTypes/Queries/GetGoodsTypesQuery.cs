@@ -34,19 +34,31 @@ public class GetGoodsTypeQueryHandler : IRequestHandler<GetGoodsTypesQuery, IEnu
         if (!request.OnlyRoot)
         {
             entities = entities.Include(x => x.SubGoodsTypes);
+            var res = await entities.ToListAsync(cancellationToken);
+            var result = res.Select(this.mapper.Map<GoodsTypeDto>);
+            return result;
         }
         else
         {
-            entities = entities.Where(x => x.ParentGoodsTypeId == null)
-                               .Include(x => x.SubGoodsTypes)
-                                 .ThenInclude(y => y.SubGoodsTypes)
-                                   .ThenInclude(y => y.SubGoodsTypes)
-                               ;
+            var childrenOf = entities.ToLookup(x => x.ParentGoodsTypeId);
+
+            foreach(var c in entities)
+            {
+                c.SubGoodsTypes = childrenOf[c.Id].ToList();
+            }
+
+            var roots = childrenOf[null].ToList();
+
+            //var res = await entities.ToListAsync(cancellationToken);
+            var result = roots.Select(this.mapper.Map<GoodsTypeDto>);
+            return result;
+            //entities = entities.Where(x => x.ParentGoodsTypeId == null)
+            //                   .Include(x => x.SubGoodsTypes)
+            //                     .ThenInclude(y => y.SubGoodsTypes)
+            //                       .ThenInclude(y => y.SubGoodsTypes);
         }
 
-        var res = await entities.ToListAsync(cancellationToken);
-        var result = res.Select(this.mapper.Map<GoodsTypeDto>);
-        return result;
+       
 
     }
 }

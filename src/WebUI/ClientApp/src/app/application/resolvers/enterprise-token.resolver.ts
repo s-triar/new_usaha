@@ -6,7 +6,7 @@ import {
 } from '@angular/router';
 import { EnterpriseTokenDto } from 'src/app/domain/backend/Dtos';
 import { EnterpriseTokenService } from 'src/app/infrastructure/backend/enterprise-token.service';
-import { EnterpriseService } from 'src/app/infrastructure/backend/enterprise.service';
+import { MyEnterpriseService } from 'src/app/infrastructure/backend/my-enterprise.service';
 import { WORKSPACE_ROUTE } from '../constant/routes';
 
 
@@ -18,19 +18,19 @@ import { WORKSPACE_ROUTE } from '../constant/routes';
 export class EnterpriseTokenResolver implements Resolve<void> {
 
   constructor(
-    private readonly enterpriseService: EnterpriseService,
-    private readonly enterpriseTokenService: EnterpriseTokenService
+    private readonly _myenterpriseService: MyEnterpriseService,
+    private readonly _enterpriseTokenService: EnterpriseTokenService
     ){}
 
   resolve(routes: ActivatedRouteSnapshot, state: RouterStateSnapshot): void {
     const p = routes.firstChild;
-    console.log(p);
-    console.log(routes);
+    // console.log(p);
+    // console.log(routes);
     const id =  routes?.params[WORKSPACE_ROUTE._ID_USAHA.substring(1)]; // === DASHBOARD_ROUTE._ID_USAHA
     console.log("EnterpriseTokenResolver",id)
-    this.enterpriseService.getEnterpriseToken({EnterpriseId: id})
+    this._myenterpriseService.getEnterpriseToken({EnterpriseId: id})
                           .subscribe((x: EnterpriseTokenDto) => {
-                            this.enterpriseTokenService.setItem(x.token);
+                            this._enterpriseTokenService.setItem(x.token);
                           });
   }
 }

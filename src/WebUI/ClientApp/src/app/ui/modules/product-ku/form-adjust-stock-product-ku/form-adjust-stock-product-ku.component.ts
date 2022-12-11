@@ -27,7 +27,7 @@ import { PopUpNotifService } from 'src/app/ui/components/pop-up/pop-up-notif/pop
 export class FormAdjustStockProductKuComponent implements OnInit {
   @Input() id!: string;
 
-  @Output() Submitted: EventEmitter<string> = new EventEmitter<string>();
+  @Output() Submitted: EventEmitter<void> = new EventEmitter<void>();
   @Output() Canceled: EventEmitter<void> = new EventEmitter<void>();
   form: FormGroup = this.fb.group({
     Id: [this.id, [Validators.required]],
@@ -66,12 +66,12 @@ export class FormAdjustStockProductKuComponent implements OnInit {
         .pipe(
           untilDestroyed(this),
           switchMap(x =>
-            this.notifService.show({message: 'Stok produk berhasil diubah.', title: 'Sukses', type: 'success'}).afterClosed()
+            this.notifService.show({message: x.message, title: 'Sukses', type: 'success'}).afterClosed()
                              .pipe(switchMap(y => of(x)))
           )
         )
         .subscribe(
-          (x: string) => this.Submitted.emit(x)
+          () => this.Submitted.emit()
         );
   }
 }

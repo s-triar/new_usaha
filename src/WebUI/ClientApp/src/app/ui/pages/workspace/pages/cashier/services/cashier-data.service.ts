@@ -84,9 +84,23 @@ export class CashierDataService {
   }
   createNewObjectForAdd(item: POSCashierItem): POSCashierItem{
     const incrementQty = item.qty + 1;
-    const isWholesalerPriceUsed = item.isWholesalerPriceAuto &&
-                                  (item.wholesalerMin <= incrementQty && item.wholesalerMin > 0) ? true : false;
-    const usedPrice =  (isWholesalerPriceUsed ?  item.wholesalerPrice : item.price) - item.singlePriceDisc;
+    let isWholesaleOk = false;
+    let wholesaleUsed = item.price;
+    for (let index = 0; index < item.wholessalePrices.length; index++) {
+      const element = item.wholessalePrices[index];
+      if(element.wholesalerMin<=incrementQty){
+        isWholesaleOk = true;
+        wholesaleUsed = element.wholesalerPrice;
+      }
+    }
+    
+    // const isWholesalerPriceUsed = item.isWholesalerPriceAuto || isWholesaleOk ? true : false;
+    const isWholesalerPriceUsed =(item.isWholesalerPriceAuto || item.isWholesalerPriceUsed) && isWholesaleOk;
+    
+    
+    const basePriceUsed = (isWholesalerPriceUsed ?  wholesaleUsed : item.price);
+    console.log(wholesaleUsed, basePriceUsed);
+    const usedPrice =  basePriceUsed - item.singlePriceDisc;
     const tempUsedTotalPrice = incrementQty * usedPrice;
     const usedTotalPrice = tempUsedTotalPrice - item.totalPriceDisc;
     return {
@@ -95,44 +109,61 @@ export class CashierDataService {
       goodsPackaging: item.goodsPackaging,
       id: item.id,
       isWholesalerPriceAuto: item.isWholesalerPriceAuto,
-      wholesalerMin: item.wholesalerMin,
+      wholessalePrices: item.wholessalePrices,
       isWholesalerPriceUsed,
       name: item.name,
       price: item.price,
       promos: item.promos,
       qty: incrementQty,
+      basePriceUsed,
+      isWholesaleAvailable:isWholesaleOk,
       singlePriceDisc: item.singlePriceDisc,
       // singlePriceDiscFormatted: item.singlePriceDiscFormatted,
       totalPriceDisc: item.totalPriceDisc,
       // totalPriceDiscFormatted: item.totalPriceDiscFormatted,
       usedPrice,
       usedTotalPrice,
-      wholesalerPrice: item.wholesalerPrice,
+      
       tempUsedTotalPrice
     };
   }
   convertDTOtoItem(item: MyGoodsForCashierDto): POSCashierItem {
-    const isWholesalerPriceUsed = item.isWholesalerPriceAuto && (item.wholesalerMin === 1) ? true : false;
-    const usedPrice = isWholesalerPriceUsed ?  item.wholesalerPrice : item.price;
+    let isWholesaleOk = false;
+    let wholesaleUsed = item.price;
+    for (let index = 0; index < item.wholessalePrices.length; index++) {
+      const element = item.wholessalePrices[index];
+      if(element.wholesalerMin<=1){
+        isWholesaleOk = true;
+        wholesaleUsed = element.wholesalerPrice;
+        break;
+      }
+    }
+    // const isWholesalerPriceUsed = item.isWholesalerPriceAuto || (isWholesaleOk) ? true : false;
+    const isWholesalerPriceUsed = (item.isWholesalerPriceAuto && isWholesaleOk);
+
+    const basePriceUsed = (isWholesalerPriceUsed ?  wholesaleUsed : item.price);
+    const usedPrice =  basePriceUsed;
+    
     return {
       barcode: item.barcode,
       enterpriseId: item.enterpriseId,
       goodsPackaging: item.goodsPackaging,
       id: item.id,
       isWholesalerPriceAuto: item.isWholesalerPriceAuto,
-      wholesalerMin: item.wholesalerMin,
+      basePriceUsed,
       isWholesalerPriceUsed,
       name: item.name,
       price: item.price,
       promos: item.promos,
       qty: 1,
+      isWholesaleAvailable:isWholesaleOk,
       singlePriceDisc: 0,
       // singlePriceDiscFormatted: null,
       totalPriceDisc: 0,
       // totalPriceDiscFormatted: null,
       usedPrice,
       usedTotalPrice: usedPrice,
-      wholesalerPrice: item.wholesalerPrice,
+      wholessalePrices: item.wholessalePrices,
       tempUsedTotalPrice: usedPrice
     };
   }

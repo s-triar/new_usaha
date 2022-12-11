@@ -160,7 +160,7 @@ namespace new_usaha.Infrastructure.Identity
                 var key = new SymmetricSecurityKey(secretByte);
                 var algorithm = SecurityAlgorithms.HmacSha256;
                 var signinCredentials = new SigningCredentials(key, algorithm);
-                var token = new JwtSecurityToken(null, null, claims, DateTime.Now, DateTime.Now.AddHours(12), signinCredentials);
+                var token = new JwtSecurityToken(null, null, claims, DateTime.Now, DateTime.Now.AddHours(24), signinCredentials);
                 var tokenJson = new JwtSecurityTokenHandler().WriteToken(token);
                 string Message = "Berhasil masuk";
                 string Token = tokenJson;

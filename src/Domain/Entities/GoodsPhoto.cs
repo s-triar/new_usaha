@@ -13,4 +13,5 @@ public class GoodsPhoto : AuditableEntity
     public Guid GoodsId { get; set; }
     public virtual Goods Goods { get; set; } 
     public string Url { get; set; } 
+
 }

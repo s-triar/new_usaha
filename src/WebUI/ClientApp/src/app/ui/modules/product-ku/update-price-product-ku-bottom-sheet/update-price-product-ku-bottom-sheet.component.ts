@@ -1,7 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatBottomSheetModule, MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
-import { FormUpdatePriceProductKuComponent } from '../form-update-price-product-ku/form-update-price-product-ku.component';
+import { FormUpdatePriceProductKuComponent, WholeSalesPrice } from '../form-update-price-product-ku/form-update-price-product-ku.component';
+
+export type FormUpdatePriceProductData={
+  id:string;
+  wholesaleprices: WholeSalesPrice[];
+}
 
 @Component({
   templateUrl: './update-price-product-ku-bottom-sheet.component.html',
@@ -17,13 +22,13 @@ export class UpdatePriceProductKuBottomSheetComponent implements OnInit {
 
   constructor(
     private bottomSheetRef: MatBottomSheetRef<UpdatePriceProductKuBottomSheetComponent>,
-    @Inject(MAT_BOTTOM_SHEET_DATA) public id: string
+    @Inject(MAT_BOTTOM_SHEET_DATA) public data: FormUpdatePriceProductData
   ) { }
 
   ngOnInit(): void {
   }
-  submitted(id: string): void{
-    this.bottomSheetRef.dismiss(id);
+  submitted(): void{
+    this.bottomSheetRef.dismiss();
   }
   canceled(): void{
     this.bottomSheetRef.dismiss();

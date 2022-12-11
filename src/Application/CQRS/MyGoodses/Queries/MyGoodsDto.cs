@@ -25,7 +25,7 @@ public class MyGoodsDto : IMapFrom<Goods>
     public string GoodsType { get; set; }
     public int Contain { get; set; }
     public decimal Price { get; set; }
-    public decimal WholesalerPrice { get; set; }
+    public List<WholesalesPrice> WholesalerPrices { get; set; }
     public int N { get; set; }
     public string Stock { get; set; }
     public void Mapping(Profile profile)
@@ -38,7 +38,8 @@ public class MyGoodsDto : IMapFrom<Goods>
                .ForMember(dest => dest.Stock, opts => opts.MapFrom<MyGoodsStockResolver>())
                .ForMember(dest => dest.Photo, opts => opts.MapFrom(x => x.GoodsPhotos.Count() > 0 ? x.GoodsPhotos.OrderBy(y => y.CreatedAt).LastOrDefault()!.Url : null))
                .ForMember(dest => dest.Price, opts => opts.MapFrom(x => x.GoodsPrices.OrderBy(y => y.CreatedAt).LastOrDefault()!.Price))
-               .ForMember(dest => dest.WholesalerPrice, opts => opts.MapFrom(x => x.GoodsPrices.OrderBy(y => y.CreatedAt).LastOrDefault()!.WholesalerPrice))
+               .ForMember(dest => dest.WholesalerPrices, opts => opts.MapFrom<MyGoodsWholesaleResolver>())
+               //.ForMember(dest => dest.WholesalerPrices, opts => opts.MapFrom(x => x.GoodsWholesalePrices.OrderBy(y => y.CreatedAt).LastOrDefault()!.WholesalerPrice))
                ;
         //.ForMember(dest => dest.Address, opts => opts.MapFrom<MyEnterpriseOwnedResolver>());
 
@@ -74,6 +75,30 @@ public class MyGoodsStockResolver : IValueResolver<Goods, MyGoodsDto, string>
         }
         stock += $"{n_stock}";
         return stock;
+    }
+}
+
+public class MyGoodsWholesaleResolver : IValueResolver<Goods, MyGoodsDto, List<WholesalesPrice>>
+{
+
+    private readonly IApplicationDbContext _context;
+    public MyGoodsWholesaleResolver(IApplicationDbContext context)
+    {
+        _context = context;
+    }
+    public List<WholesalesPrice> Resolve(Goods source, MyGoodsDto destination, List<WholesalesPrice> dstmember, ResolutionContext context)
+    {
+        List<WholesalesPrice> ws = new List<WholesalesPrice>();
+        var tws = source.GoodsWholesalePrices.Where(x => x.End == null).OrderBy(x => x.WholesalerMin).ToList();
+        foreach(var t in tws)
+        {
+            ws.Add(new WholesalesPrice
+            {
+                WholesalerMin = t.WholesalerMin,
+                WholesalerPrice = t.WholesalerPrice
+            });
+        }
+        return ws;
     }
 }
 
@@ -113,7 +138,7 @@ public class MyGoodsConverter : ITypeConverter<Goods, MyGoodsDto>
             Name = source.Name,
             Photo = source.GoodsPhotos.Count() > 0 ? source.GoodsPhotos.OrderBy(y => y.CreatedAt).LastOrDefault()!.Url : null,
             Price = source.GoodsPrices.OrderBy(y => y.CreatedAt).LastOrDefault()!.Price,
-            WholesalerPrice = source.GoodsPrices.OrderBy(y => y.CreatedAt).LastOrDefault()!.WholesalerPrice,
+            //WholesalerPrice = source.GoodsPrices.OrderBy(y => y.CreatedAt).LastOrDefault()!.WholesalerPrice,
             Stock = stock
         };
     }

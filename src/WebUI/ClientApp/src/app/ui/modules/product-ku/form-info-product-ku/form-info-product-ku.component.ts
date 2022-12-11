@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule,CurrencyPipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -9,6 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { filter, find, map } from 'rxjs';
@@ -39,7 +40,10 @@ import { MemberGroupProductKuDialogComponent } from '../member-group-product-ku-
     MatIconModule,
     InputCurrencyComponent,
     MatCheckboxModule,
-
+    MatTableModule
+  ],
+  providers:[
+    CurrencyPipe
   ]
 })
 export class FormInfoProductKuComponent implements OnInit {

@@ -21,11 +21,10 @@ import { BUSINESS_DEFAULT } from 'src/app/application/constant';
 import { CustomUploadFileEventChange } from 'src/app/application/types';
 import { EnterpriseTypeDto } from 'src/app/domain/backend/Dtos';
 import { EnterpriseTypeService } from 'src/app/infrastructure/backend/enterprise-type.service';
-import { EnterpriseService } from 'src/app/infrastructure/backend/enterprise.service';
+import { MyEnterpriseService } from 'src/app/infrastructure/backend/my-enterprise.service';
 import { MainStateService } from 'src/app/ui/pages/main/components/main-nav/main-state.service';
 import { PopUpConfirmationService } from 'src/app/ui/components/pop-up/pop-up-confirmation/pop-up-confirmation.service';
 import { PopUpNotifService } from 'src/app/ui/components/pop-up/pop-up-notif/pop-up-notif.service';
-// import { PopUpNotifService } from 'src/app/components/pop-up-ku/services/pop-up-ku-notif.service';
 
 
 @UntilDestroy()
@@ -52,7 +51,7 @@ export class AddBusinessComponent implements OnInit {
   form = this.formBuilder.nonNullable.group({
     Name: this.formBuilder.nonNullable.control('', [Validators.required, Validators.maxLength(255)] ),
     Code: this.formBuilder.nonNullable.control('', [Validators.required, Validators.maxLength(255)],
-                                                   [EnterpriseCodeAvailabilityValidator.validate(this.enterpriseService)]),
+                                                   [EnterpriseCodeAvailabilityValidator.validate(this._myenterpriseService)]),
     Description: this.formBuilder.control<string|null>(null, [Validators.maxLength(255)]),
     EnterpriseTypeId: this.formBuilder.nonNullable.control<number>(1, [Validators.required]),
     Photo: this.formBuilder.control<null|string|ArrayBuffer>(null),
@@ -102,7 +101,7 @@ export class AddBusinessComponent implements OnInit {
     private mainStateService: MainStateService,
     private location: Location,
     private breakpointObserver: BreakpointObserver,
-    private enterpriseService: EnterpriseService
+    private _myenterpriseService: MyEnterpriseService
     ) {
 
     }
@@ -115,7 +114,7 @@ export class AddBusinessComponent implements OnInit {
               untilDestroyed(this),
               debounceTime(700),
               distinctUntilChanged(),
-              switchMap(x => this.enterpriseService.GetAvailableEnterpriseCode({Name: x}))
+              switchMap(x => this._myenterpriseService.GetAvailableEnterpriseCode({Name: x}))
             )
             .subscribe(x => {
               this.codes = x;
@@ -130,9 +129,9 @@ export class AddBusinessComponent implements OnInit {
       });
     }
   }
-  compareFn(c1: any, c2: any): boolean {
-    return c1 && c2 ? c1 === c2 : c1 === c2;
-  }
+  // compareFn(c1: any, c2: any): boolean {
+  //   return c1 && c2 ? c1 === c2 : c1 === c2;
+  // }
   get Name(): AbstractControl|null{
     return this.form.get('Name');
   }
@@ -195,7 +194,7 @@ export class AddBusinessComponent implements OnInit {
             untilDestroyed(this),
             switchMap((x: any) => {
               if (!!x){
-                return this.enterpriseService.create(this.form.value);
+                return this._myenterpriseService.create(this.form.value);
               }
               return of(undefined);
             }),

@@ -20,8 +20,8 @@ export class AdjustStockPrroductKuBottomSheetComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  submitted(id: string): void{
-    this.bottomSheetRef.dismiss(id);
+  submitted(): void{
+    this.bottomSheetRef.dismiss();
   }
   canceled(): void{
     this.bottomSheetRef.dismiss();

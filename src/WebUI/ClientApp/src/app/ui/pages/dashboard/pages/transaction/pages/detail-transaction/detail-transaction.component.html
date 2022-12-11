@@ -2,8 +2,6 @@
     <app-nav-page title="Detail Transaksi" color="primary"></app-nav-page>
 </app-portal-container>
 
-
-
 <mat-tab-group>
     <mat-tab label="Struk"> 
         <div class="container">
@@ -13,7 +11,13 @@
             </div>
             <div class="prop-form">
                 <span>Online?</span>
-                <span><i [ngClass]="data.isOnline===true?'fas fa-check':'fas fa-times'"></i></span>
+                <span>
+                    <mat-icon *ngIf="data.isOnline===true; else notOnline">done</mat-icon>
+                    <ng-template #notOnline>
+                        <mat-icon>close</mat-icon>
+                    </ng-template>
+                    <!-- <i [ngClass]="data.isOnline===true?'fas fa-check':'fas fa-times'"></i> -->
+                </span>
             </div>
             <div class="prop-form">
                 <span>Tanggal</span>
@@ -58,14 +62,15 @@
     </mat-tab>
     <mat-tab label="Progres"> 
         <div class="container">
-            <div class="progress-container">
-                <div class="progress-item" *ngFor="let item of data.orderProgresses">
+            <ol class="progress-container">
+                <li class="progress-item" *ngFor="let item of data.orderProgresses">
                     <span>{{item.name}}</span>
-                    <span>{{item.createdAt | date}}</span>
-                </div>
-            </div>
+                    <span>{{item.createdAt | date : 'EEEE, d MMMM y h:mm:ss a zzzz'}}</span>
+                </li>
+            </ol>
         </div>
     </mat-tab>
 </mat-tab-group>
+
 
 

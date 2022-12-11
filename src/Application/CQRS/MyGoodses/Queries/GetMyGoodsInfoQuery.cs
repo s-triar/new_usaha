@@ -35,6 +35,7 @@ public class GetMyGoodsInfoQueryHandler : IRequestHandler<GetMyGoodsInfoQuery, M
                                       .Include(x => x.GoodsPrices)
                                       .Include(x => x.GoodsPhotos)
                                       .Include(x => x.ParentGoods)
+                                      .Include(x=>x.GoodsWholesalePrices)
                                       .Include(x => x.GoodsGroupMembers).ThenInclude(y => y.GoodsGroup).ThenInclude(z => z.Members).ThenInclude(xx => xx.Goods)
                                       .Include(x => x.GoodsStock).ThenInclude(y => y.AddStockHistories)
                                       .FirstOrDefaultAsync(cancellationToken);

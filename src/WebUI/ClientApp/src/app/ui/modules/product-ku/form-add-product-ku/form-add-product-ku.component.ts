@@ -26,6 +26,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { ButtonUploadFileComponent } from 'src/app/ui/components/form/button-upload-file/button-upload-file.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { InputCurrencyComponent } from 'src/app/ui/components/form/input-currency/input-currency.component';
+import { MatTableModule } from '@angular/material/table';
 
 @UntilDestroy()
 @Component({
@@ -46,14 +47,15 @@ import { InputCurrencyComponent } from 'src/app/ui/components/form/input-currenc
     ButtonUploadFileComponent,
     FormsModule,
     InputCurrencyComponent,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatTableModule
   ]
 
 })
 export class FormAddProductKuComponent implements OnInit {
 
   @Input() idUsaha!: string;
-  @Output() Submitted: EventEmitter<string> = new EventEmitter<string>();
+  @Output() Submitted: EventEmitter<void> = new EventEmitter<void>();
   @Output() Canceled: EventEmitter<void> = new EventEmitter<void>();
 
   @ViewChild('selectGoodType', {static: true}) selectGoodType!: MatSelect;
@@ -100,9 +102,9 @@ export class FormAddProductKuComponent implements OnInit {
       pricing: this.fb.group({
         BuyPrice: [0, [Validators.required, Validators.min(0)]],
         Price: [0, [Validators.required, Validators.min(0)]],
-        WholesalerPrice: [0, [Validators.required, Validators.min(0)]],
-        WholesalerMin: [1, [Validators.required, Validators.min(1)]],
         IsWholesalerPriceAuto: [false],
+
+        WholesalesPrices: [this.fb.array([])]
       }),
       stock: this.fb.group({
         N: [0, [Validators.required, Validators.min(0)]],
@@ -156,12 +158,15 @@ export class FormAddProductKuComponent implements OnInit {
   get PriceProduct(): AbstractControl|null{
     return this.pricingGroup.get('Price');
   }
-  get WholesalerPriceProduct(): AbstractControl|null{
-    return this.pricingGroup.get('WholesalerPrice');
+  get WholesalesPricesProduct(): FormArray{
+    return this.pricingGroup.controls.WholesalesPrices as FormArray;
   }
-  get WholesalerMinProduct(): AbstractControl|null{
-    return this.pricingGroup.get('WholesalerMin');
-  }
+  // get WholesalerPriceProduct(): AbstractControl|null{
+  //   return this.pricingGroup.get('WholesalerPrice');
+  // }
+  // get WholesalerMinProduct(): AbstractControl|null{
+  //   return this.pricingGroup.get('WholesalerMin');
+  // }
   get IsWholesalerPriceAutoProduct(): AbstractControl|null{
     return this.pricingGroup.get('IsWholesalerPriceAuto');
   }
@@ -184,6 +189,7 @@ export class FormAddProductKuComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
+
     this.goodsTypeService.GoodsTypes$.pipe(untilDestroyed(this)).subscribe(res => {
       if (res.length > 0){
         this.GoodsTypesData = res;
@@ -200,18 +206,22 @@ export class FormAddProductKuComponent implements OnInit {
       return;
     }
     const temp = this.form.value;
-    temp.info.GoodsGroups = this.GoodsGroupProduct.value.value ?? [];
+    temp.info.GoodsGroups = this.GoodsGroupProduct.value.value === null ? []:this.GoodsGroupProduct.value.value;
+    const tempPrice = this.WholesalesPricesProduct.value.value === null ?  [] :this.WholesalesPricesProduct.value.value;
     const temp2 = {...temp.info, ...temp.pricing, ...temp.stock};
+    temp2.WholesalesPrices = tempPrice;
+    console.log(temp2);
+    
     this.goodsService.create(temp2)
         .pipe(
           untilDestroyed(this),
           switchMap(x =>
-            this.notifService.show({message: 'Produk berhasil ditambah.', title: 'Sukses', type: 'success'}).afterClosed()
+            this.notifService.show({message: x.message, title: 'Sukses', type: 'success'}).afterClosed()
                              .pipe(switchMap(y => of(x)))
           )
         )
         .subscribe(
-          (x: string) => this.Submitted.emit(x)
+          () => this.Submitted.emit()
         );
   }
   initForm(): void{
@@ -238,8 +248,10 @@ export class FormAddProductKuComponent implements OnInit {
         pricing: this.fb.group({
           BuyPrice: [0, [Validators.required]],
           Price: [0, [Validators.required]],
-          WholesalerPrice: [0, [Validators.required]],
-          WholesalerMin: [1, [Validators.required, Validators.min(1)]],
+          WholesalesPrices: [this.fb.array([])],
+
+          // WholesalerPrice: [0, [Validators.required]],
+          // WholesalerMin: [1, [Validators.required, Validators.min(1)]],
           IsWholesalerPriceAuto: [false],
         }),
         stock: this.fb.group({
@@ -355,5 +367,15 @@ export class FormAddProductKuComponent implements OnInit {
       })
       .afterClosed().subscribe();
   }
-
+  addWholesaleprice():void{
+    console.log(this.WholesalesPricesProduct);
+    
+    this.WholesalesPricesProduct.value.push(this.fb.group({
+      WholesalerPrice: [0, [Validators.required]],
+      WholesalerMin: [1, [Validators.required, Validators.min(1)]],
+    }));
+  }
+  deleteWholesaleprice(idx:number):void{
+    this.WholesalesPricesProduct.value.removeAt(idx);
+  }
 }

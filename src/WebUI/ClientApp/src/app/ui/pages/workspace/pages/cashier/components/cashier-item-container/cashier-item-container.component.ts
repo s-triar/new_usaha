@@ -100,12 +100,26 @@ export class CashierItemContainerComponent implements OnInit, AfterViewChecked  
 
   toggleWholesaler(event: CashierEventToggleWholesalerChange): void{
     const value = event.value;
+    console.log(value);
+    
     const id = event.id;
     const item = this.data.items.find(x => x.id === id);
     if (item !== null && item !== undefined){
       item.isWholesalerPriceUsed = value;
-      item.usedPrice = item.isWholesalerPriceUsed ? item.wholesalerPrice : item.price;
+
+      let t:number = item.price;
+      if(item.isWholesalerPriceUsed===true){
+        item.wholessalePrices.forEach(element => {
+          if(element.wholesalerMin <= item.qty){
+            t=element.wholesalerPrice;
+          }
+        });
+      }
+
+      item.basePriceUsed = item.isWholesalerPriceUsed ? t : item.price;
       this.calculateUsedTotalPrice(item);
+      console.log(item);
+      
     }
   }
 
@@ -145,12 +159,22 @@ export class CashierItemContainerComponent implements OnInit, AfterViewChecked  
   }
 
   calculateUsedTotalPrice(item: POSCashierItem): void{
-    const isWholesalerPriceUsed = item.isWholesalerPriceAuto &&
-                                  (item.wholesalerMin <= item.qty && item.wholesalerMin > 0) ? true : false;
-    if (item.isWholesalerPriceAuto || (item.wholesalerMin > item.qty)){
-      item.isWholesalerPriceUsed = isWholesalerPriceUsed;
+    let isWholesaleOk = false;
+    let wholesaleUsed = item.price;
+    for (let index = 0; index < item.wholessalePrices.length; index++) {
+      const element = item.wholessalePrices[index];
+      if(element.wholesalerMin<=item.qty){
+        isWholesaleOk = true;
+        wholesaleUsed = element.wholesalerPrice;
+      }
     }
-    item.usedPrice = ( item.isWholesalerPriceUsed ? item.wholesalerPrice : item.price) - item.singlePriceDisc;
+    // const isWholesalerPriceUsed = item.isWholesalerPriceAuto || isWholesaleOk ? true : false;
+    // if (item.isWholesalerPriceAuto || item.isWholesalerPriceUsed){
+      item.isWholesalerPriceUsed = (item.isWholesalerPriceAuto || item.isWholesalerPriceUsed) && isWholesaleOk;
+    // }
+    item.isWholesaleAvailable = isWholesaleOk;
+    item.basePriceUsed = ( item.isWholesalerPriceUsed ? wholesaleUsed : item.price);
+    item.usedPrice = item.basePriceUsed - item.singlePriceDisc;
     item.tempUsedTotalPrice = item.usedPrice * item.qty;
     item.usedTotalPrice = item.tempUsedTotalPrice - item.totalPriceDisc;
     this.updateTotalPayment();

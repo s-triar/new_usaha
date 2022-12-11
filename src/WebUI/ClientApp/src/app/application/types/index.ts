@@ -84,17 +84,24 @@ export type ProductListItemInfo= {
     price: number;
     stocks: string;
 };
-
+export type WholesalepricesItem={
+    wholesalerPrice: number;
+    wholesalerMin: number;
+    id: string;
+}
 export type POSCashierItem = {
     id: string;
     enterpriseId: string;
     barcode: string;
     name: string;
     price: number;
-    wholesalerPrice: number;
-    wholesalerMin: number;
+    basePriceUsed:number;
+    // wholesalerPrice: number;
+    // wholesalerMin: number;
+    wholessalePrices: WholesalepricesItem[];
     isWholesalerPriceAuto: boolean;
     isWholesalerPriceUsed: boolean;
+    isWholesaleAvailable:boolean;
     goodsPackaging: string;
     promos: any[];
     singlePriceDisc: number;

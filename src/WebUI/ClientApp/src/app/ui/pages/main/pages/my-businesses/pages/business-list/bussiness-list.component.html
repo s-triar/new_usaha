@@ -1,32 +1,72 @@
-<form class=""
-    style="position: sticky;top: 0rem;background-color:white;padding:0px 1rem;z-index:19;" [formGroup]="formSearch" (ngSubmit)="searchEnterpriseSubmit()">
-    <mat-form-field class="" style="height: 100%; width: 100%; margin-top:0.5rem;" floatLabel="never" appearance="fill">
-        <input type="text"  matInput placeholder="Cari usaha" formControlName="Name">
-        <span matSuffix>
-            <i class="fa fa-search"></i>
-        </span>
+<div class="bussiness-liss-container">
+  <form class="form-input-container" [formGroup]="formSearch">
+    <mat-form-field
+      
+      floatLabel="never"
+      appearance="fill"
+    >
+      <input
+        type="text"
+        matInput
+        placeholder="Cari usaha"
+        formControlName="Search"
+      />
+      <span matSuffix>
+        <i class="fa fa-search"></i>
+      </span>
     </mat-form-field>
-</form>
-<div *ngIf="((mybusinesseslist$ | async)?.length === 0); else listMyBussinessBlock" class="no-content" style="height:calc(100% - 6rem);">
+  </form>
+  <!-- <div *ngIf="((mybusinesseslist$ | async)?.length === 0); else listMyBussinessBlock" class="no-content" style="height:calc(100% - 6rem);">
     <div style="padding: 2rem 1rem;">
         <p style="white-space:pre-wrap;" [innerHTML]="messageStatusList"> </p>
     </div>
-</div>
-<ng-template #listMyBussinessBlock>
-    <div class="container-card-list" [ngClass]="{
-        'handset': (isHandset$|async),
-        'tablet': (isTablet$|async),
-        'web': (isWeb$|async)
-    }" > 
-        <app-my-businesses-list-item class="card-list-item" *ngFor="let item of mybusinesseslist$ | async"  [data]="item"></app-my-businesses-list-item>
+</div> -->
+
+  <div
+    *ngIf="mybusinesseslist?.length > 0; else noItem"
+    class="container-card-list app-list-contaner"
+    [ngClass]="{
+      handset: (isHandset$ | async),
+      tablet: (isTablet$ | async),
+      web: (isWeb$ | async)
+    }"
+  >
+    <app-my-businesses-list-item
+      class="card-list-item "
+      *ngFor="let item of mybusinesseslist"
+      [data]="item"
+    ></app-my-businesses-list-item>
+  </div>
+
+  <ng-template #noItem>
+    <div class="app-no-item-container">
+      <span>Tidak ada usaha.</span>
     </div>
-</ng-template>
+  </ng-template>
 
-<!-- <app-button-ku-circle class="absolute right-4 md:right-6 bottom-20 text-2xl " theme="satu" additionalClass="w-10 h-10" (click)="addBusinessDialog()">
-    <i class="fa fa-plus"></i>
-</app-button-ku-circle> -->
-
-<button mat-fab color="accent" class="app-btn-add" matTooltip="Tambah Usaha Baru" matTooltipPosition="before" matTooltipClass="app-tooltip" matTooltipHideDelay="400" (click)="addBusinessDialog()">
+  
+  <app-pagination
+    (pageSelectedChanged)="pageSelectedChanged($event)"
+    (nPageChanged)="paginationNChanged($event)"
+  ></app-pagination>
+</div>
+<!-- style="
+  position: sticky;
+  top: 0rem;
+  background-color: white;
+  padding: 0px 1rem;
+  z-index: 19;
+" -->
+<button
+    mat-fab
+    color="accent"
+    class="app-btn-add"
+    matTooltip="Tambah Usaha Baru"
+    matTooltipPosition="before"
+    matTooltipClass="app-tooltip"
+    matTooltipHideDelay="400"
+    (click)="addBusinessDialog()"
+  >
     <!-- <fa-icon [icon]="icons.add"></fa-icon> -->
-    <mat-icon>{{icons.add}}</mat-icon>
-</button>
+    <mat-icon>{{ icons.add }}</mat-icon>
+  </button>

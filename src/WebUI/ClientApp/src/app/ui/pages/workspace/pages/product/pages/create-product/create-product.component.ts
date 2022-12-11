@@ -42,7 +42,7 @@ export class CreateProductComponent implements OnInit {
       isTabBarNeedToBeShown: false
     });
   }
-  submitted(x: string): void{
+  submitted(): void{
     this.location.back();
   }
   canceled(): void{

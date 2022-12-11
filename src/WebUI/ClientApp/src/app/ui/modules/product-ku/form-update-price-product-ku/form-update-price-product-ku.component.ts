@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -12,6 +12,10 @@ import { GoodsService } from 'src/app/infrastructure/backend/goods.service';
 import { InputCurrencyComponent } from 'src/app/ui/components/form/input-currency/input-currency.component';
 import { PopUpNotifService } from 'src/app/ui/components/pop-up/pop-up-notif/pop-up-notif.service';
 
+export type WholeSalesPrice={
+    wholesalerPrice: number;
+    wholesalerMin: number;
+}
 
 @UntilDestroy()
 @Component({
@@ -22,6 +26,7 @@ import { PopUpNotifService } from 'src/app/ui/components/pop-up/pop-up-notif/pop
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    FormsModule,
     InputCurrencyComponent,
     MatFormFieldModule,
     MatInputModule,
@@ -33,29 +38,34 @@ import { PopUpNotifService } from 'src/app/ui/components/pop-up/pop-up-notif/pop
 
 export class FormUpdatePriceProductKuComponent implements OnInit {
   @Input() id!: string;
+  @Input() wholesalesprices: WholeSalesPrice[]=[];
 
-  @Output() Submitted: EventEmitter<string> = new EventEmitter<string>();
+  @Output() Submitted: EventEmitter<void> = new EventEmitter<void>();
   @Output() Canceled: EventEmitter<void> = new EventEmitter<void>();
 
   form: FormGroup = this.fb.group({
     Id: [this.id, [Validators.required]],
     Price: [0, [Validators.required, Validators.min(1)]],
-    WholesalerPrice: [0, [Validators.required, Validators.min(1)]],
-    WholesalerMin: [1, [Validators.required, Validators.min(1)]],
-    IsWholesalerPriceAuto: [false],
+    WholesalesPrices:[this.fb.array([])]
+    // WholesalerPrice: [0, [Validators.required, Validators.min(1)]],
+    // WholesalerMin: [1, [Validators.required, Validators.min(1)]],
+    // IsWholesalerPriceAuto: [false],
   });
   get PriceProduct(): AbstractControl|null{
     return this.form.get('Price');
   }
-  get WholesalerPriceProduct(): AbstractControl|null{
-    return this.form.get('WholesalerPrice');
+  get WholesalesPricesProduct(): FormArray{
+    return this.form.controls.WholesalesPrices as FormArray;
   }
-  get WholesalerMinProduct(): AbstractControl|null{
-    return this.form.get('WholesalerMin');
-  }
-  get IsWholesalerPriceAutoProduct(): AbstractControl|null{
-    return this.form.get('IsWholesalerPriceAuto');
-  }
+  // get WholesalerPriceProduct(): AbstractControl|null{
+  //   return this.form.get('WholesalerPrice');
+  // }
+  // get WholesalerMinProduct(): AbstractControl|null{
+  //   return this.form.get('WholesalerMin');
+  // }
+  // get IsWholesalerPriceAutoProduct(): AbstractControl|null{
+  //   return this.form.get('IsWholesalerPriceAuto');
+  // }
   constructor(
     private fb: FormBuilder,
     private notifService: PopUpNotifService,
@@ -70,10 +80,17 @@ export class FormUpdatePriceProductKuComponent implements OnInit {
     this.form = this.fb.group({
       Id: [this.id, [Validators.required]],
       Price: [0, [Validators.required, Validators.min(1)]],
-      WholesalerPrice: [0, [Validators.required, Validators.min(1)]],
-      WholesalerMin: [1, [Validators.required, Validators.min(1)]],
-      IsWholesalerPriceAuto: [false],
+      WholesalesPrices:[this.fb.array([])]
+    // WholesalerPrice: [0, [Validators.required, Validators.min(1)]],
+    // WholesalerMin: [1, [Validators.required, Validators.min(1)]],
+    // IsWholesalerPriceAuto: [false],
     });
+    for (const iterator of this.wholesalesprices) {
+      this.WholesalesPricesProduct.value.push(this.fb.group({
+          WholesalerPrice: [iterator.wholesalerPrice, [Validators.required]],
+          WholesalerMin: [iterator.wholesalerMin, [Validators.required, Validators.min(1)]],
+      }));
+    }
   }
   cancel(): void{
     this.Canceled.emit();
@@ -85,16 +102,27 @@ export class FormUpdatePriceProductKuComponent implements OnInit {
       return;
     }
     const temp = this.form.value;
+    temp.WholesalesPrices = this.WholesalesPricesProduct.value.value === null ? []:this.WholesalesPricesProduct.value.value;
     this.goodsService.changeSellPrice(temp)
         .pipe(
           untilDestroyed(this),
           switchMap(x =>
-            this.notifService.show({message: 'Harga jual produk berhasil diubah.', title: 'Sukses', type: 'success'}).afterClosed()
+            this.notifService.show({message: x.message, title: 'Sukses', type: 'success'}).afterClosed()
                              .pipe(switchMap(y => of(x)))
           )
         )
         .subscribe(
-          (x: string) => this.Submitted.emit(x)
+          () => this.Submitted.emit()
         );
+  }
+  addWholesaleprice():void{
+       
+    this.WholesalesPricesProduct.value.push(this.fb.group({
+      WholesalerPrice: [0, [Validators.required]],
+      WholesalerMin: [1, [Validators.required, Validators.min(1)]],
+    }));
+  }
+  deleteWholesaleprice(idx:number):void{
+    this.WholesalesPricesProduct.value.removeAt(idx);
   }
 }

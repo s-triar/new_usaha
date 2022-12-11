@@ -12,6 +12,17 @@ using new_usaha.Domain.Entities;
 
 namespace new_usaha.Application.CQRS.MyEnterprises.Commands;
 
+public class CreateEnterpriseAddressCommand
+{
+    public string Street { get; set; }
+    public string SubDistrict { get; set; }
+    public string District { get; set; }
+    public string City { get; set; }
+    public string Province { get; set; }
+    public string PostalCode { get; set; }
+    public decimal Latitude { get; set; }
+    public decimal Longitude { get; set; }
+}
 public class CreateMyEnterpriseCommand: IRequest<ResultWithMessage>
 {
     public string Code { get; set; }
@@ -24,14 +35,7 @@ public class CreateMyEnterpriseCommand: IRequest<ResultWithMessage>
     public IFormCollection? PhotoFile { get; set; }
 
 
-    public string Street { get; set; }
-    public string SubDistrict { get; set; }
-    public string District { get; set; }
-    public string City { get; set; }
-    public string Province { get; set; }
-    public string PostalCode { get; set; }
-    public decimal Latitude { get; set; }
-    public decimal Longitude { get; set; }
+    public CreateEnterpriseAddressCommand Address { get; set; }
 
 }
 public class CreateMyEnterpriseCommandHandler : IRequestHandler<CreateMyEnterpriseCommand, ResultWithMessage>
@@ -47,6 +51,7 @@ public class CreateMyEnterpriseCommandHandler : IRequestHandler<CreateMyEnterpri
 
     public async Task<ResultWithMessage> Handle(CreateMyEnterpriseCommand request, CancellationToken cancellationToken)
     {
+        await this._context.BeginTransactionAsync();
         var entity = new Enterprise
         {
             UserOwnerId = _cs.UserId!,
@@ -63,15 +68,15 @@ public class CreateMyEnterpriseCommandHandler : IRequestHandler<CreateMyEnterpri
 
         var entityAddresss = new EnterpriseAddress
         {
-            Street = request.Street,
-            SubDistrict = request.SubDistrict,
-            District = request.District,
-            City = request.City,
-            Province = request.Province,
-            PostalCode = request.PostalCode,
+            Street = request.Address.Street,
+            SubDistrict = request.Address.SubDistrict,
+            District = request.Address.District,
+            City = request.Address.City,
+            Province = request.Address.Province,
+            PostalCode = request.Address.PostalCode,
             EnterpriseId = entity.Id,
-            Latitude = request.Latitude,
-            Longitude = request.Longitude
+            Latitude = request.Address.Latitude,
+            Longitude = request.Address.Longitude
         };
         _context.EnterpriseAddresses.Add(entityAddresss);
 
@@ -98,6 +103,7 @@ public class CreateMyEnterpriseCommandHandler : IRequestHandler<CreateMyEnterpri
 
         }
         await _context.SaveChangesAsync(cancellationToken);
+        this._context.CommitTransactionAsync();
         return new ResultWithMessage(true, new List<string> { }, "Berhasil membuat usaha baru");
     }
 

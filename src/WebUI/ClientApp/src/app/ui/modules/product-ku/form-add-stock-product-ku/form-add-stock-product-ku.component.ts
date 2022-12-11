@@ -28,7 +28,7 @@ import { PopUpNotifService } from 'src/app/ui/components/pop-up/pop-up-notif/pop
 export class FormAddStockProductKuComponent implements OnInit {
   @Input() id!: string;
 
-  @Output() Submitted: EventEmitter<string> = new EventEmitter<string>();
+  @Output() Submitted: EventEmitter<void> = new EventEmitter<void>();
   @Output() Canceled: EventEmitter<void> = new EventEmitter<void>();
 
   form: FormGroup = this.fb.group({
@@ -78,7 +78,7 @@ export class FormAddStockProductKuComponent implements OnInit {
           )
         )
         .subscribe(
-          (x: string) => this.Submitted.emit(x)
+          () => this.Submitted.emit()
         );
   }
 }

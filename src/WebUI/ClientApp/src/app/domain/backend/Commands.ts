@@ -33,6 +33,10 @@ export type CreateEnterpriseCommand  =  {
     PhotoFile: File | null;
 };
 
+export type WholesalesPrice={
+    WholesalerPrice: number;
+    WholesalerMin: number;
+}
 export type CreateGoodsCommand = {
     GoodsTypeId: number;
     Barcode: string;
@@ -47,8 +51,7 @@ export type CreateGoodsCommand = {
     Threshold: number;
     AvailableOnline: boolean;
     BuyPrice: number;
-    WholesalerPrice: number;
-    WholesalerMin: number;
+    WholesalesPrices: WholesalesPrice[];
     IsWholesalerPriceAuto: boolean;
     ParentBarcode: string;
     GoodsGroups: string[];
@@ -100,7 +103,7 @@ export type  AddStockCommand= {
 export type  UpdateGoodsSellingPriceCommand= {
     Id: string,
     Price: number,
-    WholesalerPrice: number,
+    WholesalerPrices: WholesalesPrice[],
 };
 export type ItemOrdered= {
     GoodsId: string;

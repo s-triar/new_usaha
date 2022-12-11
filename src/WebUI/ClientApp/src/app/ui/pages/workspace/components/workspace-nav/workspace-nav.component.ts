@@ -49,13 +49,13 @@ export class WorkspaceNavComponent implements OnInit {
     close: 'close',
     setting: 'settings'
   };
-  viewState: WorkspaceViewState = {
-    currentTab: '',
-    isFooterBarNeedToBeShown: false,
-    isSearchBarNeedToBeShown: true,
-    isTabBarNeedToBeShown: true
-  };
-
+  // viewState: WorkspaceViewState = {
+  //   currentTab: '',
+  //   isFooterBarNeedToBeShown: false,
+  //   isSearchBarNeedToBeShown: true,
+  //   isTabBarNeedToBeShown: true
+  // };
+  viewState:WorkspaceViewState;
   titleModule = 'Workspace';
   linkBackModule = GLOBAL_PATH.MAIN_MY_BUSSINESSES;
   PARAM_WORKSPACE_ID_USAHA = WORKSPACE_ROUTE._ID_USAHA;

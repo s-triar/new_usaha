@@ -18,7 +18,7 @@ import { WORKSPACE_ROUTE, WS_CASHIER, WS_PRODUCT } from 'src/app/application/con
 import { POSCashierContainerItem } from 'src/app/application/types';
 import { CreateOrderCashierCommand, ItemOrdered } from 'src/app/domain/backend/Commands';
 import { MyEnterpriseDto, MyGoodsForCashierDto } from 'src/app/domain/backend/Dtos';
-import { EnterpriseService } from 'src/app/infrastructure/backend/enterprise.service';
+import { MyEnterpriseService } from 'src/app/infrastructure/backend/my-enterprise.service';
 import { PopUpConfirmationService } from 'src/app/ui/components/pop-up/pop-up-confirmation/pop-up-confirmation.service';
 import { PopUpNotifService } from 'src/app/ui/components/pop-up/pop-up-notif/pop-up-notif.service';
 import { SearchInputBarcodeComponent } from 'src/app/ui/components/search/search-input-barcode/search-input-barcode.component';
@@ -106,7 +106,7 @@ export class CashierComponent implements OnInit {
               private printService: PrintService,
               private snackbar: MatSnackBar,
               private dialog: MatDialog,
-              private enterpriseService: EnterpriseService
+              private _myenterpriseService: MyEnterpriseService
     ) {
       this.printService.isConnected.subscribe(result => {
         this.printerConnectionStatus = result;
@@ -224,13 +224,23 @@ export class CashierComponent implements OnInit {
       To: this.indexQueueCurrent
     };
     data.items.forEach(x => {
+
+      // let t:number=x.price;
+      // if(x.isWholesalerPriceUsed===true){
+      //   x.wholessalePrices.forEach(elm => {
+      //     if(elm.wholesalerMin <= x.qty){
+      //       t = elm.wholesalerPrice;
+      //     }
+      //   });
+      // }
+
       const tempItem: ItemOrdered = {
         GoodsId: x.id,
         IsWholesalerPrice: x.isWholesalerPriceUsed,
         N: x.qty,
         DiscountItem: x.singlePriceDisc,
         DiscountItemTotal: x.totalPriceDisc,
-        PricePerItem: x.isWholesalerPriceUsed ? x.wholesalerPrice : x.price,
+        PricePerItem: x.basePriceUsed, //x.isWholesalerPriceUsed ? x.wholesalerPrice : x.price,
         PricePerItemAfterDiscount: x.usedPrice,
         PriceTotal: x.tempUsedTotalPrice,
         PriceTotalAfterDiscount: x.usedTotalPrice,
@@ -284,7 +294,7 @@ export class CashierComponent implements OnInit {
     this.getInfoUsaha();
   }
   getInfoUsaha():void{
-    this.enterpriseService.getMyEnterpriseInfo({Id:this.idUsaha})
+    this._myenterpriseService.getMyEnterpriseInfo({Id:this.idUsaha})
       .pipe(
         untilDestroyed(this)
       )

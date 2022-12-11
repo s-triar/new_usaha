@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { OrderAPI, GoodsAPI } from 'src/app/application/constant/apis';
+import { OrderAPI, MyGoodsAPI } from 'src/app/application/constant/apis';
 import { showErrorDialogContext } from 'src/app/application/interceptors/notification.interceptor';
 import { FormConversionService } from 'src/app/application/utility/form-conversion.service';
 import { MyGoodsForCashierDto } from 'src/app/domain/backend/Dtos';
@@ -29,6 +29,6 @@ export class CashierService extends ApiCallService implements CashierServiceInte
       , {context: showErrorDialogContext()});
   }
   get(query: CashierProductSearchQuery): Observable<MyGoodsForCashierDto[]> {
-    return this.httpClient.get<MyGoodsForCashierDto[]>(GoodsAPI.GetListProductForCashier, {params: query});
+    return this.httpClient.get<MyGoodsForCashierDto[]>(MyGoodsAPI.GetListProductForCashier, {params: query});
   }
 }

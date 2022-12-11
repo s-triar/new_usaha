@@ -21,3 +21,31 @@
     margin-right: 0.5rem;
   }
 }
+.wholesaler-container{
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+
+}
+.wholesaler-input-container{
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-content: center;
+  align-items: center;
+  >.wholeslaeprice{
+    width: 10rem;
+    >.mat-form-field-wrapper{
+      width: 10rem;
+    }
+  }
+  >.wholeslaemin{
+    width: 4rem;
+    >.mat-form-field-wrapper{
+      width: 4rem;
+    }
+  }
+  >.btn-del-wholesaleprice{
+    margin-left: 0.5rem;
+  }
+}

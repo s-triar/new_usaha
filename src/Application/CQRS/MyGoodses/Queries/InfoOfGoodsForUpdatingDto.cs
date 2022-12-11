@@ -9,6 +9,12 @@ using new_usaha.Domain.Entities;
 
 namespace new_usaha.Application.CQRS.MyGoodses.Queries;
 
+public class InfoOfWholesalesForUpdatingDto
+{
+    public Guid Id { get; set; }
+    public decimal WholesalerPrice { get; set; }
+    public int WholesalerMin { get; set; }
+}
 public class InfoOfParentOfGoodsForUpdatingDto
 {
     public Guid Id { get; set; }
@@ -43,14 +49,12 @@ public class MyGoodsInfoDto : IMapFrom<Goods>
     public decimal Price { get; set; }
     public decimal BuyPrice { get; set; }
     public decimal BaseBuyPrice { get; set; }
-    public decimal WholesalerPrice { get; set; }
-    public int WholesalerMin { get; set; }
     public bool IsWholesalerPriceAuto { get; set; }
     public bool AvailableOnline { get; set; }
     public int Threshold { get; set; }
     public InfoOfParentOfGoodsForUpdatingDto? Parent { get; set; }
     public List<InfoOfGroupOfGoodsForUpdatingDto> Groups { get; set; } = new List<InfoOfGroupOfGoodsForUpdatingDto>();
-
+    public List<InfoOfWholesalesForUpdatingDto> WholePrices { get; set; } = new List<InfoOfWholesalesForUpdatingDto>();
     public void Mapping(Profile profile)
     {
         profile.CreateMap<Goods, MyGoodsInfoDto>()
@@ -77,7 +81,18 @@ public class MyInfoOfGoodsConverter : ITypeConverter<Goods, MyGoodsInfoDto>
             });
         }
 
-        var goodsPrice = source.GoodsPrices.LastOrDefault()!;
+        var goodsPrice = source.GoodsPrices.Where(x=>x.End==null).OrderBy(x=>x.CreatedAt).LastOrDefault()!;
+
+        var wholePrices = new List<InfoOfWholesalesForUpdatingDto>();
+        foreach(var i in source.GoodsWholesalePrices.Where(x=>x.End==null).OrderBy(x=>x.WholesalerMin).ToList())
+        {
+            wholePrices.Add(new InfoOfWholesalesForUpdatingDto
+            {
+                Id = i.Id,
+                WholesalerMin = i.WholesalerMin,
+                WholesalerPrice = i.WholesalerPrice
+            });
+        }
 
         return new MyGoodsInfoDto
         {
@@ -99,10 +114,12 @@ public class MyInfoOfGoodsConverter : ITypeConverter<Goods, MyGoodsInfoDto>
             BuyPrice = source.GoodsStock.AddStockHistories.LastOrDefault()!.PricePerItem,
             BaseBuyPrice = source.GoodsStock.AddStockHistories.LastOrDefault()!.BasePrice,
 
-            IsWholesalerPriceAuto = goodsPrice.IsWholesalerPriceAuto,
+            IsWholesalerPriceAuto = source.IsWholesalerPriceAuto,
             Price = goodsPrice.Price,
-            WholesalerMin = goodsPrice.WholesalerMin,
-            WholesalerPrice = goodsPrice.WholesalerPrice,
+
+            WholePrices = wholePrices
+            //WholesalerMin = goodsPrice.WholesalerMin,
+            //WholesalerPrice = goodsPrice.WholesalerPrice,
 
         };
 

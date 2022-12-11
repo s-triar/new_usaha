@@ -78,9 +78,11 @@ public class CreateOrderCashierCommandHandler : IRequestHandler<CreateOrderCashi
     }
     public async Task<Guid> Handle(CreateOrderCashierCommand request, CancellationToken cancellationToken)
     {
+        await this.context.BeginTransactionAsync();
         var order = await this.CreateOrder(request, cancellationToken);
         await this.CreateOrderItem(order, request.Items, cancellationToken);
         await this.CreateProgressOrder(order, cancellationToken);
+        await this.context.CommitTransactionAsync();
         return order.Id;
     }
     private async Task CreateProgressOrder(Order order, CancellationToken cancellationToken)

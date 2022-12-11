@@ -42,7 +42,7 @@ export class UpdateInfoProductComponent implements OnInit {
     this.dataGoods = this.routes.snapshot.data.dataGoods;
     console.log(this.idUsaha, this.dataGoods, this.routes.snapshot.data);
   }
-  submitted(x: string): void{
+  submitted(): void{
     this.location.back();
   }
   canceled(): void{

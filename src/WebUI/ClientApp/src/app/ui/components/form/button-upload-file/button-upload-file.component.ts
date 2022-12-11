@@ -1,6 +1,6 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { OverlayModule, ScrollStrategy, ScrollStrategyOptions } from '@angular/cdk/overlay';
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, forwardRef, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -37,7 +37,7 @@ import { MatIconModule } from '@angular/material/icon';
     NgxImageCompressService,
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: ButtonUploadFileComponent,
+      useExisting: forwardRef(() => ButtonUploadFileComponent),
       multi: true
     }
   ],

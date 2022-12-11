@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { APP_INITIALIZER, InjectionToken, NgModule } from '@angular/core';
+import { APP_INITIALIZER, InjectionToken, LOCALE_ID, NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -25,7 +25,6 @@ import { CommonModule, CurrencyPipe } from '@angular/common';
 // import { EnterpriseInterceptor } from './shared/interceptors/enterprise.interceptor';
 import { FlexLayoutModule } from '@angular/flex-layout';
 // import { ZXingScannerModule } from '@zxing/ngx-scanner';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 // import { AuthModule } from './application/auth/auth.module';
 import { SplashComponent } from './ui/components/utility/splash/splash.component';
 import { AuthorizeInterceptor } from './application/interceptors/authorize.interceptor';
@@ -36,6 +35,9 @@ import { MatDialogModule } from '@angular/material/dialog';
 // import { NgxEchartsModule } from 'ngx-echarts';
 export const BASE_URL = new InjectionToken<string>('BASE_URL');
 import { AgChartsAngularModule } from 'ag-charts-angular';
+import { registerLocaleData } from '@angular/common';
+import localeId from '@angular/common/locales/id'; 
+registerLocaleData(localeId, 'id'); 
 
 // Import echarts extensions
 // import 'echarts-gl';
@@ -60,12 +62,14 @@ import { AgChartsAngularModule } from 'ag-charts-angular';
     SplashComponent,
     // FontAwesomeModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
-    AgChartsAngularModule
+    AgChartsAngularModule,
+    
     // NgxEchartsModule.forRoot({
     //   echarts: () => import('echarts')
     // }),
   ],
   providers: [
+    { provide: LOCALE_ID, useValue: "id-ID" },
     PrintService,
     CurrencyPipe,
     { provide: BASE_URL, useValue: environment.auth_server },

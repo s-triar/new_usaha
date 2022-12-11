@@ -23,6 +23,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatSelect, MatSelectChange, MatSelectModule } from '@angular/material/select';
+
 import { MatTabsModule } from '@angular/material/tabs';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { switchMap, of, throwIfEmpty, filter } from 'rxjs';
@@ -55,12 +56,13 @@ import { MemberGroupProductKuDialogComponent } from '../member-group-product-ku-
     MatOptionModule,
     MatSelectModule,
     ButtonUploadFileComponent,
+    
   ]
 })
 export class FormUpdateInfoProductKuComponent implements OnInit {
   @Input() idUsaha!: string;
   @Input() dataGoods!: InfoOfGoodsForUpdatingDto;
-  @Output() Submitted: EventEmitter<string> = new EventEmitter<string>();
+  @Output() Submitted: EventEmitter<void> = new EventEmitter<void>();
   @Output() Canceled: EventEmitter<void> = new EventEmitter<void>();
 
   @ViewChild('selectGoodType', { static: true }) selectGoodType!: MatSelect;
@@ -203,7 +205,7 @@ export class FormUpdateInfoProductKuComponent implements OnInit {
         switchMap((x) =>
           this.notifService
             .show({
-              message: 'Info Produk berhasil diubah.',
+              message: x.message,
               title: 'Sukses',
               type: 'success',
             })
@@ -211,7 +213,7 @@ export class FormUpdateInfoProductKuComponent implements OnInit {
             .pipe(switchMap((y) => of(x)))
         )
       )
-      .subscribe((x: string) => this.Submitted.emit(x));
+      .subscribe(() => this.Submitted.emit());
   }
   initForm(): void {
     this.form = this.fb.group({

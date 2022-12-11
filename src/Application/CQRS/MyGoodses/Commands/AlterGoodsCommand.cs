@@ -13,10 +13,12 @@ namespace new_usaha.Application.CQRS.MyGoodses.Commands;
 public class AlterGoodsCommand
 {
     private readonly IApplicationDbContext _context;
+    private readonly IDateTime _tanggal;
 
-    public AlterGoodsCommand(IApplicationDbContext context)
+    public AlterGoodsCommand(IApplicationDbContext context, IDateTime tanggal)
     {
         _context = context;
+        _tanggal = tanggal;
     }
 
     public virtual async Task AddGoodsPhoto(Guid goodsId, IFormFile? PhotoFile, string? Photo, CancellationToken cancellationToken)
@@ -47,7 +49,7 @@ public class AlterGoodsCommand
         }
         catch (Exception ex)
         {
-
+            
         }
     }
 
@@ -83,27 +85,52 @@ public class AlterGoodsCommand
         {
             End = null,
             Price = Price,
-            Start = new DateTime(),
+            Start = this._tanggal.Now,
             GoodsId = goodsId,
         };
         _context.GoodsPrices.Add(entity);
         await _context.SaveChangesAsync(cancellationToken);
         return entity;
     }
-
-    public async Task<GoodsWholesalePrice> AddGoodsWholesalePrice(Guid goodsId, decimal WholesalerPrice, int WholesalerMin, CancellationToken cancellationToken)
+    public async Task<GoodsWholesalePrice> AddGoodsWholesalePrice(Guid goodsId, decimal WholesalerPrice, int WholesalerMin , CancellationToken cancellationToken)
     {
+
         var entity = new GoodsWholesalePrice
         {
             End = null,
-            Start = new DateTime(),
+            Start = this._tanggal.Now,
             WholesalerPrice = WholesalerPrice,
             GoodsId = goodsId,
             WholesalerMin = WholesalerMin
         };
         _context.GoodsWholesalePrices.Add(entity);
         await _context.SaveChangesAsync(cancellationToken);
+        
         return entity;
+    }
+    public async Task<List<GoodsWholesalePrice>> AddGoodsWholesalePrices(Guid goodsId, List<WholesalesPrice> wholesalesprices, CancellationToken cancellationToken)
+    {
+        List<GoodsWholesalePrice> entities = new List<GoodsWholesalePrice>();
+        if (wholesalesprices != null && wholesalesprices.Count()>0)
+        {
+            foreach (var w in wholesalesprices)
+            {
+                var entity = new GoodsWholesalePrice
+                {
+                    End = null,
+                    Start = this._tanggal.Now,
+                    WholesalerPrice = w.WholesalerPrice,
+                    GoodsId = goodsId,
+                    WholesalerMin = w.WholesalerMin
+                };
+                _context.GoodsWholesalePrices.Add(entity);
+
+                await _context.SaveChangesAsync(cancellationToken);
+                entities.Add(entity);
+            }
+        }
+        
+        return entities;
     }
 
     public async Task<GoodsStock> AddGoodsStocks(Guid goodsId, int N, int Threshold, CancellationToken cancellationToken)

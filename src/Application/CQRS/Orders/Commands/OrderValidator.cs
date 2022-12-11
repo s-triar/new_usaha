@@ -40,12 +40,13 @@ public class OrderValidator<T>: AbstractValidator<T>
     {
         var itemIds = Items.Select(x => x.GoodsId).ToList();
         var entities = await this._context.Goodses
-                                       .Include(x => x.GoodsPrices)
+                                       .Include(x => x.GoodsPrices.Where(y=>y.End==null))
+                                       .Include(x=>x.GoodsWholesalePrices.Where(y=>y.End==null).OrderBy(y=>y.WholesalerMin))
                                        .Where(x => itemIds.Contains(x.Id))
                                        .ToListAsync(cancellationToken);
         var items = entities.Select(this._mapper.Map<MyGoodsForCashierDto>);
         var checkPrice = items.Join(Items, i => i.Id, I => I.GoodsId, (i, I) => new { i = i, I = I })
-            .All(x => x.I.IsWholesalerPrice == 1 ? x.I.PricePerItem == x.i.WholesalerPrice : x.I.PricePerItem == x.i.Price);
+            .All(x => x.I.IsWholesalerPrice == 1 ? x.I.PricePerItem == x.i.WholessalePrices.Where(y => y.WholesalerMin < x.I.N).Last().WholesalerPrice : x.I.PricePerItem == x.i.Price);
         if (!checkPrice)
         {
             return checkPrice;

@@ -22,8 +22,8 @@ export class AddStockProductKuBottomSheetComponent implements OnInit {
   ngOnInit(): void {
     console.log(this.id);
   }
-  submitted(id: string): void{
-    this.bottomSheetRef.dismiss(id);
+  submitted(): void{
+    this.bottomSheetRef.dismiss();
   }
   canceled(): void{
     this.bottomSheetRef.dismiss();

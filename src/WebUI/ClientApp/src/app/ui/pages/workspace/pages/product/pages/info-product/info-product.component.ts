@@ -11,8 +11,9 @@ import { NavPageComponent } from 'src/app/ui/components/nav/nav-page/nav-page.co
 import { PortalContainerComponent } from 'src/app/ui/components/utility/portal-container/portal-container.component';
 import { AddStockProductKuBottomSheetComponent } from 'src/app/ui/modules/product-ku/add-stock-product-ku-bottom-sheet/add-stock-product-ku-bottom-sheet.component';
 import { AdjustStockPrroductKuBottomSheetComponent } from 'src/app/ui/modules/product-ku/adjust-stock-prroduct-ku-bottom-sheet/adjust-stock-prroduct-ku-bottom-sheet.component';
-import { UpdatePriceProductKuBottomSheetComponent } from 'src/app/ui/modules/product-ku/update-price-product-ku-bottom-sheet/update-price-product-ku-bottom-sheet.component';
+import { FormUpdatePriceProductData, UpdatePriceProductKuBottomSheetComponent } from 'src/app/ui/modules/product-ku/update-price-product-ku-bottom-sheet/update-price-product-ku-bottom-sheet.component';
 import { WorkspaceStateService } from '../../../../components/workspace-nav/workspace-state.service';
+import { WholeSalesPrice } from 'src/app/ui/modules/product-ku/form-update-price-product-ku/form-update-price-product-ku.component';
 
 @UntilDestroy()
 @Component({
@@ -69,9 +70,16 @@ export class InfoProductComponent implements OnInit {
   }
 
   updatePrice(): void {
+    const d:FormUpdatePriceProductData={
+      id:this.dataGoods.id,
+      wholesaleprices:this.dataGoods.wholePrices.map(x=> {
+        const t:WholeSalesPrice = {wholesalerPrice: x.wholesalerPrice, wholesalerMin: x.wholesalerMin}
+        return t;
+      })
+    }
     this.bottomSheet.open(UpdatePriceProductKuBottomSheetComponent,
       {
-        data: this.dataGoods.id
+        data: d
       }).afterDismissed()
         .subscribe((x: string|null|undefined) => {
           this.renewInfo();

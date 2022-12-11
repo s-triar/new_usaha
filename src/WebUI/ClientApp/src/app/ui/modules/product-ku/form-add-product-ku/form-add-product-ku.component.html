@@ -1,4 +1,4 @@
-<mat-stepper orientation="vertical" [linear]="true" #stepper>
+<mat-stepper orientation="horizontal" [linear]="true" #stepper>
     <form [formGroup]="form" >
         <mat-step [stepControl]="infoGroup">
         <ng-template matStepLabel>Informasi Produk</ng-template>
@@ -86,21 +86,35 @@
                 <mat-hint class="color-warn" *ngIf="(PriceProduct?.dirty || PriceProduct?.touched) && PriceProduct?.errors?.required">Harga jual produk harus diisi.</mat-hint>
                 <mat-hint class="color-warn" *ngIf="(PriceProduct?.dirty || PriceProduct?.touched) && PriceProduct?.errors?.min">Nilai minimal adalah 0.</mat-hint>
             </mat-form-field>
-            <mat-form-field appearance="fill" shouldLabelFloat="true" floatLabel="always">
-                <mat-label>Harga Jual Grosir Produk</mat-label>
-                <span matPrefix>Rp&nbsp;</span>
-                <app-input-currency placeholder="Harga Jual Grosir Produk" formControlName="WholesalerPrice" ></app-input-currency>
-                <mat-hint class="color-warn" *ngIf="(WholesalerPriceProduct?.dirty || WholesalerPriceProduct?.touched) && WholesalerPriceProduct?.errors?.required">Harga jual grosir produk harus diisi.</mat-hint>
-                <mat-hint class="color-warn" *ngIf="(WholesalerPriceProduct?.dirty || WholesalerPriceProduct?.touched) && WholesalerPriceProduct?.errors?.min">Nilai minimal adalah 0.</mat-hint>
-            </mat-form-field>
-            <mat-form-field appearance="fill" shouldLabelFloat="true" floatLabel="always">
-                <mat-label>Minimal Beli Produk Untuk Grosir</mat-label>
-                <input type="number" matInput placeholder="Minimal Beli Produk Untuk Grosir" formControlName="WholesalerMin" min="1" style="text-align: right;">
-                <mat-hint class="color-warn" *ngIf="(WholesalerMinProduct?.dirty || WholesalerMinProduct?.touched) && WholesalerMinProduct?.errors?.min">Nilai minimal adalah 1.</mat-hint>
-            </mat-form-field>
             <div class="mat-form-field">
                 <mat-checkbox formControlName="IsWholesalerPriceAuto">Otomatis harga grosir jika minimal terpenuhi?</mat-checkbox>
             </div>
+            <div class="wholesaler-container" formArrayName="WholesalesPrices" >
+                <span>Harga Jual Grosir</span>
+                <ng-container *ngFor="let WholesalesPricesForm of WholesalesPricesProduct.value.controls; let i = index">
+                    <div class="wholesaler-input-container" [formGroup]="WholesalesPricesForm">
+                    
+                        <mat-form-field appearance="fill" shouldLabelFloat="true" floatLabel="always" class="wholeslaemin">
+                            <mat-label>Minimal Beli Produk Untuk Grosir</mat-label>
+                            <input type="number" matInput placeholder="Minimal Beli Produk Untuk Grosir" formControlName="WholesalerMin" min="1" style="text-align: right;">
+                            <mat-hint class="color-warn" *ngIf="(WholesalesPricesForm.get('WholesalerMin')?.dirty || WholesalesPricesForm.get('WholesalerMin')?.touched) && WholesalesPricesForm.get('WholesalerMin')?.errors?.min">Nilai minimal adalah 1.</mat-hint>
+                        </mat-form-field>
+                        <mat-form-field appearance="fill" shouldLabelFloat="true" floatLabel="always" class="wholeslaeprice">
+                            <mat-label>Harga Jual Grosir Produk</mat-label>
+                            <span matPrefix>Rp&nbsp;</span>
+                            <app-input-currency placeholder="Harga Jual Grosir Produk" formControlName="WholesalerPrice" ></app-input-currency>
+                            <mat-hint class="color-warn" *ngIf="(WholesalesPricesForm.get('WholesalerPrice')?.dirty || WholesalesPricesForm.get('WholesalerPrice')?.touched) && WholesalesPricesForm.get('WholesalerPrice')?.errors?.required">Harga jual grosir produk harus diisi.</mat-hint>
+                            <mat-hint class="color-warn" *ngIf="(WholesalesPricesForm.get('WholesalerPrice')?.dirty || WholesalesPricesForm.get('WholesalerPrice')?.touched) && WholesalesPricesForm.get('WholesalerPrice')?.errors?.min">Nilai minimal adalah 0.</mat-hint>
+                        </mat-form-field>
+                        <button mat-mini-fab color="warn" class="btn-del-wholesaleprice" (click)="deleteWholesaleprice(i)"><mat-icon>delete</mat-icon></button>
+                    </div>
+                </ng-container>
+                <div>
+                    <button mat-stroked-button type="button" (click)="addWholesaleprice()"><mat-icon>add</mat-icon> Tambah Harga Grosir</button>
+                </div>
+            </div>
+            
+           
             <div class="stepper-action">
                 <button mat-raised-button color="accent" matStepperPrevious>Kembali</button>
                 <button mat-raised-button color="primary" matStepperNext [disabled]="!pricingGroup.dirty || ((pricingGroup.dirty || pricingGroup.touched) && !pricingGroup.valid)">Berikutnya</button>

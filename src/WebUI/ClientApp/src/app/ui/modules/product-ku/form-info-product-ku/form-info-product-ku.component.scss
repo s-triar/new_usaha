@@ -19,3 +19,13 @@
   .btn-delete-group{
     margin-right: 8px;
   }
+
+  .table-wholesale-price{
+    width: calc(100% - 2rem);
+    margin-left: 1rem;
+    margin-right: 1rem;
+    tbody{
+      max-height: 400px;
+      overflow-y: auto;
+    }
+  }

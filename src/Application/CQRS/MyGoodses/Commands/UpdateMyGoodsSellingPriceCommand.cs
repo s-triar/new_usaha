@@ -38,32 +38,42 @@ public class UpdateMyGoodsSellingPriceCommandValidator : GoodsValidator<UpdateMy
 public class UpdateMyGoodsSellingPriceCommandHandler : IRequestHandler<UpdateMyGoodsSellingPriceCommand, ResultWithMessage>
 {
     private readonly IApplicationDbContext _context;
+    private readonly IDateTime _tanggal;
 
-    public UpdateMyGoodsSellingPriceCommandHandler(IApplicationDbContext context)
+    public UpdateMyGoodsSellingPriceCommandHandler(IApplicationDbContext context, IDateTime tanggal)
     {
         _context = context;
+        _tanggal = tanggal;
     }
 
     public async Task<ResultWithMessage> Handle(UpdateMyGoodsSellingPriceCommand request, CancellationToken cancellationToken)
     {
+        await this._context.BeginTransactionAsync();
         UpdateOldGoodsPrice(request.Id);
-        UpdateOldGoodsWholesalePrice(request.Id);
         AddGoodsPrice(request);
-        AddGWholesalePrice(request.Id, request.WholesalePrices);
+        //if (request.WholesalePrices.Count() > 0)
+        //{
+            UpdateOldGoodsWholesalePrice(request.Id);
+            AddGWholesalePrice(request.Id, request.WholesalePrices);
+        //}
         await _context.SaveChangesAsync(cancellationToken);
+        await this._context.CommitTransactionAsync();
         return new ResultWithMessage(true, new List<string>() { }, "Pembaruan harga produk berhasil");
     }
     private void UpdateOldGoodsPrice(Guid Id)
     {
         var entity_old = _context.GoodsPrices.Where(x => x.GoodsId == Id).Where(x => x.End == null).OrderBy(x => x.CreatedAt).LastOrDefault();
-        entity_old!.End = new DateTime();
+        entity_old!.End = this._tanggal.Now;
         _context.GoodsPrices.Update(entity_old);
     }
     private void UpdateOldGoodsWholesalePrice(Guid Id)
     {
-        var entity_old = _context.GoodsWholesalePrices.Where(x => x.GoodsId == Id).Where(x=>x.End==null).OrderBy(x => x.CreatedAt).LastOrDefault();
-        entity_old!.End = new DateTime();
-        _context.GoodsWholesalePrices.Update(entity_old);
+        var entity_olds = _context.GoodsWholesalePrices.Where(x => x.GoodsId == Id).Where(x=>x.End==null).OrderBy(x => x.CreatedAt).ToList();
+        foreach(var entity_old in entity_olds)
+        {
+            entity_old!.End = this._tanggal.Now;
+            _context.GoodsWholesalePrices.Update(entity_old);
+        }
     }
     private void AddGoodsPrice(UpdateMyGoodsSellingPriceCommand request)
     {
@@ -72,7 +82,7 @@ public class UpdateMyGoodsSellingPriceCommandHandler : IRequestHandler<UpdateMyG
             GoodsId = request.Id,
             End = null,
             Price = request.Price,
-            Start = new DateTime()
+            Start = this._tanggal.Now
         };
         _context.GoodsPrices.Add(entity);
     }
@@ -84,7 +94,7 @@ public class UpdateMyGoodsSellingPriceCommandHandler : IRequestHandler<UpdateMyG
             {
                 GoodsId = GoodsId,
                 End = null,
-                Start = new DateTime(),
+                Start = this._tanggal.Now,
                 WholesalerPrice = j.WholesalerPrice,
                 WholesalerMin = j.WholesalerMin,
             };

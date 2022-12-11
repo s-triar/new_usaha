@@ -87,7 +87,9 @@ export type SearchPageResponse<T> = {
     items: T[],
     totalPages: number,
     totalCount: number,
-    pageNumber: number
+    pageNumber: number,
+    hasPreviousPage:boolean,
+    hasNextPage:boolean
 };
 
 export type MyGoodsesListContainerDto = SearchPageResponse<MyGoodsesListItemDto> & {
@@ -128,6 +130,14 @@ export type GoodsParentInfoDto = {
     contain: number;
     n: number;
 };
+
+export type WholesalespriceDto={
+    wholesalerPrice: number;
+    wholesalerMin: number;
+    id: string;
+
+}
+
 export type InfoOfGoodsForUpdatingDto = {
     id: string;
     enterpriseId: string;
@@ -141,14 +151,13 @@ export type InfoOfGoodsForUpdatingDto = {
     price: number;
     buyPrice: number;
     baseBuyPrice: number;
-    wholesalerPrice: number;
-    wholesalerMin: number;
     isWholesalerPriceAuto: boolean;
     parentGoodsId: string;
     availableOnline: boolean;
     threshold: number;
     parent: GoodsParentInfoDto | null;
     groups: GoodsGroupInfoDto[];
+    wholePrices:WholesalespriceDto[];
 };
 
 export type MyGoodsForCashierDto = {
@@ -157,8 +166,7 @@ export type MyGoodsForCashierDto = {
     barcode: string;
     name: string;
     price: number;
-    wholesalerPrice: number;
-    wholesalerMin: number;
+    wholessalePrices:WholesalespriceDto[];
     promos: any[];
     isWholesalerPriceAuto: boolean;
     goodsPackaging: string;

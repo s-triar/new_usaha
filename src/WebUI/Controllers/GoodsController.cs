@@ -6,10 +6,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using new_usaha.Application.Common.Constants;
 using new_usaha.Application.Common.Models;
-using new_usaha.Application.CQRS.Goodses.Commands.CreateGoods;
-using new_usaha.Application.CQRS.Goodses.Queries;
-using new_usaha.Application.CQRS.Goodses.Queries.GetInfoOfGoodsForUpdating;
-using new_usaha.Application.CQRS.Goodses.Queries.GetMyGoodses;
+//using new_usaha.Application.CQRS.Goodses.Commands.CreateGoods;
+//using new_usaha.Application.CQRS.Goodses.Queries;
+//using new_usaha.Application.CQRS.Goodses.Queries.GetInfoOfGoodsForUpdating;
+//using new_usaha.Application.CQRS.Goodses.Queries.GetMyGoodses;
 using new_usaha.WebUI.Controllers;
 using new_usaha.Infrastructure.TokenValidator;
 using new_usaha.Application.CQRS.MyGoodses.Queries;
@@ -37,31 +37,31 @@ public class GoodsController : ApiControllerBase
         return await Mediator.Send(query);
     }
 
-    [HttpPost]
-    public async Task<Guid> Create([FromForm] CreateMyGoodsCommand commad)
-    {
-        return await Mediator.Send(commad);
-    }
-    [HttpPut]
-    public async Task<Guid> Update([FromForm] UpdateMyGoodsCommand commad)
-    {
-        return await Mediator.Send(commad);
-    }
-    [HttpPut]
-    public async Task<Guid> UpdateSellingPrice([FromBody] UpdateMyGoodsSellingPriceCommand commad)
-    {
-        return await Mediator.Send(commad);
-    }
-    [HttpPut]
-    public async Task<Guid> AddStock([FromBody] AddMyGoodsStockCommand commad)
-    {
-        return await Mediator.Send(commad);
-    }
-    [HttpPut]
-    public async Task<Guid> AdjustStock([FromBody] AdjustStockCommand commad)
-    {
-        return await Mediator.Send(commad);
-    }
+    //[HttpPost]
+    //public async Task<Guid> Create([FromForm] CreateMyGoodsCommand commad)
+    //{
+    //    return await Mediator.Send(commad);
+    //}
+    //[HttpPut]
+    //public async Task<Guid> Update([FromForm] UpdateMyGoodsCommand commad)
+    //{
+    //    return await Mediator.Send(commad);
+    //}
+    //[HttpPut]
+    //public async Task<Guid> UpdateSellingPrice([FromBody] UpdateMyGoodsSellingPriceCommand commad)
+    //{
+    //    return await Mediator.Send(commad);
+    //}
+    //[HttpPut]
+    //public async Task<Guid> AddStock([FromBody] AddMyGoodsStockCommand commad)
+    //{
+    //    return await Mediator.Send(commad);
+    //}
+    //[HttpPut]
+    //public async Task<Guid> AdjustStock([FromBody] AdjustStockCommand commad)
+    //{
+    //    return await Mediator.Send(commad);
+    //}
     [HttpGet]
     public async Task<IEnumerable<MyGoodsForCashierDto>> GetListProductForCashier([FromQuery] GetCashierSearchQuery query)
     {

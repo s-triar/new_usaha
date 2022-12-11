@@ -18,6 +18,9 @@ export type SearchPageRequest = {
     PageNumber: number;
     PageSize: number;
 };
+export type GetMyEnterprisesQuery= SearchPageRequest & {
+
+};
 export type GetMyGoodsesSearchQuery = SearchPageRequest & {
 
 };

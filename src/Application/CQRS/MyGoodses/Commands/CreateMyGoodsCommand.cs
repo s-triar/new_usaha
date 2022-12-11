@@ -16,6 +16,8 @@ using new_usaha.Application.Common.Models;
 
 namespace new_usaha.Application.CQRS.MyGoodses.Commands;
 
+
+
 public class CreateMyGoodsCommand : IRequest<ResultWithMessage>
 {
     public string Name { get; set; }
@@ -29,11 +31,10 @@ public class CreateMyGoodsCommand : IRequest<ResultWithMessage>
     public int AvailableOnline { get; set; }
     public string? ParentBarcode { get; set; }
     public List<string>? GoodsGroups { get; set; }
+    public List<WholesalesPrice> WholesalesPrices { get; set; }
     public decimal Price { get; set; }
     public decimal BuyPrice { get; set; }
-    public decimal WholesalerPrice { get; set; }
-    public int WholesalerMin { get; set; }
-    public bool IsWholesalerPriceAuto { get; set; }
+    public int IsWholesalerPriceAuto { get; set; }
     public int N { get; set; }
     public int Threshold { get; set; } // threshold stock
 }
@@ -85,7 +86,7 @@ public class CreateMyGoodsCommandHandler : AlterGoodsCommand, IRequestHandler<Cr
     private readonly ICurrentUserService _cs;
     private readonly ICurrentEnterpriseService _ce;
 
-    public CreateMyGoodsCommandHandler(IApplicationDbContext context, ICurrentUserService cs, ICurrentEnterpriseService ce) : base(context)
+    public CreateMyGoodsCommandHandler(IApplicationDbContext context, ICurrentUserService cs, ICurrentEnterpriseService ce, IDateTime tanggal) : base(context, tanggal)
     {
         _context = context;
         _cs = cs;
@@ -93,16 +94,28 @@ public class CreateMyGoodsCommandHandler : AlterGoodsCommand, IRequestHandler<Cr
     }
     public async Task<ResultWithMessage> Handle(CreateMyGoodsCommand request, CancellationToken cancellationToken)
     {
-        var goods = await AddGoods(request, cancellationToken);
-        var goodsPrice = await AddGoodsPrice(goods.Id, request.Price, cancellationToken);
-        var goodsWholesalePrice = AddGoodsWholesalePrice(goods.Id, request.WholesalerPrice, request.WholesalerMin, cancellationToken);
-        var goodsStock = await AddGoodsStocks(goods.Id, request.N, request.Threshold, cancellationToken);
-        var goodsStockHistory = await AddStockHistory(goodsStock.Id, request.N, request.BuyPrice, cancellationToken);
-        if (request.GoodsGroups != null && request.GoodsGroups.Count() > 0)
-            await AlterGoodsGroup(goods.Id, request.GoodsGroups, new List<string>(), cancellationToken);
-        await AddGoodsPhoto(goods.Id, request.PhotoFile, null, cancellationToken);
-        await _context.SaveChangesAsync(cancellationToken);
-        return new ResultWithMessage(true, new List<string>() { }, "Berhasil menambah produk");
+        await this._context.BeginTransactionAsync();
+        //try
+        //{
+            var goods = await AddGoods(request, cancellationToken);
+            var goodsPrice = await AddGoodsPrice(goods.Id, request.Price, cancellationToken);
+            var goodsWholesalePrices = await AddGoodsWholesalePrices(goods.Id, request.WholesalesPrices, cancellationToken);
+            var goodsStock = await AddGoodsStocks(goods.Id, request.N, request.Threshold, cancellationToken);
+            var goodsStockHistory = await AddStockHistory(goodsStock.Id, request.N, request.BuyPrice, cancellationToken);
+            if (request.GoodsGroups != null && request.GoodsGroups.Count() > 0)
+                await AlterGoodsGroup(goods.Id, request.GoodsGroups, new List<string>(), cancellationToken);
+            await AddGoodsPhoto(goods.Id, request.PhotoFile, null, cancellationToken);
+            await _context.SaveChangesAsync(cancellationToken);
+            await this._context.CommitTransactionAsync();
+            return new ResultWithMessage(true, new List<string>() { }, "Berhasil menambah produk");
+        //}
+        //catch(Exception ex)
+        //{
+        //    this._context.RollbackTransaction();
+        //    return new ResultWithMessage(false, new List<string>() {ex.Message }, "Gagal menambah produk");
+
+        //}
+
     }
 
     private async Task<Goods> AddGoods(CreateMyGoodsCommand request, CancellationToken cancellationToken)
@@ -114,7 +127,7 @@ public class CreateMyGoodsCommandHandler : AlterGoodsCommand, IRequestHandler<Cr
             Contain = request.Contain,
             Description = request.Description,
             Name = request.Name,
-            IsWholesalerPriceAuto = request.IsWholesalerPriceAuto,
+            IsWholesalerPriceAuto = request.IsWholesalerPriceAuto == 1,
             GoodsTypeId = request.GoodsTypeId,
             EnterpriseId = Guid.Parse(_ce.EnterpriseId),
             ParentGoodsId = string.IsNullOrEmpty(request.ParentBarcode) ? null : this._context.Goodses.FirstOrDefault(x => x.EnterpriseId.ToString() == this._ce.EnterpriseId && x.Barcode == request.Barcode).Id

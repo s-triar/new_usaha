@@ -9,6 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using new_usaha.Application.Common.Interfaces;
 using new_usaha.Domain.Entities;
+using new_usaha.Application.Common.Models;
 
 namespace new_usaha.Application.CQRS.MyGoodses.Commands;
 
@@ -18,7 +19,7 @@ namespace new_usaha.Application.CQRS.MyGoodses.Commands;
 //    Lost, //Lost, Broken, Expired
 //    Manual //sold manually so the order is not recorded in system
 //}
-public class AdjustStockCommand : IRequest<Guid>
+public class AdjustStockCommand : IRequest<ResultWithMessage>
 {
     public Guid Id { get; set; }
     public int ActualStock { get; set; }
@@ -33,7 +34,7 @@ public class AdjustStockCommandValidator : GoodsValidator<AdjustStockCommand>
             .MustAsync(CheckId).WithMessage("Id produk tidak ditemukan.");
     }
 }
-public class AdjustStockCommandHandler : IRequestHandler<AdjustStockCommand, Guid>
+public class AdjustStockCommandHandler : IRequestHandler<AdjustStockCommand, ResultWithMessage>
 {
     private readonly IApplicationDbContext _context;
     private ICurrentUserService _cs;
@@ -43,8 +44,9 @@ public class AdjustStockCommandHandler : IRequestHandler<AdjustStockCommand, Gui
         _cs = cs;
     }
 
-    public async Task<Guid> Handle(AdjustStockCommand request, CancellationToken cancellationToken)
+    public async Task<ResultWithMessage> Handle(AdjustStockCommand request, CancellationToken cancellationToken)
     {
+        await this._context.BeginTransactionAsync();
         var stock = _context.GoodsStocks.Where(x => x.GoodsId == request.Id).SingleOrDefault();
         var deltaN = stock.N - request.ActualStock;
         //if (deltaN > 0 && request.Reason == ReasonAdjustStock.None)
@@ -71,7 +73,9 @@ public class AdjustStockCommandHandler : IRequestHandler<AdjustStockCommand, Gui
         await _context.GoodsAdjustments.AddAsync(gdAdj);
         await _context.SaveChangesAsync(cancellationToken);
         var gd = _context.Goodses.Where(x => x.Id == request.Id).FirstOrDefault();
-        return stock.GoodsId;
+        await this._context.CommitTransactionAsync();
+        return new ResultWithMessage(true, new List<string>() { }, "Berhasil mengatur stok produk");
+
     }
     //private void IncrementStock(int deltaN, GoodsStock stock)
     //{

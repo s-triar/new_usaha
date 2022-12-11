@@ -9,6 +9,7 @@ import { InputCurrencyComponent } from 'src/app/ui/components/form/input-currenc
 // import { InputCurrencyComponent } from 'src/app/components/input-currency/input-currency.component';
 // import { POSCashierItem } from 'src/app/shared/interfaces';
 
+
 export interface CashierEventDiscChange{
   value: number;
   id: string;
@@ -35,10 +36,13 @@ export interface CashierEventToggleWholesalerChange{
     MatInputModule,
     MatSlideToggleModule,
     InputCurrencyComponent,
-    MatSnackBarModule
+    MatSnackBarModule,
+    
+    
   ],
   providers: [
-    CurrencyPipe
+    CurrencyPipe,
+    
   ]
 })
 export class CashierItemComponent implements OnInit, OnChanges {
@@ -53,7 +57,7 @@ export class CashierItemComponent implements OnInit, OnChanges {
 
   isAdditionalPanelOpened = false;
   @ViewChild('qtyinput', {static: true}) qtyInput!: ElementRef;
-
+  
   constructor(
     private currencyPipe: CurrencyPipe,
     // private cdr: ChangeDetectorRef
@@ -101,4 +105,6 @@ export class CashierItemComponent implements OnInit, OnChanges {
       id: this.item.id
     });
   }
+
+  
 }

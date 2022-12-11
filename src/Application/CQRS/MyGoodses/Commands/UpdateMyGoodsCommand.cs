@@ -28,7 +28,7 @@ public class UpdateMyGoodsCommand : IRequest<ResultWithMessage>
     public int Contain { get; set; } // smaller goods if the goods is the smallest, then this should be 1
     public int AvailableOnline { get; set; }
     public string? ParentBarcode { get; set; }
-    public bool IsWholesalerPriceAuto { get; set; }
+    public int IsWholesalerPriceAuto { get; set; }
     public List<string> AddGoodsGroups { get; set; }
     public List<string> RemoveGoodsGroups { get; set; }
 }
@@ -67,31 +67,42 @@ public class UpdateMyGoodsCommandHandler : AlterGoodsCommand, IRequestHandler<Up
 {
     private readonly IApplicationDbContext _context;
     private readonly ICurrentEnterpriseService _ce;
-    public UpdateMyGoodsCommandHandler(IApplicationDbContext context, ICurrentEnterpriseService ce) : base(context)
+    public UpdateMyGoodsCommandHandler(IApplicationDbContext context, ICurrentEnterpriseService ce, IDateTime tanggal) : base(context, tanggal)
     {
         _context = context;
         _ce = ce;
     }
     public async Task<ResultWithMessage> Handle(UpdateMyGoodsCommand request, CancellationToken cancellationToken)
     {
-        var goods = await _context.Goodses
+        await this._context.BeginTransactionAsync();
+        //try
+        //{
+            var goods = await _context.Goodses
                                        .Include(x => x.GoodsPhotos)
                                        .Include(x => x.GoodsStock)
                                        .FirstOrDefaultAsync(x => x.Id == request.Id);
-        goods.ParentGoodsId = string.IsNullOrEmpty(request.ParentBarcode) ? null : this._context.Goodses.FirstOrDefault(x => x.EnterpriseId.ToString() == this._ce.EnterpriseId && x.Barcode == request.ParentBarcode).Id;
-        goods.Name = request.Name;
-        goods.GoodsTypeId = request.GoodsTypeId;
-        goods.Description = request.Description;
-        goods.Contain = request.Contain;
-        goods.AvailableOnline = request.AvailableOnline == 1;
-        if (goods.GoodsPhotos.Count() > 0 && goods.GoodsPhotos.LastOrDefault().Url != request.Photo && request.Photo != null)
-        {
-            await AddGoodsPhoto(goods.Id, request.PhotoFile, request.Photo, cancellationToken);
-        }
-        _context.Goodses.Update(goods);
-        await _context.SaveChangesAsync(cancellationToken);
-        await AlterGoodsGroup(goods.Id, request.AddGoodsGroups, request.RemoveGoodsGroups, cancellationToken);
-        return new ResultWithMessage(true, new List<string>() { }, "Berhasil memperbarui produk");
+            goods.ParentGoodsId = string.IsNullOrEmpty(request.ParentBarcode) ? null : this._context.Goodses.FirstOrDefault(x => x.EnterpriseId.ToString() == this._ce.EnterpriseId && x.Barcode == request.ParentBarcode).Id;
+            goods.Name = request.Name;
+            goods.GoodsTypeId = request.GoodsTypeId;
+            goods.Description = request.Description;
+            goods.Contain = request.Contain;
+            goods.AvailableOnline = request.AvailableOnline == 1;
+            goods.IsWholesalerPriceAuto = request.IsWholesalerPriceAuto == 1;
+            if (goods.GoodsPhotos.Count() > 0 && goods.GoodsPhotos.LastOrDefault().Url != request.Photo && request.Photo != null)
+            {
+                await AddGoodsPhoto(goods.Id, request.PhotoFile, request.Photo, cancellationToken);
+            }
+            _context.Goodses.Update(goods);
+            await _context.SaveChangesAsync(cancellationToken);
+            await AlterGoodsGroup(goods.Id, request.AddGoodsGroups, request.RemoveGoodsGroups, cancellationToken);
+            await this._context.CommitTransactionAsync();
+            return new ResultWithMessage(true, new List<string>() { }, "Berhasil memperbarui produk");
+        //}
+        //catch(Exception ex)
+        //{
+        //    this._context.RollbackTransaction();
+        //    return new ResultWithMessage(true, new List<string>() { }, "Berhasil memperbarui produk");
+        //}
 
     }
 }
