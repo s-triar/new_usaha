@@ -14,11 +14,11 @@ using new_usaha.Application.Common.Models;
 
 namespace new_usaha.Application.CQRS.MyEnterprises.Commands;
 
-public class DeleteEnterpriseCommand : IRequest<ResultWithMessage>
+public class DeleteEnterpriseCommand : IRequest<Unit>
 {
     public Guid Id { get; set; }
 }
-public class DeleteEnterpriseCommandHandler : IRequestHandler<DeleteEnterpriseCommand, ResultWithMessage>
+public class DeleteEnterpriseCommandHandler : IRequestHandler<DeleteEnterpriseCommand, Unit>
 {
     private readonly IApplicationDbContext _context;
     private readonly ICurrentUserService _cs;
@@ -29,7 +29,7 @@ public class DeleteEnterpriseCommandHandler : IRequestHandler<DeleteEnterpriseCo
         _cs = cs;
     }
 
-    public async Task<ResultWithMessage> Handle(DeleteEnterpriseCommand request, CancellationToken cancellationToken)
+    public async Task<Unit> Handle(DeleteEnterpriseCommand request, CancellationToken cancellationToken)
     {
         var entity = await _context.Enterprises
              .Where(l => l.Id == request.Id)
@@ -44,7 +44,8 @@ public class DeleteEnterpriseCommandHandler : IRequestHandler<DeleteEnterpriseCo
 
         await _context.SaveChangesAsync(cancellationToken);
 
-        return new ResultWithMessage(true, new List<string> { }, "Berhasil menghapus usaha");
+        //return new ResultWithMessage(true, new List<string> { }, "Berhasil menghapus usaha");
+        return Unit.Value;
 
     }
 }

@@ -1,4 +1,4 @@
-import { CommonModule, CurrencyPipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { Component, OnInit,  Input, Output, EventEmitter, AfterViewChecked, ChangeDetectorRef } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -45,7 +45,7 @@ export class CashierItemContainerComponent implements OnInit, AfterViewChecked  
   @Output() cancel = new EventEmitter<CashierContainerCancelEvent>();
 
   constructor(
-    private currencyPipe: CurrencyPipe,
+    // private currencyPipe: CurrencyPipe,
     private cdr: ChangeDetectorRef,
     // private utilService: UtilityService
   ) { }

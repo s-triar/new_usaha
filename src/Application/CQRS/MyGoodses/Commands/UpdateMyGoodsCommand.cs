@@ -16,7 +16,7 @@ using new_usaha.Application.Common.Models;
 
 namespace new_usaha.Application.CQRS.MyGoodses.Commands;
 
-public class UpdateMyGoodsCommand : IRequest<ResultWithMessage>
+public class UpdateMyGoodsCommand : IRequest<Unit>
 {
     public Guid Id { get; set; }
     public string Barcode { get; set; }  //PENDING TODO Update Barcode
@@ -63,7 +63,7 @@ public class UpdateMyGoodsCommandValidator : GoodsValidator<UpdateMyGoodsCommand
           .WithMessage("Terdapat group yang tidak ada (Hapus).");
     }
 }
-public class UpdateMyGoodsCommandHandler : AlterGoodsCommand, IRequestHandler<UpdateMyGoodsCommand, ResultWithMessage>
+public class UpdateMyGoodsCommandHandler : AlterGoodsCommand, IRequestHandler<UpdateMyGoodsCommand, Unit>
 {
     private readonly IApplicationDbContext _context;
     private readonly ICurrentEnterpriseService _ce;
@@ -72,37 +72,31 @@ public class UpdateMyGoodsCommandHandler : AlterGoodsCommand, IRequestHandler<Up
         _context = context;
         _ce = ce;
     }
-    public async Task<ResultWithMessage> Handle(UpdateMyGoodsCommand request, CancellationToken cancellationToken)
+    public async Task<Unit> Handle(UpdateMyGoodsCommand request, CancellationToken cancellationToken)
     {
         await this._context.BeginTransactionAsync();
-        //try
-        //{
-            var goods = await _context.Goodses
-                                       .Include(x => x.GoodsPhotos)
-                                       .Include(x => x.GoodsStock)
-                                       .FirstOrDefaultAsync(x => x.Id == request.Id);
-            goods.ParentGoodsId = string.IsNullOrEmpty(request.ParentBarcode) ? null : this._context.Goodses.FirstOrDefault(x => x.EnterpriseId.ToString() == this._ce.EnterpriseId && x.Barcode == request.ParentBarcode).Id;
-            goods.Name = request.Name;
-            goods.GoodsTypeId = request.GoodsTypeId;
-            goods.Description = request.Description;
-            goods.Contain = request.Contain;
-            goods.AvailableOnline = request.AvailableOnline == 1;
-            goods.IsWholesalerPriceAuto = request.IsWholesalerPriceAuto == 1;
-            if (goods.GoodsPhotos.Count() > 0 && goods.GoodsPhotos.LastOrDefault().Url != request.Photo && request.Photo != null)
-            {
-                await AddGoodsPhoto(goods.Id, request.PhotoFile, request.Photo, cancellationToken);
-            }
-            _context.Goodses.Update(goods);
-            await _context.SaveChangesAsync(cancellationToken);
-            await AlterGoodsGroup(goods.Id, request.AddGoodsGroups, request.RemoveGoodsGroups, cancellationToken);
-            await this._context.CommitTransactionAsync();
-            return new ResultWithMessage(true, new List<string>() { }, "Berhasil memperbarui produk");
-        //}
-        //catch(Exception ex)
-        //{
-        //    this._context.RollbackTransaction();
-        //    return new ResultWithMessage(true, new List<string>() { }, "Berhasil memperbarui produk");
-        //}
+        var goods = await _context.Goodses
+                                    .Include(x => x.GoodsPhotos)
+                                    .Include(x => x.GoodsStock)
+                                    .FirstOrDefaultAsync(x => x.Id == request.Id);
+        goods.ParentGoodsId = string.IsNullOrEmpty(request.ParentBarcode) ? null : this._context.Goodses.FirstOrDefault(x => x.EnterpriseId.ToString() == this._ce.EnterpriseId && x.Barcode == request.ParentBarcode).Id;
+        goods.Name = request.Name;
+        goods.GoodsTypeId = request.GoodsTypeId;
+        goods.Description = request.Description;
+        goods.Contain = request.Contain;
+        goods.AvailableOnline = request.AvailableOnline == 1;
+        goods.IsWholesalerPriceAuto = request.IsWholesalerPriceAuto == 1;
+        if (goods.GoodsPhotos.Count() > 0 && goods.GoodsPhotos.LastOrDefault().Url != request.Photo && request.Photo != null)
+        {
+            await AddGoodsPhoto(goods.Id, request.PhotoFile, request.Photo, cancellationToken);
+        }
+        _context.Goodses.Update(goods);
+        await _context.SaveChangesAsync(cancellationToken);
+        await AlterGoodsGroup(goods.Id, request.AddGoodsGroups, request.RemoveGoodsGroups, cancellationToken);
+        await this._context.CommitTransactionAsync();
+        
+        return Unit.Value;
+
 
     }
 }

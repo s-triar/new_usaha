@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Inject, Input, OnInit, ViewChild } from '@angular/core';
-import { FlexLayoutModule } from '@angular/flex-layout';
+// import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormGroup, FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatDialogModule } from '@angular/material/dialog';
@@ -24,7 +24,7 @@ import { PaginationComponent } from 'src/app/ui/components/pagination/pagination
     MatDialogModule,
     MatInputModule,
     MatFormFieldModule,
-    FlexLayoutModule
+    // FlexLayoutModule
   ]
 })
 export class MemberGroupProductKuDialogComponent implements OnInit {

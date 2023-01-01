@@ -6,7 +6,7 @@ import {
 } from '@angular/router';
 import { Observable } from 'rxjs';
 import { EnterpriseRoleDetailDto } from 'src/app/domain/backend/Dtos';
-import { RoleService } from 'src/app/infrastructure/backend/role.service';
+import { RoleService } from 'src/app/ui/pages/dashboard/pages/employee/role.service';
 import { DB_EMPY_ROLE_ROUTE } from '../constant/routes';
 
 @Injectable({

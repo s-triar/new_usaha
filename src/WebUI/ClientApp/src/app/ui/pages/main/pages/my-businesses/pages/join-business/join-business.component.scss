@@ -14,3 +14,10 @@
 .input-code{
     width: 50px;
 }
+.input-code-container{
+    display: flex;
+    flex-direction: row;
+    align-content: space-between;
+    align-items: center;
+    flex: 1 1 auto;
+}

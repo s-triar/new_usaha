@@ -8,7 +8,7 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { debounceTime, tap, ignoreElements, switchMap } from 'rxjs/operators';
 import { DASHBOARD_ROUTE, DB_EMPY_ROLE_ROUTE } from 'src/app/application/constant/routes';
 import { EnterpriseRoleDto } from 'src/app/domain/backend/Dtos';
-import { RoleService } from 'src/app/infrastructure/backend/role.service';
+import { RoleService } from 'src/app/ui/pages/dashboard/pages/employee/role.service';
 import { DashboardStateService } from 'src/app/ui/pages/dashboard/components/dashboard-nav/dashboard-state.service';
 import { NavPageComponent } from 'src/app/ui/components/nav/nav-page/nav-page.component';
 import { PageNumberChangedEvent, PageSizeChangedEvent, PaginationComponent } from 'src/app/ui/components/pagination/pagination/pagination.component';

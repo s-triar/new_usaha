@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Inject, Input, OnInit, ViewChild } from '@angular/core';
-import { FlexLayoutModule } from '@angular/flex-layout';
+// import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -33,7 +33,7 @@ type MyGoodsGroupsListItemChoiceDto= MyGoodsGroupsListItemDto&{
     MatIconModule,
     MatTableModule,
     PaginationComponent,
-    FlexLayoutModule
+    // FlexLayoutModule
   ]
 })
 export class GroupProductKuDialogComponent implements OnInit {

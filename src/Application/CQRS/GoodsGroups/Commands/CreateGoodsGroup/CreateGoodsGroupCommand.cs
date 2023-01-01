@@ -32,13 +32,11 @@ public class CreateGoodsGroupCommandValidator : GoodsGroupValidator<CreateGoodsG
 public class CreateGoodsGroupCommandHandler : IRequestHandler<CreateGoodsGroupCommand, Guid>
 {
     private readonly IApplicationDbContext _context;
-    private readonly ICurrentUserService _cs;
     private readonly ICurrentEnterpriseService _ce;
 
-    public CreateGoodsGroupCommandHandler(IApplicationDbContext context, ICurrentUserService cs, ICurrentEnterpriseService ce) 
+    public CreateGoodsGroupCommandHandler(IApplicationDbContext context, ICurrentEnterpriseService ce) 
     {
         _context = context;
-        _cs = cs;
         _ce = ce;
     }
     public async Task<Guid> Handle(CreateGoodsGroupCommand request, CancellationToken cancellationToken)

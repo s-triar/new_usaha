@@ -1,17 +1,16 @@
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable, tap } from 'rxjs';
-import { LoginCommand, RegisterCommand } from 'src/app/domain/backend/Commands';
-import { ResultUserLogin, ResultWithMessage } from 'src/app/domain/backend/Dtos';
-import { AccountService } from 'src/app/infrastructure/backend/account.service';
 import { LocalStorageService } from '../utility/local-storage.service';
 import { JwtHelperService } from "@auth0/angular-jwt";
+import { AccountService, LoginCommand, RegisterCommand } from './account.service';
+
 
 export interface AuthServiceInterface {
-  login(data:LoginCommand):Observable<ResultUserLogin>;
+  login(data:LoginCommand):Observable<string>;
   getToken():string|null;
   checkLoggedInd():boolean;
   logout():void;
-  register(data: RegisterCommand):Observable<ResultWithMessage>;
+  register(data: RegisterCommand):Observable<void>;
 }
 
 @Injectable({
@@ -30,24 +29,17 @@ export class AuthService implements AuthServiceInterface{
   
   checkLoggedInd(): boolean {
     const token  = this._localstorage.load("access_token");
-    
-
-
     if (token !== null ) {
       const helper = new JwtHelperService();
-      // const decodedToken = helper.decodeToken(token);
-      // const expirationDate = helper.getTokenExpirationDate(token);
       const isExpired = helper.isTokenExpired(token);
       if(isExpired){
         return false;
       }
       return true;
     } else {
-      // token valid
       this.logout();
       return false;
     }
-    // return this._localstorage.load("access_token") !== null;
   }
 
 
@@ -55,15 +47,15 @@ export class AuthService implements AuthServiceInterface{
     this._localstorage.remove("access_token");
   }
 
-  register(data: RegisterCommand): Observable<ResultWithMessage> {
+  register(data: RegisterCommand): Observable<void> {
     return this._accountAPIService.register(data);
   }
 
-  login(data: LoginCommand): Observable<ResultUserLogin>{
+  login(data: LoginCommand): Observable<string>{
     return this._accountAPIService.login(data).pipe(
       tap(x=>{
-        if(x.token){
-          this._localstorage.save("access_token",x.token);
+        if(x){
+          this._localstorage.save("access_token",x);
         }
       }),
     )

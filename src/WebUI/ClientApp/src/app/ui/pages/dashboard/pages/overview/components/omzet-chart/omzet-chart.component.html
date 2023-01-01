@@ -1,0 +1,15 @@
+<div class="app-w-full app-h-full">
+    <div>
+
+        <form [formGroup]="form">
+            <mat-form-field appearance="fill" class="app-w-full ">
+                <mat-label>Tahun</mat-label>
+                <mat-select formControlName="Year">
+                    <mat-option [value]="itemYear" *ngFor="let itemYear of yearOptions">{{itemYear}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </form>
+    </div>
+
+    <div echarts [options]="chartOption" [loading]="isLoading" theme="macarons"></div>
+</div>

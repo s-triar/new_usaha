@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { FlexLayoutModule } from '@angular/flex-layout';
+// import { FlexLayoutModule } from '@angular/flex-layout';
 import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -23,7 +23,7 @@ import { DuplicateGroupNameValidator } from './DuplicateGroupNameValidator';
     MatFormFieldModule,
     MatButtonModule,
     ReactiveFormsModule,
-    FlexLayoutModule
+    // FlexLayoutModule
   ]
 })
 export class FormAddGroupProductKuComponent implements OnInit {

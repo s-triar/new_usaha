@@ -13,3 +13,8 @@
     overflow-y: auto;
     max-height: 300px;
 }
+
+.app-search-list-page-container{
+  grid-template-rows: auto 1fr auto auto;
+
+}

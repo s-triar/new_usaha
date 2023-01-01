@@ -1,16 +1,3 @@
-export type Result = {
-    succeeded:boolean;
-    errors:string[];
-}
-
-export type ResultWithMessage = Result & {
-    message:string;
-}
-
-export type ResultUserLogin = ResultWithMessage & {
-  token: string|null;
-}
-
 export type EnterpriseTypeDto = {
     id: number;
     name: string;
@@ -287,4 +274,73 @@ export type UserMinimalInfo={
     id:string
     name:string
     email:string
+}
+
+export enum DiagramRangeSellPriceType{
+    PRICE = 1,
+    CHANGE = 2,
+};
+
+export type ResultSellPriceLineDiagramItem=
+{
+    dateTime:Date;
+    price:number;
+};
+
+export type ResultSellPriceLineDiagram=
+{
+    type:DiagramRangeSellPriceType;
+    items: ResultSellPriceLineDiagramItem[];
+    average:number;
+}
+
+export enum DiagramRangeBuyPriceType
+{
+    PRICE = 1,
+    CHANGE = 2,
+}
+export type ResultBuyPriceLineDiagramItem=
+{
+    dateTime:Date;
+    price:number;
+
+};
+
+export type ResultBuyPriceLineDiagram={
+    type:DiagramRangeBuyPriceType;
+    items: ResultBuyPriceLineDiagramItem[];
+    average:number;
+}
+
+export enum DiagramRangeSoldType
+{
+    SUM = 1,
+    AVERAGE = 2,
+    MAX=3,
+    MIN=4
+};
+
+export type ResultSoldLineDiagramItem=
+{
+    dateTime:Date;
+    n:number;
+}
+
+export type ResultSoldLineDiagram={
+    type:DiagramRangeSoldType;
+    items: ResultSoldLineDiagramItem[];
+    average:number;
+}
+
+
+export type ResultOmzetLineDiagramItem = 
+{
+    dateTime:Date;
+    total:number;
+}
+
+export type ResultOmzetLineDiagram = 
+{
+    items:ResultOmzetLineDiagramItem[];
+    average:number;
 }

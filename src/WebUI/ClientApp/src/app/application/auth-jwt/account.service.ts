@@ -2,13 +2,24 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AccountAPI } from '../../application/constant/apis';
-import { LoginCommand, RegisterCommand } from '../../domain/backend/Commands';
-import { ResultUserLogin, ResultWithMessage } from '../../domain/backend/Dtos';
+
+export type LoginCommand = {
+  Identifier:string;
+  Password: string;
+}
+
+export type RegisterCommand={
+    Fullname:string;
+    Email:string;
+    Phone:string;
+    Password:string;
+    ConfirmPassword:string;
+}
 
 
 export interface AccountServiceInteface {
-  login(command: LoginCommand): Observable<ResultUserLogin>;
-  register(command: RegisterCommand): Observable<ResultWithMessage>;
+  login(command: LoginCommand): Observable<string>;
+  register(command: RegisterCommand): Observable<void>;
   checkEmailExist(email:string):Observable<boolean>;
   checkPhoneExist(phone:string):Observable<boolean>;
 }
@@ -27,11 +38,11 @@ export class AccountService implements AccountServiceInteface {
   checkPhoneExist(phone: string): Observable<boolean> {
     return this.http.get<boolean>(AccountAPI.CheckPhoneExist, {params:{phone:phone}});
   }
-  register(command: RegisterCommand): Observable<ResultWithMessage> {
-    return this.http.post<ResultWithMessage>(AccountAPI.Register, command);
+  register(command: RegisterCommand): Observable<void> {
+    return this.http.post<void>(AccountAPI.Register, command);
   }
-  login(command: LoginCommand): Observable<ResultUserLogin> {
-    return this.http.post<ResultUserLogin>(AccountAPI.Login, command);
+  login(command: LoginCommand): Observable<string> {
+    return this.http.post<string>(AccountAPI.Login, command);
   }
 
 }

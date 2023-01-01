@@ -14,11 +14,9 @@ export interface EmployeeServiceInterface{
   getEnterpriseEmployee(query: GetEnterpriseEmployeeQuery): Observable<EnterpriseEmployeeListContainerDto>;
   getDetailEnterpriseEmployee(query: GetDetailEnterpriseEmployeeQuery): Observable<EnterpriseEmployeeDetailDto>;
   getCandidateEmployee(query:GetCandidateEmployeeQuery):Observable<UserMinimalInfo>;
-
   createEmployee(form:any):Observable<string>;
   updateEmployee(form:any):Observable<string>;
   deleteEmployee(form:any):Observable<string>;
-
   joinEmployee(form:any):Observable<string>;
 }
 

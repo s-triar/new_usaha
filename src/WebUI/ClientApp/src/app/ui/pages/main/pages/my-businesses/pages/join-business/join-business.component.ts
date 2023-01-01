@@ -1,12 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FlexLayoutModule } from '@angular/flex-layout';
+// import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInput, MatInputModule } from '@angular/material/input';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { switchMap } from 'rxjs';
-import { EmployeeService } from 'src/app/infrastructure/backend/employee.service';
+import { EmployeeService } from 'src/app/ui/pages/dashboard/pages/employee/employee.service';
 import { NavPageComponent } from 'src/app/ui/components/nav/nav-page/nav-page.component';
 import { PopUpNotifComponent } from 'src/app/ui/components/pop-up/pop-up-notif/pop-up-notif.component';
 import { PopUpNotifService } from 'src/app/ui/components/pop-up/pop-up-notif/pop-up-notif.service';
@@ -26,7 +26,7 @@ import { MainStateService } from '../../../../components/main-nav/main-state.ser
     NavPageComponent,
     MatInputModule,
     MatFormFieldModule,
-    FlexLayoutModule,
+    // FlexLayoutModule,
     MatButtonModule,
     PopUpNotifComponent,
     ButtonBackDirective,

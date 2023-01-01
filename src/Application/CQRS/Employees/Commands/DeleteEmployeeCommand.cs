@@ -11,7 +11,7 @@ using new_usaha.Domain.Entities;
 
 namespace new_usaha.Application.CQRS.Employees.Commands;
 
-public class DeleteEmployeeCommand : IRequest<Guid>
+public class DeleteEmployeeCommand : IRequest<Unit>
 {
     public Guid Id { get; set; }
 }
@@ -31,7 +31,7 @@ public class DeleteEmployeeCommandValidator : EmployeeValidator<DeleteEmployeeCo
             .MustAsync(BeRegisteredEmployee).WithMessage("Karyawan tidak ditemukan.");
     }
 }
-public class DeleteEmployeeCommandHandler : IRequestHandler<DeleteEmployeeCommand, Guid>
+public class DeleteEmployeeCommandHandler : IRequestHandler<DeleteEmployeeCommand, Unit>
 {
     private readonly IApplicationDbContext _context;
     private readonly IIdentityService _cs;
@@ -49,7 +49,7 @@ public class DeleteEmployeeCommandHandler : IRequestHandler<DeleteEmployeeComman
         _ce = ce;
         //_email = email;
     }
-    public async Task<Guid> Handle(DeleteEmployeeCommand request, CancellationToken cancellationToken)
+    public async Task<Unit> Handle(DeleteEmployeeCommand request, CancellationToken cancellationToken)
     {
         EnterpriseEmployee employee = await _context.EnterpriseEmployees
                                         .FirstOrDefaultAsync(x =>
@@ -61,6 +61,6 @@ public class DeleteEmployeeCommandHandler : IRequestHandler<DeleteEmployeeComman
         _context.EnterpriseEmployees.Remove(employee);
         await _context.SaveChangesAsync(cancellationToken);
         //await _email.SendEmployeeFiredAsync(user.Email, enterprise.Name);
-        return employee.Id;
+        return Unit.Value;
     }
 }

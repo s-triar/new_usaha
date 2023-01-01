@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using new_usaha.Application.Common.Models;
 using new_usaha.Application.CQRS.MyGoodses.Commands;
@@ -29,32 +30,48 @@ public class MyGoodsController : ApiControllerBase
     }
 
     [HttpPost]
-    public async Task<ResultWithMessage> Create([FromForm] CreateMyGoodsCommand commad)
+    public async Task<Unit> Create([FromForm] CreateMyGoodsCommand commad)
     {
         return await Mediator.Send(commad);
     }
     [HttpPut]
-    public async Task<ResultWithMessage> Update([FromForm] UpdateMyGoodsCommand commad)
+    public async Task<Unit> Update([FromForm] UpdateMyGoodsCommand commad)
     {
         return await Mediator.Send(commad);
     }
     [HttpPut]
-    public async Task<ResultWithMessage> UpdateSellingPrice([FromBody] UpdateMyGoodsSellingPriceCommand commad)
+    public async Task<Unit> UpdateSellingPrice([FromBody] UpdateMyGoodsSellingPriceCommand commad)
     {
         return await Mediator.Send(commad);
     }
     [HttpPut]
-    public async Task<ResultWithMessage> AddStock([FromBody] AddMyGoodsStockCommand commad)
+    public async Task<Unit> AddStock([FromBody] AddMyGoodsStockCommand commad)
     {
         return await Mediator.Send(commad);
     }
     [HttpPut]
-    public async Task<ResultWithMessage> AdjustStock([FromBody] AdjustStockCommand commad)
+    public async Task<Unit> AdjustStock([FromBody] AdjustMyGoodsStockCommand commad)
     {
         return await Mediator.Send(commad);
     }
     [HttpGet]
     public async Task<IEnumerable<MyGoodsForCashierDto>> GetListProductForCashier([FromQuery] GetCashierSearchQuery query)
+    {
+        return await Mediator.Send(query);
+    }
+
+    [HttpGet]
+    public async Task<ResultSellPriceLineDiagram> GetListProductSellPrice([FromQuery] SellPriceChangeInARangeQuery query)
+    {
+        return await Mediator.Send(query);
+    }
+    [HttpGet]
+    public async Task<ResultBuyPriceLineDiagram> GetListProductBuyPrice([FromQuery] BuyPriceChangeInARangeQuery query)
+    {
+        return await Mediator.Send(query);
+    }
+    [HttpGet]
+    public async Task<ResultSoldLineDiagram> GetListProductNSold([FromQuery] NumberSoldInARangeQuery query)
     {
         return await Mediator.Send(query);
     }

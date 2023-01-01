@@ -1,3 +1,4 @@
+import { DiagramRangeBuyPriceType, DiagramRangeSellPriceType, DiagramRangeSoldType } from './Dtos';
 
 
 export type CheckAvailableEnterpriseCodeQuery = {
@@ -92,3 +93,25 @@ export type GetMyGoodsGroupsSearchQuery = SearchPageRequest & {
 export type CheckDuplicateGoodsGroupNameQuery = {
     Name: string;
 };
+
+export type SellPriceChangeInARangeQuery ={
+    Id:string;
+    Year:number;
+    Type:DiagramRangeSellPriceType;
+}
+
+export type BuyPriceChangeInARangeQuery ={
+    Id:string;
+    Year:number;
+    Type:DiagramRangeBuyPriceType;
+}
+
+export type NumberSoldInARangeQuery ={
+    Id:string;
+    Year:number;
+    Type:DiagramRangeSoldType;
+}
+
+export type GetOmzetQuery={
+    Year:number;
+}

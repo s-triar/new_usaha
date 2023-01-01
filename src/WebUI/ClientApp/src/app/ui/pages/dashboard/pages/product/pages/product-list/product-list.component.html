@@ -1,0 +1,38 @@
+<app-portal-container querySelector="#workspace-utility">
+    <form class="w-full" [formGroup]="formSearch" >
+        <app-search-input-barcode
+        labelName="Cari Produk"
+        [parentForm]="formSearch"
+        fieldName="Search"
+        formControlName="Search" class="w-full h-full"></app-search-input-barcode>
+    </form>
+    
+</app-portal-container>
+
+<button 
+ mat-fab color="primary"
+ class="app-btn-add" 
+ matTooltip="Tambah produk toko"
+ matTooltipPosition="before"
+ matTooltipClass="app-tooltip"
+ (click)="goto(linkToAdd)">
+    <!-- <fa-icon [icon]="icons.add"></fa-icon> -->
+    <mat-icon>{{icons.add}}</mat-icon>
+</button>
+
+<mat-nav-list #listProductContainer class="app-list-container" *ngIf="(productList.length>0); else noProduct;">
+    <a mat-list-item [routerLink]="productInfoLinks[i]" *ngFor="let item of productList; let i=index" class="app-item-list-continer"> 
+        <app-my-product-list-item [item]="item??item" class="app-item-list-content" ></app-my-product-list-item>
+    </a>
+ </mat-nav-list>
+<ng-template #noProduct >
+    <div class="app-no-item-container">
+        <span>Tidak ada produk.</span>
+    </div>
+</ng-template>
+<app-portal-container querySelector="#workspace-footer">
+    <app-pagination
+    (pageSelectedChanged)="pageSelectedChanged($event)"
+    (nPageChanged)="paginationNChanged($event)"
+    ></app-pagination>
+</app-portal-container>

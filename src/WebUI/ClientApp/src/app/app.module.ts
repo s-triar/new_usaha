@@ -21,24 +21,25 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 
 import { PrintService, ThermalPrintModule } from 'ng-thermal-print';
 // import { PopUpKuModule } from './components/pop-up-ku/pop-up-ku.module';
-import { CommonModule, CurrencyPipe } from '@angular/common';
+import { CurrencyPipe } from '@angular/common';
 // import { EnterpriseInterceptor } from './shared/interceptors/enterprise.interceptor';
-import { FlexLayoutModule } from '@angular/flex-layout';
+// import { FlexLayoutModule } from '@angular/flex-layout';
 // import { ZXingScannerModule } from '@zxing/ngx-scanner';
 // import { AuthModule } from './application/auth/auth.module';
 import { SplashComponent } from './ui/components/utility/splash/splash.component';
 import { AuthorizeInterceptor } from './application/interceptors/authorize.interceptor';
 import { EnterpriseInterceptor } from './application/interceptors/enterprise.interceptor';
-import { AuthorizeServerInterceptor } from './application/interceptors/authorize-server.interceptor';
+// import { AuthorizeServerInterceptor } from './application/interceptors/authorize-server.interceptor';
 import { NotificationInterceptor } from './application/interceptors/notification.interceptor';
 import { MatDialogModule } from '@angular/material/dialog';
 // import { NgxEchartsModule } from 'ngx-echarts';
 export const BASE_URL = new InjectionToken<string>('BASE_URL');
-import { AgChartsAngularModule } from 'ag-charts-angular';
+// import { AgChartsAngularModule } from 'ag-charts-angular';
 import { registerLocaleData } from '@angular/common';
 import localeId from '@angular/common/locales/id'; 
+import { NgxEchartsModule, NGX_ECHARTS_CONFIG } from 'ngx-echarts';
 registerLocaleData(localeId, 'id'); 
-
+import * as echarts from 'echarts';
 // Import echarts extensions
 // import 'echarts-gl';
 // Import echarts themes
@@ -55,14 +56,18 @@ registerLocaleData(localeId, 'id');
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    FlexLayoutModule,
+    NgxEchartsModule.forRoot({
+      echarts: { init: echarts.init }
+    
+    }),
+    // FlexLayoutModule,
     // AuthModule.forRoot(),
     ThermalPrintModule,
     // PopUpKuModule,
     SplashComponent,
     // FontAwesomeModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
-    AgChartsAngularModule,
+    // AgChartsAngularModule,
     
     // NgxEchartsModule.forRoot({
     //   echarts: () => import('echarts')
@@ -75,7 +80,7 @@ registerLocaleData(localeId, 'id');
     { provide: BASE_URL, useValue: environment.auth_server },
     { provide: HTTP_INTERCEPTORS, useClass: AuthorizeInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: EnterpriseInterceptor, multi: true },
-
+    // {provide: NGX_ECHARTS_CONFIG, useFactory: () => import('echarts')},
     // { provide: HTTP_INTERCEPTORS, useClass: AuthorizeServerInterceptor, multi: true },
     // { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: NotificationInterceptor, multi: true },

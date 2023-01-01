@@ -20,7 +20,7 @@ public class UpdateMyGoodsWholesalePrice
     public int WholesalerMin { get; set; }
 }
 
-public class UpdateMyGoodsSellingPriceCommand : IRequest<ResultWithMessage>
+public class UpdateMyGoodsSellingPriceCommand : IRequest<Unit>
 {
     public Guid Id { get; set; }
     public decimal Price { get; set; }
@@ -35,7 +35,7 @@ public class UpdateMyGoodsSellingPriceCommandValidator : GoodsValidator<UpdateMy
             .MustAsync(CheckId).WithMessage("Id produk tidak ditemukan.");
     }
 }
-public class UpdateMyGoodsSellingPriceCommandHandler : IRequestHandler<UpdateMyGoodsSellingPriceCommand, ResultWithMessage>
+public class UpdateMyGoodsSellingPriceCommandHandler : IRequestHandler<UpdateMyGoodsSellingPriceCommand, Unit>
 {
     private readonly IApplicationDbContext _context;
     private readonly IDateTime _tanggal;
@@ -46,7 +46,7 @@ public class UpdateMyGoodsSellingPriceCommandHandler : IRequestHandler<UpdateMyG
         _tanggal = tanggal;
     }
 
-    public async Task<ResultWithMessage> Handle(UpdateMyGoodsSellingPriceCommand request, CancellationToken cancellationToken)
+    public async Task<Unit> Handle(UpdateMyGoodsSellingPriceCommand request, CancellationToken cancellationToken)
     {
         await this._context.BeginTransactionAsync();
         UpdateOldGoodsPrice(request.Id);
@@ -58,7 +58,8 @@ public class UpdateMyGoodsSellingPriceCommandHandler : IRequestHandler<UpdateMyG
         //}
         await _context.SaveChangesAsync(cancellationToken);
         await this._context.CommitTransactionAsync();
-        return new ResultWithMessage(true, new List<string>() { }, "Pembaruan harga produk berhasil");
+        //return new ResultWithMessage(true, new List<string>() { }, "Pembaruan harga produk berhasil");
+        return Unit.Value;
     }
     private void UpdateOldGoodsPrice(Guid Id)
     {

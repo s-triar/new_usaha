@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { EMPTY, of, throwError } from 'rxjs';
 import { Observable } from 'rxjs';
 import { catchError, debounceTime, distinctUntilChanged, first, map, switchMap, take, tap } from 'rxjs/operators';
-import { EmployeeService } from 'src/app/infrastructure/backend/employee.service';
+import { EmployeeService } from 'src/app/ui/pages/dashboard/pages/employee/employee.service';
 
 
 export class EmployeeEmailValidator{

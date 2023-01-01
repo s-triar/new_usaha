@@ -3,7 +3,8 @@ import { AbstractControl, AsyncValidatorFn, ValidationErrors } from '@angular/fo
 import { of } from 'rxjs';
 import { Observable } from 'rxjs';
 import { catchError, debounceTime, map, switchMap, take } from 'rxjs/operators';
-import { AccountService } from 'src/app/infrastructure/backend/account.service';
+import { AccountService } from '../auth-jwt/account.service';
+
 
 export class DuplicateUserEmailValidator{
     static validate(

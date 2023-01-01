@@ -17,7 +17,7 @@ public class RoleClaimItem
     public Guid Id { get; set; }
     public int Authorize { get; set; }
 }
-public class CreateRoleCommand : IRequest<Guid>
+public class CreateRoleCommand : IRequest<Unit>
 {
     public string Name { get; set; } 
     public IEnumerable<RoleClaimItem> Claims { get; set; } 
@@ -40,7 +40,7 @@ public class CreateRoleCommandValidator : AbstractValidator<CreateRoleCommand>
 
     }
 }
-public class CreateRoleCommandHandler : IRequestHandler<CreateRoleCommand, Guid>
+public class CreateRoleCommandHandler : IRequestHandler<CreateRoleCommand, Unit>
 {
     private readonly IApplicationDbContext context;
     private readonly ICurrentUserService userService;
@@ -53,7 +53,7 @@ public class CreateRoleCommandHandler : IRequestHandler<CreateRoleCommand, Guid>
         this.currentEnterprise = currentEnterprise;
     }
 
-    public async Task<Guid> Handle(CreateRoleCommand request, CancellationToken cancellationToken)
+    public async Task<Unit> Handle(CreateRoleCommand request, CancellationToken cancellationToken)
     {
         //throw new NotImplementedException();
         var claims = request.Claims.Where(x => x.Authorize == 1).Select(x => x.Id);
@@ -74,6 +74,6 @@ public class CreateRoleCommandHandler : IRequestHandler<CreateRoleCommand, Guid>
             enterpriseRole.EnterpriseRoleClaims.Add(cl);
         }
         await this.context.SaveChangesAsync(cancellationToken);
-        return enterpriseRole.Id;
+        return Unit.Value;
     }
 }

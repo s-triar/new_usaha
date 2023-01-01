@@ -23,7 +23,7 @@ public class CreateEnterpriseAddressCommand
     public decimal Latitude { get; set; }
     public decimal Longitude { get; set; }
 }
-public class CreateMyEnterpriseCommand: IRequest<ResultWithMessage>
+public class CreateMyEnterpriseCommand: IRequest<Unit>
 {
     public string Code { get; set; }
     public string Name { get; set; }
@@ -38,7 +38,7 @@ public class CreateMyEnterpriseCommand: IRequest<ResultWithMessage>
     public CreateEnterpriseAddressCommand Address { get; set; }
 
 }
-public class CreateMyEnterpriseCommandHandler : IRequestHandler<CreateMyEnterpriseCommand, ResultWithMessage>
+public class CreateMyEnterpriseCommandHandler : IRequestHandler<CreateMyEnterpriseCommand, Unit>
 {
     private readonly IApplicationDbContext _context;
     private readonly ICurrentUserService _cs;
@@ -49,7 +49,7 @@ public class CreateMyEnterpriseCommandHandler : IRequestHandler<CreateMyEnterpri
         _cs = cs;
     }
 
-    public async Task<ResultWithMessage> Handle(CreateMyEnterpriseCommand request, CancellationToken cancellationToken)
+    public async Task<Unit> Handle(CreateMyEnterpriseCommand request, CancellationToken cancellationToken)
     {
         await this._context.BeginTransactionAsync();
         var entity = new Enterprise
@@ -82,13 +82,12 @@ public class CreateMyEnterpriseCommandHandler : IRequestHandler<CreateMyEnterpri
 
         try
         {
-
-            if (request.PhotoFile!.Files.Count() > 0)
+            foreach(var f in request.PhotoFile!.Files)
             {
                 var folderName = Path.Combine(ResourcesPath.RESOURCES, ResourcesPath.ENTERPRISE_FOLDER);
                 var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
-                var file = request.PhotoFile.Files.First();
-                var fileName = (Guid.NewGuid()).ToString().Substring(9, 16) + ((new DateTime()).Ticks).ToString() + request.Photo;
+                var file = f;
+                var fileName = string.Concat(Guid.NewGuid().ToString().AsSpan(9,16), ((new DateTime()).Ticks).ToString(), request.Photo); 
                 var fullPath = Path.Combine(pathToSave, fileName);
                 var dbPath = Path.Combine(folderName, fileName);
                 using (var stream = new FileStream(fullPath, FileMode.Create))
@@ -97,6 +96,7 @@ public class CreateMyEnterpriseCommandHandler : IRequestHandler<CreateMyEnterpri
                 }
                 entity.Photo = dbPath;
             }
+            
         }
         catch (Exception ex)
         {
@@ -104,7 +104,8 @@ public class CreateMyEnterpriseCommandHandler : IRequestHandler<CreateMyEnterpri
         }
         await _context.SaveChangesAsync(cancellationToken);
         this._context.CommitTransactionAsync();
-        return new ResultWithMessage(true, new List<string> { }, "Berhasil membuat usaha baru");
+        return Unit.Value;
+        //return new ResultWithMessage(true, new List<string> { }, "Berhasil membuat usaha baru");
     }
 
 }

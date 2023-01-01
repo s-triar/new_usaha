@@ -18,7 +18,7 @@ namespace new_usaha.Application.CQRS.MyGoodses.Commands;
 
 
 
-public class CreateMyGoodsCommand : IRequest<ResultWithMessage>
+public class CreateMyGoodsCommand : IRequest<Unit>
 {
     public string Name { get; set; }
     public string? Description { get; set; }
@@ -68,9 +68,9 @@ public class CreateMyGoodsCommandValidator : GoodsValidator<CreateMyGoodsCommand
         RuleFor(v => v.GoodsGroups)
            .MustAsync((model, GoodsGroups, cancelToken) => { return BeExistGroup(GoodsGroups, cancelToken); })
            .WithMessage("Terdapat group yang tidak ada.");
-        RuleFor(v => v.GoodsGroups)
-           .MustAsync((model, GoodsGroups, cancelToken) => { return BeExistGroup(GoodsGroups, cancelToken); })
-           .WithMessage("Terdapat group yang tidak ada.");
+        //RuleFor(v => v.GoodsGroups)
+        //   .MustAsync((model, GoodsGroups, cancelToken) => { return BeExistGroup(GoodsGroups, cancelToken); })
+        //   .WithMessage("Terdapat group yang tidak ada.");
         RuleFor(v => v.PhotoFile)
            .Must((model, PhotoFile) => { return FileMustBeImage(PhotoFile?.ContentType); })
            .WithMessage("Gambar harus berformat .jpg, .jpeg, atau .png");
@@ -80,7 +80,7 @@ public class CreateMyGoodsCommandValidator : GoodsValidator<CreateMyGoodsCommand
     }
 
 }
-public class CreateMyGoodsCommandHandler : AlterGoodsCommand, IRequestHandler<CreateMyGoodsCommand, ResultWithMessage>
+public class CreateMyGoodsCommandHandler : AlterGoodsCommand, IRequestHandler<CreateMyGoodsCommand, Unit>
 {
     private readonly IApplicationDbContext _context;
     private readonly ICurrentUserService _cs;
@@ -92,7 +92,7 @@ public class CreateMyGoodsCommandHandler : AlterGoodsCommand, IRequestHandler<Cr
         _cs = cs;
         _ce = ce;
     }
-    public async Task<ResultWithMessage> Handle(CreateMyGoodsCommand request, CancellationToken cancellationToken)
+    public async Task<Unit> Handle(CreateMyGoodsCommand request, CancellationToken cancellationToken)
     {
         await this._context.BeginTransactionAsync();
         //try
@@ -107,7 +107,8 @@ public class CreateMyGoodsCommandHandler : AlterGoodsCommand, IRequestHandler<Cr
             await AddGoodsPhoto(goods.Id, request.PhotoFile, null, cancellationToken);
             await _context.SaveChangesAsync(cancellationToken);
             await this._context.CommitTransactionAsync();
-            return new ResultWithMessage(true, new List<string>() { }, "Berhasil menambah produk");
+        //return new ResultWithMessage(true, new List<string>() { }, "Berhasil menambah produk");
+        return Unit.Value;
         //}
         //catch(Exception ex)
         //{

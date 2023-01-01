@@ -10,6 +10,7 @@ using new_usaha.Application.CQRS.EnterpriseClaims;
 using new_usaha.Application.CQRS.EnterpriseClaims.Commands;
 using new_usaha.Application.CQRS.EnterpriseClaims.Queries;
 using new_usaha.WebUI.Controllers;
+using MediatR;
 
 namespace new_usaha.WebUI.Controllers;
 
@@ -50,7 +51,7 @@ public class RoleController : ApiControllerBase
 
     [EnterpriseAuthorize("Dashboard", "Peran", "Buat")]
     [HttpPost]
-    public async Task<Guid> CreateRole([FromForm] CreateRoleCommand command)
+    public async Task<Unit> CreateRole([FromForm] CreateRoleCommand command)
     {
         return await Mediator.Send(command);
     }

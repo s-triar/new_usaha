@@ -1,15 +1,4 @@
-export type LoginCommand = {
-  Identifier:string;
-  Password: string;
-}
 
-export type RegisterCommand={
-    Fullname:string;
-    Email:string;
-    Phone:string;
-    Password:string;
-    ConfirmPassword:string;
-}
 
 export type EnterpriseAddressCommand = {
     Street: string;

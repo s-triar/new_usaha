@@ -1,6 +1,7 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -13,10 +14,10 @@ namespace new_usaha.WebUI.Controllers;
 [Authorize]
 public class MyEnterpriseController : ApiControllerBase
 {
-    private readonly IConfiguration configuration;
+    private readonly IConfiguration _configuration;
     public MyEnterpriseController(IConfiguration configuration) : base()
     {
-        this.configuration = configuration;
+        this._configuration = configuration;
     }
     [HttpGet]
     public async Task<SearchPageResponse<MyEnterpriseDto>> GetOwned([FromQuery] GetMyEnterprisesQuery query)
@@ -31,7 +32,7 @@ public class MyEnterpriseController : ApiControllerBase
         return result;
     }
     [HttpPost]
-    public async Task<ResultWithMessage> Create([FromForm] CreateMyEnterpriseCommand command)
+    public async Task<Unit> Create([FromForm] CreateMyEnterpriseCommand command)
     {
 
         return await Mediator.Send(command);
@@ -52,11 +53,11 @@ public class MyEnterpriseController : ApiControllerBase
     {
         var model = await Mediator.Send(query);
 
-        var secret = this.configuration.GetValue<string>("EnterpriseSecret");
+        var secret = this._configuration.GetValue<string>("EnterpriseSecret");
         var mySecurityKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secret));
 
-        var myIssuer = this.configuration.GetSection("ClientInfo").GetValue<string>("Authority");
-        var myAudience = this.configuration.GetSection("ClientInfo").GetValue<string>("Audience");
+        var myIssuer = this._configuration.GetSection("ClientInfo").GetValue<string>("Authority");
+        var myAudience = this._configuration.GetSection("ClientInfo").GetValue<string>("Audience");
 
         var tokenHandler = new JwtSecurityTokenHandler();
         var tokenDescriptor = new SecurityTokenDescriptor
@@ -75,5 +76,11 @@ public class MyEnterpriseController : ApiControllerBase
 
         var token = tokenHandler.CreateToken(tokenDescriptor);
         return new EnterpriseTokenDto { Token = tokenHandler.WriteToken(token) };
+    }
+
+    [HttpGet]
+    public async Task<ResultOmzetLineDiagram> GetOmzetMyEnterprise([FromQuery] GetOmzetQuery query)
+    {
+        return await this.Mediator.Send(query);
     }
 }

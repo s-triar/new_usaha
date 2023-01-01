@@ -9,7 +9,7 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { debounceTime, tap, ignoreElements, switchMap } from 'rxjs/operators';
 import { DASHBOARD_ROUTE, DASHBOARD_EMPLOYEE_ROUTE } from 'src/app/application/constant/routes';
 import { EnterpriseEmployeeDto } from 'src/app/domain/backend/Dtos';
-import { EmployeeService } from 'src/app/infrastructure/backend/employee.service';
+import { EmployeeService } from 'src/app/ui/pages/dashboard/pages/employee/employee.service';
 import { DashboardStateService } from 'src/app/ui/pages/dashboard/components/dashboard-nav/dashboard-state.service';
 import { PageNumberChangedEvent, PageSizeChangedEvent, PaginationComponent } from 'src/app/ui/components/pagination/pagination/pagination.component';
 import { SearchInputBarcodeComponent } from 'src/app/ui/components/search/search-input-barcode/search-input-barcode.component';

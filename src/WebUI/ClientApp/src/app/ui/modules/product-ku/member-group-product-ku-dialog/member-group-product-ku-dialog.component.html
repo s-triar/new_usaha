@@ -1,12 +1,12 @@
-<div class="group-product-dialog-content">
-    <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+<div class="app-search-list-page-container">
+    
         <form class="w-full" [formGroup]="form" >
             <mat-form-field appearance="outline">
                 <mat-label>Cari Anggota Grup</mat-label>
                 <input matInput placeholder="Cari Anggota Grup" formControlName="Search" class="w-full h-full">
             </mat-form-field>
         </form>
-    </div>
+    
     <div mat-dialog-content class="content-container">
         <!-- <div class="search-result not-found-group">Grup tidak ditemukan.</div> -->
         <table mat-table [dataSource]="memberList" class="search-result">
@@ -19,7 +19,7 @@
     <div>
         <p>Found: {{memberList.length}} of {{members.length}}</p>
     </div>
-    <div mat-dialog-actions fxLayout="row" fxLayoutAlign="space-around center" fxLayoutGap="0px" fxFlexFill style="width:100%;">
+    <div mat-dialog-actions class="form-action-container" style="width:100%;">
         <button mat-raised-button color="primary" mat-dialog-close>Tutup</button>
     </div>
 </div>

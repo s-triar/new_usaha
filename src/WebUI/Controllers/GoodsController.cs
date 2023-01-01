@@ -36,32 +36,6 @@ public class GoodsController : ApiControllerBase
     {
         return await Mediator.Send(query);
     }
-
-    //[HttpPost]
-    //public async Task<Guid> Create([FromForm] CreateMyGoodsCommand commad)
-    //{
-    //    return await Mediator.Send(commad);
-    //}
-    //[HttpPut]
-    //public async Task<Guid> Update([FromForm] UpdateMyGoodsCommand commad)
-    //{
-    //    return await Mediator.Send(commad);
-    //}
-    //[HttpPut]
-    //public async Task<Guid> UpdateSellingPrice([FromBody] UpdateMyGoodsSellingPriceCommand commad)
-    //{
-    //    return await Mediator.Send(commad);
-    //}
-    //[HttpPut]
-    //public async Task<Guid> AddStock([FromBody] AddMyGoodsStockCommand commad)
-    //{
-    //    return await Mediator.Send(commad);
-    //}
-    //[HttpPut]
-    //public async Task<Guid> AdjustStock([FromBody] AdjustStockCommand commad)
-    //{
-    //    return await Mediator.Send(commad);
-    //}
     [HttpGet]
     public async Task<IEnumerable<MyGoodsForCashierDto>> GetListProductForCashier([FromQuery] GetCashierSearchQuery query)
     {

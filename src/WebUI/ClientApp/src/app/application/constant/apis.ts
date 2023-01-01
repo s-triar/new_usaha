@@ -17,6 +17,7 @@ export const MyEnterpriseAPI = {
     GetAvailableEnterpriseCode: `${prefixApi}/MyEnterprise/GetAvailableEnterpriseCode`, // GET
     GetMyEnterpriseToken: `${prefixApi}/MyEnterprise/GetEnterpriseToken`, // GET
     GetMyEnterpriseInfo:`${prefixApi}/MyEnterprise/GetMyEnterpriseInfo`, // GET
+    GetOmzetMyEnterprise: `${prefixApi}/MyEnterprise/GetOmzetMyEnterprise`,//GET
 };
 export const MyGoodsAPI = {
     Create: `${prefixApi}/MyGoods/Create`, // POST
@@ -31,6 +32,9 @@ export const MyGoodsAPI = {
     GetMyGoodsesRelation: `${prefixApi}/MyGoods/GetMyGoodsesRelation`, // GET
     GetInfoOfGoodsForUpdating: `${prefixApi}/MyGoods/GetInfoOfGoodsForUpdating`, // GET
     GetListProductForCashier: `${prefixApi}/MyGoods/GetListProductForCashier`, // GET
+    GetListProductSellPrice: `${prefixApi}/MyGoods/GetListProductSellPrice`, //GET
+    GetListProductBuyPrice: `${prefixApi}/MyGoods/GetListProductBuyPrice`, //GET
+    GetListProductNSold: `${prefixApi}/MyGoods/GetListProductNSold`, //GET
 };
 export const GoodsGroupAPI = {
     Create: `${prefixApi}/GoodsGroup/Create`, // POST

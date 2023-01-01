@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using new_usaha.Application.Common.Interfaces;
 using new_usaha.Application.Common.Models;
 using new_usaha.Application.CQRS.Accounts.Commands;
@@ -8,14 +9,14 @@ namespace new_usaha.WebUI.Controllers;
 public class AccountController : ApiControllerBase
 {
     [HttpPost]
-    public async Task<ResultUserLogin> Login([FromBody] LoginCommand command)
+    public async Task<string> Login([FromBody] LoginCommand command)
     {
         return await Mediator.Send(command);
     }
     [HttpPost]
-    public async Task<ResultWithMessage> Register([FromBody] RegisterAnUserCommand command)
+    public async Task Register([FromBody] RegisterAnUserCommand command)
     {
-        return await Mediator.Send(command);
+        await Mediator.Send(command);
     }
     [HttpGet]
     public async Task<bool> CheckDuplicateEmail([FromQuery] CheckDuplicateEmailQuery query)

@@ -8,6 +8,7 @@ import {
   DASHBOARD_ROUTE,
   DB_EMPY_ROLE_ROUTE,
   DB_TRANS_ROUTE,
+  DSHB_PRODUCT,
   GLOBAL_PATH,
   MAIN_ROUTE,
   MY_BUSSINESSES_ROUTE,
@@ -180,6 +181,39 @@ const routes: Routes = [
           import('./ui/pages/dashboard/pages/overview/overview.component').then(
             (c) => c.OverviewComponent
           ),
+      },
+      {
+        path: DASHBOARD_ROUTE.PRODUCT,
+        loadComponent: () => import('./ui/pages/dashboard/pages/product/product.component').then(c => c.ProductComponent),
+        children: [
+          {
+            path: '',
+            redirectTo: `${GLOBAL_PATH.DASHBOARD_PRODUCT_LIST}`,
+            pathMatch: 'full'
+          },
+          {
+            path: `${DSHB_PRODUCT.PRODUCT_LIST}`,
+            // tslint:disable-next-line:max-line-length
+            loadComponent: () => import('./ui/pages/dashboard/pages/product/pages/product-list/product-list.component').then(c => c.ProductListComponent)
+          },
+          {
+            path: `${DSHB_PRODUCT.PRODUCT_ADD}`,
+            // tslint:disable-next-line:max-line-length
+            loadComponent: () => import('./ui/pages/dashboard/pages/product/pages/create-product/create-product.component').then(c => c.CreateProductComponent)
+          },
+          {
+            path: `${DSHB_PRODUCT.PRODUCT_INFO}/${DSHB_PRODUCT._ID_PRODUCT_INFO}`,
+            // tslint:disable-next-line:max-line-length
+            loadComponent: () => import('./ui/pages/dashboard/pages/product/pages/info-product/info-product.component').then(c => c.InfoProductComponent),
+            resolve: { dataGoods: InfoProductResolver },
+          },
+          {
+            path: `${DSHB_PRODUCT.PRODUCT_UPDATE}/${DSHB_PRODUCT._ID_PRODUCT_INFO}`,
+            // tslint:disable-next-line:max-line-length
+            loadComponent: () => import('./ui/pages/dashboard/pages/product/pages/update-info-product/update-info-product.component').then(c => c.UpdateInfoProductComponent),
+            resolve: { dataGoods: InfoProductResolver },
+          },
+        ]
       },
       {
         path: DASHBOARD_ROUTE.EMPLOYEE,

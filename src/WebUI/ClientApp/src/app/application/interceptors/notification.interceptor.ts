@@ -40,15 +40,6 @@ export class NotificationInterceptor implements HttpInterceptor {
   }
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     return next.handle(request).pipe(
-      // tap(
-      //   (event: HttpEvent<any>) => {
-      //     if (event instanceof HttpResponse) {
-      //       if (request.context.get(SHOW_ERROR_DIALOG_TOKEN)) {
-      //         this.notifService.show({type: 'success', message: null, title: ''});
-      //       }
-      //     }
-      //   }
-      // ),
       catchError((error: any) => {
         if (error instanceof HttpErrorResponse) {
           if (request.context.get(SHOW_ERROR_DIALOG_TOKEN)) {
@@ -63,7 +54,7 @@ export class NotificationInterceptor implements HttpInterceptor {
             this.notifService.show({type: 'error', message: msg, title: 'Error'});
           }
         }
-        return throwError(error);
+        return throwError(()=>error);
       })
     );
   }

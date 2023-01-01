@@ -55,6 +55,7 @@ export class DashboardNavComponent implements OnInit {
   navListBluePrint: string[] = [
     GLOBAL_PATH.DASHBOARD_OVERVIEW,
     GLOBAL_PATH.DASHBOARD_TRANSACTION_LIST,
+    GLOBAL_PATH.DASHBOARD_PRODUCT_LIST,
     GLOBAL_PATH.DASHBOARD_EMPLOYEE_LIST,
     GLOBAL_PATH.DASHBOARD_EMPLOYEE_LIST,
   ];
@@ -72,6 +73,14 @@ export class DashboardNavComponent implements OnInit {
       data: {
         icon: 'receipt',
         text: 'Transaksi'
+      },
+      type: DB_TRANS_ROUTE._KEY_
+    },
+    {
+      link: GLOBAL_PATH.DASHBOARD_PRODUCT_LIST,
+      data: {
+        icon: 'inventory_2',
+        text: 'Produk'
       },
       type: DB_TRANS_ROUTE._KEY_
     },

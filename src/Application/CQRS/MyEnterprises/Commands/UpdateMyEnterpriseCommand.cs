@@ -14,11 +14,11 @@ using new_usaha.Application.Common.Models;
 
 namespace new_usaha.Application.CQRS.MyEnterprises.Commands;
 
-public class UpdateEnterpriseCommand : EnterpriseDto, IRequest<ResultWithMessage>
+public class UpdateEnterpriseCommand : EnterpriseDto, IRequest<Unit>
 {
     public Guid EnterpriseTypeId { get; set; }
 }
-public class UpdateEnterpriseCommandHandler : IRequestHandler<UpdateEnterpriseCommand, ResultWithMessage>
+public class UpdateEnterpriseCommandHandler : IRequestHandler<UpdateEnterpriseCommand, Unit>
 {
     private readonly IApplicationDbContext _context;
 
@@ -27,7 +27,7 @@ public class UpdateEnterpriseCommandHandler : IRequestHandler<UpdateEnterpriseCo
         _context = context;
     }
 
-    public async Task<ResultWithMessage> Handle(UpdateEnterpriseCommand request, CancellationToken cancellationToken)
+    public async Task<Unit> Handle(UpdateEnterpriseCommand request, CancellationToken cancellationToken)
     {
         await this._context.BeginTransactionAsync();
         var entity = await _context.Enterprises
@@ -48,6 +48,7 @@ public class UpdateEnterpriseCommandHandler : IRequestHandler<UpdateEnterpriseCo
 
         await _context.SaveChangesAsync(cancellationToken);
         await this._context.CommitTransactionAsync();
-        return new ResultWithMessage(true, new List<string>() { }, "Pembaruan usaha berhasil");
+        return Unit.Value;
+        //return new ResultWithMessage(true, new List<string>() { }, "Pembaruan usaha berhasil");
     }
 }

@@ -12,7 +12,7 @@ using new_usaha.Domain.Entities;
 
 namespace new_usaha.Application.CQRS.Employees.Commands;
 
-public class UpdateEmployeeCommand: IRequest<Guid>
+public class UpdateEmployeeCommand: IRequest<Unit>
 {
     public Guid Id { get; set; }
     public string EnterpriseRoleName { get; set; }
@@ -36,7 +36,7 @@ public class UpdateEmployeeCommandValidator : EmployeeValidator<UpdateEmployeeCo
     }
 }
 
-public class UpdateEmployeeCommandHandler : IRequestHandler<UpdateEmployeeCommand, Guid>
+public class UpdateEmployeeCommandHandler : IRequestHandler<UpdateEmployeeCommand, Unit>
 {
     private readonly IApplicationDbContext _context;
     private readonly IIdentityService _cs;
@@ -51,7 +51,7 @@ public class UpdateEmployeeCommandHandler : IRequestHandler<UpdateEmployeeComman
         _cs = cs;
         _ce = ce;
     }
-    public async Task<Guid> Handle(UpdateEmployeeCommand request, CancellationToken cancellationToken)
+    public async Task<Unit> Handle(UpdateEmployeeCommand request, CancellationToken cancellationToken)
     {
         EnterpriseRole enterpriseRole = await _context.EnterpriseRoles.FirstOrDefaultAsync(x => x.EnterpriseId.ToString() == _ce.EnterpriseId && x.Name.ToLower() == request.EnterpriseRoleName.ToLower());
         EnterpriseEmployee employee = await _context.EnterpriseEmployees
@@ -62,6 +62,6 @@ public class UpdateEmployeeCommandHandler : IRequestHandler<UpdateEmployeeComman
         employee.EnterpriseRoleId = enterpriseRole.Id;
         _context.EnterpriseEmployees.Update(employee);
         await _context.SaveChangesAsync(cancellationToken);
-        return employee.Id;
+        return Unit.Value;
     }
 }

@@ -146,17 +146,14 @@
         </button>
       </div>
     </div>
-    <div style="display: block">
-      <!-- <canvas baseChart width="400" height="400"
-                [data]="lineChartData"
-                [options]="lineChartOptions"
-                [type]="lineChartType"
-                (chartHover)="chartHovered($event)"
-                (chartClick)="chartClicked($event)">
-            </canvas> -->
-    </div>
+   
   </mat-tab>
   <mat-tab label="Harga">
+    <div style="display: block;">
+      <ng-content select="#sellproductchart"></ng-content>
+
+      
+    </div>
     <div class="form-input-container">
       <mat-form-field
         appearance="fill"
@@ -183,22 +180,27 @@
             </mat-form-field> -->
 
       <table
-        
         mat-table
         [dataSource]="dataGoods.wholePrices"
         class="mat-elevation-z2 table-wholesale-price"
       >
         <ng-container matColumnDef="wholesalerMin">
-          <th mat-header-cell *matHeaderCellDef style="text-align: center;">Minimal</th>
-          <td mat-cell *matCellDef="let element" style="text-align: right;">
+          <th mat-header-cell *matHeaderCellDef style="text-align: center">
+            Minimal
+          </th>
+          <td mat-cell *matCellDef="let element" style="text-align: right">
             {{ element.wholesalerMin }}
           </td>
         </ng-container>
 
         <ng-container matColumnDef="wholesalerPrice">
-          <th mat-header-cell *matHeaderCellDef style="text-align: center;">Harga Grosir</th>
-          <td mat-cell *matCellDef="let element" style="text-align: right;">
-            {{ element.wholesalerPrice |currency:'Rp.  ':'symbol':'0.0-0' }}
+          <th mat-header-cell *matHeaderCellDef style="text-align: center">
+            Harga Grosir
+          </th>
+          <td mat-cell *matCellDef="let element" style="text-align: right">
+            {{
+              element.wholesalerPrice | currency : "Rp.  " : "symbol" : "0.0-0"
+            }}
           </td>
         </ng-container>
         <tr
@@ -219,6 +221,20 @@
     </div>
   </mat-tab>
   <mat-tab label="Stok">
+    <div style="display: flex;">
+      <div style="display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-content: center;
+      justify-content: center;
+      align-items: center;
+      flex: 1 1 auto;">
+
+        
+      <ng-content  select="#nsoldthischart"></ng-content>
+        <ng-content  select="#buyproductchart"></ng-content>
+      </div>
+    </div>
     <div class="form-input-container">
       <mat-form-field
         appearance="fill"

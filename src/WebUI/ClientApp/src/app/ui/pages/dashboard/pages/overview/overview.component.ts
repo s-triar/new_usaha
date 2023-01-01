@@ -1,13 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { AfterContentInit, Component, OnInit, ViewChild } from '@angular/core';
-import { FlexLayoutModule } from '@angular/flex-layout';
+// import { FlexLayoutModule } from '@angular/flex-layout';
 import { RouterModule } from '@angular/router';
 import { DashboardStateService } from 'src/app/ui/pages/dashboard/components/dashboard-nav/dashboard-state.service';
 import { MatCardModule } from '@angular/material/card';
 // import { NgxEchartsModule, NgxEchartsDirective } from 'ngx-echarts/';
-import { AgChartsAngularModule } from 'ag-charts-angular';
+// import { AgChartsAngularModule } from 'ag-charts-angular';
 import { MatIconModule } from '@angular/material/icon';
 import { ListProductUnderThresholdComponent } from 'src/app/ui/modules/product-ku/list-product-under-threshold/list-product-under-threshold.component';
+import { OmzetChartComponent } from './components/omzet-chart/omzet-chart.component';
+import { NgxEchartsModule } from 'ngx-echarts';
 @Component({
   selector: 'app-overview',
   templateUrl: './overview.component.html',
@@ -16,11 +18,13 @@ import { ListProductUnderThresholdComponent } from 'src/app/ui/modules/product-k
   imports: [
     CommonModule,
     RouterModule,
-    FlexLayoutModule,
+    // FlexLayoutModule,
     MatCardModule,
-    AgChartsAngularModule,
+    // AgChartsAngularModule,
     MatIconModule,
-    ListProductUnderThresholdComponent
+    ListProductUnderThresholdComponent,
+    OmzetChartComponent,
+    // NgxEchartsModule
     // NgxEchartsModule.forRoot({
     //   echarts: () => import('echarts')
     // })

@@ -29,7 +29,7 @@ public class OrderController : ApiControllerBase
     [HttpPost]
     public async Task<Guid> CreateOrderCashier([FromForm] CreateOrderCashierCommand command)
     {
-        return (Guid) await Mediator.Send(command);
+        return await Mediator.Send(command);
     }
     [EnterpriseAuthorize("Dashboard", "Order", "Read")]
     [HttpGet]

@@ -11,7 +11,7 @@ using new_usaha.Domain.Entities;
 
 namespace new_usaha.Application.CQRS.Employees.Commands;
 
-public class CreateEmployeeCommand: IRequest<Guid>
+public class CreateEmployeeCommand: IRequest<Unit>
 {
     public string Email { get; set; }
     public string EnterpriseRoleName { get; set; }
@@ -39,7 +39,7 @@ public class CreateEmployeeCommandValidator : EmployeeValidator<CreateEmployeeCo
     }
 }
 
-public class CreateEmployeeCommandHandler : IRequestHandler<CreateEmployeeCommand, Guid>
+public class CreateEmployeeCommandHandler : IRequestHandler<CreateEmployeeCommand, Unit>
 {
     private readonly IApplicationDbContext _context;
     private readonly IIdentityService _cs;
@@ -57,7 +57,7 @@ public class CreateEmployeeCommandHandler : IRequestHandler<CreateEmployeeComman
         _ce = ce;
         //_email = email;
     }
-    public async Task<Guid> Handle(CreateEmployeeCommand request, CancellationToken cancellationToken)
+    public async Task<Unit> Handle(CreateEmployeeCommand request, CancellationToken cancellationToken)
     {
         DateTime expiredTime = DateTime.Now.AddHours(2);
         EnterpriseRole enterpriseRole = await _context.EnterpriseRoles.FirstOrDefaultAsync(x => x.EnterpriseId.ToString() == _ce.EnterpriseId && x.Name.ToLower() == request.EnterpriseRoleName.ToLower());
@@ -83,7 +83,7 @@ public class CreateEmployeeCommandHandler : IRequestHandler<CreateEmployeeComman
         await _context.EmployeeJoins.AddAsync(new_employee);
         await _context.SaveChangesAsync(cancellationToken);
         //await _email.SendEmployeeHiredAsync(request.Email, usaha.Name, code, expiredTime);
-        return new_employee.Id;
+        return Unit.Value;
 
 
     }

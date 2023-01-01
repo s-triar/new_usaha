@@ -7,15 +7,14 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { NavPageComponent } from 'src/app/ui/components/nav/nav-page/nav-page.component';
 import { PortalContainerComponent } from 'src/app/ui/components/utility/portal-container/portal-container.component';
-import { ResultWithMessage } from 'src/app/domain/backend/Dtos';
 import { AuthService } from 'src/app/application/auth-jwt/auth.service';
 import { delay, Observable, tap } from 'rxjs';
 import { GLOBAL_PATH } from 'src/app/application/constant/routes';
 import { Router, RouterModule } from '@angular/router';
 import { CheckMatchPasswordValidator } from 'src/app/application/form-validators/MatchPasswordConfirmPasswordValidator';
 import { DuplicateUserEmailValidator } from 'src/app/application/form-validators/DuplicateUserEmailValidator';
-import { AccountService } from 'src/app/infrastructure/backend/account.service';
 import { DuplicateUserPhoneValidator } from 'src/app/application/form-validators/DuplicateUserPhoneValidator';
+import { AccountService } from 'src/app/application/auth-jwt/account.service';
 
 @Component({
   standalone: true,
@@ -36,7 +35,7 @@ import { DuplicateUserPhoneValidator } from 'src/app/application/form-validators
 export class RegisterComponent implements OnInit {
   pathToLogin = GLOBAL_PATH.AUTH_LOGIN;
   loading = false;
-  formMessage$: Observable<ResultWithMessage>;
+  formMessage$: Observable<void>;
 
   form: FormGroup = this._fb.nonNullable.group({
     Fullname: this._fb.nonNullable.control('',{validators:[Validators.required, Validators.maxLength(255)]}),
@@ -65,10 +64,8 @@ export class RegisterComponent implements OnInit {
     this.formMessage$ = this._authService.register(this.form.value).pipe(
       delay(1000),
       tap(() => (this.loading = false)),
-      tap((x) => {
-        if (x.succeeded) {
-          this._router.navigateByUrl(GLOBAL_PATH.AUTH_LOGIN, {replaceUrl:true});
-        }
+      tap(() => {
+        this._router.navigateByUrl(GLOBAL_PATH.AUTH_LOGIN, {replaceUrl:true});
       })
     );
   }

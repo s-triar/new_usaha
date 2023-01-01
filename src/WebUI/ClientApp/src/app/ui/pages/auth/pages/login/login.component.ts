@@ -18,7 +18,6 @@ import {
 } from 'src/app/application/auth-jwt/auth.service';
 import { GLOBAL_PATH } from 'src/app/application/constant/routes';
 import { LocalStorageService } from 'src/app/application/utility/local-storage.service';
-import { ResultUserLogin } from 'src/app/domain/backend/Dtos';
 
 import { NavPageComponent } from 'src/app/ui/components/nav/nav-page/nav-page.component';
 import { PortalContainerComponent } from 'src/app/ui/components/utility/portal-container/portal-container.component';
@@ -43,7 +42,7 @@ import { PortalContainerComponent } from 'src/app/ui/components/utility/portal-c
 })
 export class LoginComponent implements OnInit {
   pathToRegister = GLOBAL_PATH.AUTH_REGISTER;
-  formMessage$: Observable<ResultUserLogin>;
+  formMessage$: Observable<string>;
   loading: boolean = false;
   form: FormGroup = this._fb.nonNullable.group({
     Identifier: this._fb.nonNullable.control('', {
@@ -69,11 +68,9 @@ export class LoginComponent implements OnInit {
     this.formMessage$ = this._authService.login(this.form.value).pipe(
       delay(1000),
       tap(() => (this.loading = false)),
-      tap((x) => {
-        if (x.succeeded) {
-          const lastPath = this._localStorage.load('last_path');
-          this._router.navigateByUrl(lastPath  !== null?lastPath: GLOBAL_PATH.MAIN_HOME, {replaceUrl:true});
-        }
+      tap(() => {
+        const lastPath = this._localStorage.load('last_path');
+        this._router.navigateByUrl(lastPath  !== null?lastPath: GLOBAL_PATH.MAIN_HOME, {replaceUrl:true});
       })
     );
   }

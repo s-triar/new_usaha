@@ -9,7 +9,7 @@ using new_usaha.Application.Common.Interfaces;
 using new_usaha.Application.Common.Models;
 
 namespace new_usaha.Application.CQRS.Accounts.Commands;
-public class RegisterAnUserCommand: IRequest<ResultWithMessage>
+public class RegisterAnUserCommand: IRequest<Unit>
 {
     public string Fullname { get; set; }
     public string Email {get;set;}
@@ -64,7 +64,7 @@ public class RegisterAnUserCommandValidator : AbstractValidator<RegisterAnUserCo
 }
 
 
-public class RegisterAnUserCommandHandler : IRequestHandler<RegisterAnUserCommand, ResultWithMessage>
+public class RegisterAnUserCommandHandler : IRequestHandler<RegisterAnUserCommand, Unit>
 {
     private readonly IIdentityService _ids;
 
@@ -74,9 +74,10 @@ public class RegisterAnUserCommandHandler : IRequestHandler<RegisterAnUserComman
     {
         _ids = ids;
     }
-    public async Task<ResultWithMessage> Handle(RegisterAnUserCommand request, CancellationToken cancellationToken)
+    public async Task<Unit> Handle(RegisterAnUserCommand request, CancellationToken cancellationToken)
     {
         var res = await _ids.CreateUserAsync(request.Fullname, request.Email, request.Phone, request.Password);
-        return new ResultWithMessage(res.Result.Succeeded, res.Result.Errors, res.Result.Succeeded ? "Pendaftaran berhasil.":"Pendaftaran gagal.");
+        //return new ResultWithMessage(res.Result.Succeeded, res.Result.Errors, res.Result.Succeeded ? "Pendaftaran berhasil.":"Pendaftaran gagal.");
+        return Unit.Value;
     }
 }

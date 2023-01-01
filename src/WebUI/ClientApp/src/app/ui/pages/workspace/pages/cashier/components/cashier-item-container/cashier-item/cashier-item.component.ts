@@ -2,7 +2,7 @@ import { CommonModule, CurrencyPipe } from '@angular/common';
 import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter, OnChanges, SimpleChanges, ViewChild, ElementRef } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { MatSlideToggle, MatSlideToggleChange, MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatSlideToggleChange, MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { POSCashierItem } from 'src/app/application/types';
 import { InputCurrencyComponent } from 'src/app/ui/components/form/input-currency/input-currency.component';
@@ -59,7 +59,7 @@ export class CashierItemComponent implements OnInit, OnChanges {
   @ViewChild('qtyinput', {static: true}) qtyInput!: ElementRef;
   
   constructor(
-    private currencyPipe: CurrencyPipe,
+    // private currencyPipe: CurrencyPipe,
     // private cdr: ChangeDetectorRef
   ) { }
 

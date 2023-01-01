@@ -4,8 +4,8 @@ import { Observable } from 'rxjs';
 import { MyEnterpriseAPI } from 'src/app/application/constant/apis';
 import { showErrorDialogContext } from 'src/app/application/interceptors/notification.interceptor';
 import { FormConversionService } from 'src/app/application/utility/form-conversion.service';
-import { MyEnterpriseDto, EnterpriseTokenDto, MyEnterpriseContainerDto } from 'src/app/domain/backend/Dtos';
-import { CheckAvailableEnterpriseCodeQuery, GetMyEnterprisesQuery, GetAvailableEnterpriseCodeQuery, EnterpriseTokenQuery, GetMyEnterpriseInfoQuery } from 'src/app/domain/backend/Queries';
+import { MyEnterpriseDto, EnterpriseTokenDto, MyEnterpriseContainerDto, ResultOmzetLineDiagram } from 'src/app/domain/backend/Dtos';
+import { CheckAvailableEnterpriseCodeQuery, GetMyEnterprisesQuery, GetAvailableEnterpriseCodeQuery, EnterpriseTokenQuery, GetMyEnterpriseInfoQuery, GetOmzetQuery } from 'src/app/domain/backend/Queries';
 
 export interface MyEnterpriseServiceInterface{
   checkAvailableEnterpriseCode(query: CheckAvailableEnterpriseCodeQuery): Observable<boolean>;
@@ -14,6 +14,7 @@ export interface MyEnterpriseServiceInterface{
   GetAvailableEnterpriseCode(query: GetAvailableEnterpriseCodeQuery): Observable<string[]>;
   getEnterpriseToken(query: EnterpriseTokenQuery): Observable<EnterpriseTokenDto>;
   getMyEnterpriseInfo(query: GetMyEnterpriseInfoQuery): Observable<MyEnterpriseDto>;
+  GetOmzetMyEnterprise(query: GetOmzetQuery):Observable<ResultOmzetLineDiagram>;
 }
 
 @Injectable({
@@ -23,6 +24,9 @@ export class MyEnterpriseService  implements MyEnterpriseServiceInterface{
 
   constructor(protected http: HttpClient, private utilService: FormConversionService) {
 
+  }
+  GetOmzetMyEnterprise(query: GetOmzetQuery): Observable<ResultOmzetLineDiagram> {
+    return this.http.get<ResultOmzetLineDiagram>(MyEnterpriseAPI.GetOmzetMyEnterprise,{params:query});
   }
   getMyEnterpriseInfo(query: GetMyEnterpriseInfoQuery): Observable<MyEnterpriseDto> {
     return this.http.get<MyEnterpriseDto>(MyEnterpriseAPI.GetMyEnterpriseInfo, {params:  query });

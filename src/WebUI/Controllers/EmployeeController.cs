@@ -13,6 +13,7 @@ using new_usaha.WebUI.Controllers;
 using new_usaha.Application.Common.Models;
 using new_usaha.Application.CQRS.Employees.Commands;
 using new_usaha.Application.Common.Interfaces;
+using MediatR;
 
 namespace new_usaha.WebUI.Controllers;
 
@@ -48,17 +49,17 @@ public class EmployeeController : ApiControllerBase
 
     //[EnterpriseAuthorize("Dashboard", "Peran", "Buat")]
     [HttpPost]
-    public async Task<Guid> CreateEmployee([FromForm] CreateEmployeeCommand command)
+    public async Task<Unit> CreateEmployee([FromForm] CreateEmployeeCommand command)
     {
         return await Mediator.Send(command);
     }
     [HttpPut]
-    public async Task<Guid> UpdateEmployee([FromForm] UpdateEmployeeCommand command)
+    public async Task<Unit> UpdateEmployee([FromForm] UpdateEmployeeCommand command)
     {
         return await Mediator.Send(command);
     }
     [HttpPut]
-    public async Task<Guid> DeleteEmployee([FromForm] DeleteEmployeeCommand command)
+    public async Task<Unit> DeleteEmployee([FromForm] DeleteEmployeeCommand command)
     {
         return await Mediator.Send(command);
     }

@@ -15,7 +15,7 @@
         ></textarea>
         <mat-hint class="color-warn" *ngIf="DescriptionGroup?.errors?.maxlength">Maksimal panjang deskripsi produk 255 karakter.</mat-hint>
     </mat-form-field>
-    <div fxLayout="row" fxLayoutAlign="space-around center" fxLayoutGap="0px" fxFlexFill style="width:100%;">
+    <div class="form-action-container" style="width:100%;">
         <button mat-button color="warn" mat-dialog-close>Batal</button>
         <button mat-raised-button color="primary" (click)="submit()">Selesai</button>
     </div>

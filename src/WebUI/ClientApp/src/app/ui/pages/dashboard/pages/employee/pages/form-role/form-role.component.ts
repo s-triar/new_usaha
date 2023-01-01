@@ -14,7 +14,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { ButtonBackDirective } from 'src/app/ui/directives/button-back/button-back.directive';
 import { EnterpriseClaimDto, EnterpriseRoleDetailDto } from 'src/app/domain/backend/Dtos';
-import { RoleService } from 'src/app/infrastructure/backend/role.service';
+import { RoleService } from 'src/app/ui/pages/dashboard/pages/employee/role.service';
 import { DashboardStateService } from 'src/app/ui/pages/dashboard/components/dashboard-nav/dashboard-state.service';
 import { PopUpConfirmationService } from 'src/app/ui/components/pop-up/pop-up-confirmation/pop-up-confirmation.service';
 import { PopUpNotifService } from 'src/app/ui/components/pop-up/pop-up-notif/pop-up-notif.service';

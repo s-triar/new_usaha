@@ -9,7 +9,7 @@ import {debounceTime,distinctUntilChanged, Observable, startWith, switchMap} fro
 import { MyGoodsGroupsListContainerDto, MyGoodsGroupsListItemDto } from 'src/app/domain/backend/Dtos';
 import { GoodsService } from 'src/app/infrastructure/backend/goods.service';
 import { GoodsGroupService } from 'src/app/infrastructure/backend/goods-group.service';
-import { FlexLayoutModule } from '@angular/flex-layout';
+// import { FlexLayoutModule } from '@angular/flex-layout';
 type MyGoodsGroupsListItemChoiceDto= MyGoodsGroupsListItemDto&{
   selected: boolean;
 };
@@ -25,7 +25,7 @@ type MyGoodsGroupsListItemChoiceDto= MyGoodsGroupsListItemDto&{
     MatFormFieldModule,
     ReactiveFormsModule,
     MatListModule,
-    FlexLayoutModule
+    // FlexLayoutModule
   ],
 })
 export class ListProductUnderThresholdComponent implements OnInit {

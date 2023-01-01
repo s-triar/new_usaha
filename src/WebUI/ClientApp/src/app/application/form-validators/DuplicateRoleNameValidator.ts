@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { EMPTY, of, throwError } from 'rxjs';
 import { Observable } from 'rxjs';
 import { catchError, debounceTime, distinctUntilChanged, first, map, switchMap, take, tap } from 'rxjs/operators';
-import { RoleService } from 'src/app/infrastructure/backend/role.service';
+import { RoleService } from 'src/app/ui/pages/dashboard/pages/employee/role.service';
 
 export class DuplicateRoleNameValidator{
     static validate(

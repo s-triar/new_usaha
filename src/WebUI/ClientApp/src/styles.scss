@@ -53,6 +53,13 @@ body {
   margin: 0;
 }
 
+.app-w-full{
+  width: 100%;
+}
+.app-h-full{
+  height: 100%;
+}
+
 // [type='text']:focus, 
 // [type='email']:focus, 
 // [type='url']:focus, 
@@ -491,6 +498,7 @@ body {
 }
 
 
+
 .img-preview>app-button-upload-file {
   position: absolute;
   right: 1rem;
@@ -535,6 +543,14 @@ body {
   right: 1.5rem;
   bottom: 5.5rem;
   z-index: 20;
+}
+
+.app-search-list-page-container{
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: grid !important;
+  grid-template-rows: auto 1fr auto;
 }
 
 .app-list-container {
