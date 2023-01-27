@@ -6,7 +6,7 @@ import { ControlValueAccessor, FormBuilder, FormGroup, FormsModule, NgControl, N
 import { GoodsTypeDto } from 'src/app/domain/backend/Dtos';
 import { Subject } from 'rxjs';
 import { FocusMonitor, FocusOrigin } from '@angular/cdk/a11y';
-import { CurrencyConversionService } from 'src/app/application/utility/currency-conversion.service';
+import { CurrencyConversionService } from 'src/app/core/utility/currency-conversion.service';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 
 

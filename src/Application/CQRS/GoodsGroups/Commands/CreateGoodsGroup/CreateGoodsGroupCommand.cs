@@ -10,7 +10,7 @@ using new_usaha.Domain.Entities;
 
 namespace new_usaha.Application.CQRS.GoodsGroups.Commands.CreateGoodsGroup;
 
-public class CreateGoodsGroupCommand: IRequest<Guid>
+public class CreateGoodsGroupCommand: IRequest<Unit>
 {
     public string Name { get; set; } 
     public string? Description { get; set; }
@@ -29,7 +29,7 @@ public class CreateGoodsGroupCommandValidator : GoodsGroupValidator<CreateGoodsG
     }
 }
 
-public class CreateGoodsGroupCommandHandler : IRequestHandler<CreateGoodsGroupCommand, Guid>
+public class CreateGoodsGroupCommandHandler : IRequestHandler<CreateGoodsGroupCommand, Unit>
 {
     private readonly IApplicationDbContext _context;
     private readonly ICurrentEnterpriseService _ce;
@@ -39,7 +39,7 @@ public class CreateGoodsGroupCommandHandler : IRequestHandler<CreateGoodsGroupCo
         _context = context;
         _ce = ce;
     }
-    public async Task<Guid> Handle(CreateGoodsGroupCommand request, CancellationToken cancellationToken)
+    public async Task<Unit> Handle(CreateGoodsGroupCommand request, CancellationToken cancellationToken)
     {
         var entity = new GoodsGroup
         {
@@ -49,6 +49,7 @@ public class CreateGoodsGroupCommandHandler : IRequestHandler<CreateGoodsGroupCo
         };
         this._context.GoodsGroups.Add(entity);
         await _context.SaveChangesAsync(cancellationToken);
-        return entity.Id;
+        //return entity.Id;
+        return Unit.Value;
     }
 }

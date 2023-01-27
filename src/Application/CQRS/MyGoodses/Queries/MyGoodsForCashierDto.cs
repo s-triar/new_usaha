@@ -44,10 +44,10 @@ public class MyGoodsCashierConverter : ITypeConverter<Goods, MyGoodsForCashierDt
             Barcode = source.Barcode,
             Name = source.Name,
             Price = source.GoodsPrices.Where(x=>x.End==null).OrderBy(x=>x.CreatedAt).LastOrDefault()!.Price,
-            WholessalePrices =  source.GoodsWholesalePrices.Where(x=>x.End == null).OrderBy(x=>x.WholesalerMin).Select(x=> new WholesalesPrice { WholesalerMin=x.WholesalerMin, WholesalerPrice=x.WholesalerPrice}).ToList()
+            WholessalePrices =  source.GoodsWholesalePrices.Where(x=>x.End == null).OrderBy(x=>x.WholesalerMin).Select(x=> new WholesalesPrice { WholesalerMin=x.WholesalerMin, WholesalerPrice=x.WholesalerPrice}).ToList(),
             //WholesalerPrice = lastPrice.WholesalerPrice,
             //WholesalerMin = lastPrice.WholesalerMin,
-            //IsWholesalerPriceAuto = lastPrice.IsWholesalerPriceAuto,
+            IsWholesalerPriceAuto = source.IsWholesalerPriceAuto,
         };
     }
 }

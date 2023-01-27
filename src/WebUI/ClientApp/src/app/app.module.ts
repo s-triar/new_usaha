@@ -25,12 +25,12 @@ import { CurrencyPipe } from '@angular/common';
 // import { EnterpriseInterceptor } from './shared/interceptors/enterprise.interceptor';
 // import { FlexLayoutModule } from '@angular/flex-layout';
 // import { ZXingScannerModule } from '@zxing/ngx-scanner';
-// import { AuthModule } from './application/auth/auth.module';
+// import { AuthModule } from './core/auth/auth.module';
 import { SplashComponent } from './ui/components/utility/splash/splash.component';
-import { AuthorizeInterceptor } from './application/interceptors/authorize.interceptor';
-import { EnterpriseInterceptor } from './application/interceptors/enterprise.interceptor';
-// import { AuthorizeServerInterceptor } from './application/interceptors/authorize-server.interceptor';
-import { NotificationInterceptor } from './application/interceptors/notification.interceptor';
+import { AuthorizeInterceptor } from './core/interceptors/authorize.interceptor';
+import { EnterpriseInterceptor } from './core/interceptors/enterprise.interceptor';
+// import { AuthorizeServerInterceptor } from './core/interceptors/authorize-server.interceptor';
+import { NotificationInterceptor } from './core/interceptors/notification.interceptor';
 import { MatDialogModule } from '@angular/material/dialog';
 // import { NgxEchartsModule } from 'ngx-echarts';
 export const BASE_URL = new InjectionToken<string>('BASE_URL');
@@ -40,6 +40,7 @@ import localeId from '@angular/common/locales/id';
 import { NgxEchartsModule, NGX_ECHARTS_CONFIG } from 'ngx-echarts';
 registerLocaleData(localeId, 'id'); 
 import * as echarts from 'echarts';
+import { LoadingInterceptor } from './core/interceptors/loading.interceptor';
 // Import echarts extensions
 // import 'echarts-gl';
 // Import echarts themes
@@ -74,7 +75,7 @@ import * as echarts from 'echarts';
     // }),
   ],
   providers: [
-    { provide: LOCALE_ID, useValue: "id-ID" },
+    { provide: LOCALE_ID, useValue: "en-ID" },
     PrintService,
     CurrencyPipe,
     { provide: BASE_URL, useValue: environment.auth_server },
@@ -82,7 +83,7 @@ import * as echarts from 'echarts';
     { provide: HTTP_INTERCEPTORS, useClass: EnterpriseInterceptor, multi: true },
     // {provide: NGX_ECHARTS_CONFIG, useFactory: () => import('echarts')},
     // { provide: HTTP_INTERCEPTORS, useClass: AuthorizeServerInterceptor, multi: true },
-    // { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: NotificationInterceptor, multi: true },
   ],
   bootstrap: [AppComponent]

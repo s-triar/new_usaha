@@ -5,7 +5,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { NgxEchartsModule } from 'ngx-echarts';
 import { DiagramRangeSellPriceType, DiagramRangeSoldType, ResultOmzetLineDiagramItem, ResultSellPriceLineDiagram, ResultSellPriceLineDiagramItem, ResultSoldLineDiagram, ResultSoldLineDiagramItem } from 'src/app/domain/backend/Dtos';
-import { GoodsService } from 'src/app/infrastructure/backend/goods.service';
+import { MyGoodsService } from 'src/app/infrastructure/backend/my-goods.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { EChartsOption } from 'echarts';
 import { startWith, tap, switchMap } from 'rxjs';
@@ -44,7 +44,7 @@ export class SellPriceChartComponent implements OnInit{
   typeOptions = [];
 
   constructor(
-    private _mygoodsService: GoodsService
+    private _mygoodsService: MyGoodsService
     ) {}
 
    

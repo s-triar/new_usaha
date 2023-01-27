@@ -7,7 +7,7 @@ import { MatListModule } from '@angular/material/list';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { debounceTime, tap, ignoreElements, switchMap } from 'rxjs/operators';
-import { DASHBOARD_ROUTE, DASHBOARD_EMPLOYEE_ROUTE } from 'src/app/application/constant/routes';
+import { DASHBOARD_ROUTE, DASHBOARD_EMPLOYEE_ROUTE } from 'src/app/core/constant/routes';
 import { EnterpriseEmployeeDto } from 'src/app/domain/backend/Dtos';
 import { EmployeeService } from 'src/app/ui/pages/dashboard/pages/employee/employee.service';
 import { DashboardStateService } from 'src/app/ui/pages/dashboard/components/dashboard-nav/dashboard-state.service';

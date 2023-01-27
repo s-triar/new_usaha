@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { useHash } from './application/auth/auth-flags';
+import { useHash } from './core/auth/auth-flags';
 import {
   APP_ROUTE,
   AUTH_ROUTE,
@@ -14,19 +14,19 @@ import {
   MY_BUSSINESSES_ROUTE,
   WORKSPACE_ROUTE,
   WS_PRODUCT,
-} from './application/constant/routes';
-import { AuthWithForceLoginGuard } from './application/guards/auth-with-force-login.guard';
-import { AuthGuard } from './application/guards/auth.guard';
-import { UnAuthGuard } from './application/guards/un-auth.guard';
+} from './core/constant/routes';
+import { AuthWithForceLoginGuard } from './core/guards/auth-with-force-login.guard';
+import { AuthGuard } from './core/guards/auth.guard';
+import { UnAuthGuard } from './core/guards/un-auth.guard';
 // import { useHash } from './core/auth/auth-flags';
 // import { AuthWithForceLoginGuard } from './core/auth/auth-with-force-login.guard';
 // import { AuthGuard } from './core/auth/auth.guard';
 // import { UnAuthGuard } from './core/auth/un-auth.guard';
 // import { EnterpriseTokenResolver } from './pages/dashboard/enterprise-token.resolver';
-import { DetailTransactionResolver } from './application/resolvers/detail-transaction.resolver';
-import { EnterpriseTokenResolver } from './application/resolvers/enterprise-token.resolver';
-import { InfoProductResolver } from './application/resolvers/info-product.resolver';
-import { InfoRoleResolver } from './application/resolvers/info-role.resolver';
+import { DetailTransactionResolver } from './core/resolvers/detail-transaction.resolver';
+import { EnterpriseTokenResolver } from './core/resolvers/enterprise-token.resolver';
+import { InfoProductResolver } from './core/resolvers/info-product.resolver';
+import { InfoRoleResolver } from './core/resolvers/info-role.resolver';
 // import { AutoLoginGuard } from './shared/guards/auto-login.guard';
 
 const routes: Routes = [
@@ -118,9 +118,13 @@ const routes: Routes = [
     resolve: { enterpriseToken: EnterpriseTokenResolver },
     loadComponent: () => import('./ui/pages/workspace/workspace.component').then(c => c.WorkspaceComponent),
     children: [
+      // {
+      //   path: WORKSPACE_ROUTE.CASHIER,
+      //   loadComponent: () => import('./ui/pages/workspace/pages/cashier/cashier.component').then(c => c.CashierComponent),
+      // },
       {
         path: WORKSPACE_ROUTE.CASHIER,
-        loadComponent: () => import('./ui/pages/workspace/pages/cashier/cashier.component').then(c => c.CashierComponent),
+        loadComponent: () => import('./ui/pages/workspace/pages/pos-cashier/pos-cashier.component').then(c => c.PosCashierComponent),
       },
       {
         path: WORKSPACE_ROUTE.PRODUCT,

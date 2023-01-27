@@ -3,7 +3,7 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { DashboardStateService, DashboardViewState } from 'src/app/ui/pages/dashboard/components/dashboard-nav/dashboard-state.service';
-import { DASHBOARD_EMPLOYEE_ROUTE, DASHBOARD_ROUTE, DB_OVERVIEW, DB_TRANS_ROUTE, GLOBAL_PATH } from 'src/app/application/constant/routes';
+import { DASHBOARD_EMPLOYEE_ROUTE, DASHBOARD_ROUTE, DB_OVERVIEW, DB_TRANS_ROUTE, GLOBAL_PATH } from 'src/app/core/constant/routes';
 import { Router, RouterModule } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -11,7 +11,7 @@ import { CommonModule } from '@angular/common';
 import { MatListModule } from '@angular/material/list';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { ButtonBackDirective } from 'src/app/ui/directives/button-back/button-back.directive';
-import { DataNavList } from 'src/app/application/types';
+import { DataNavList } from 'src/app/core/types';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 

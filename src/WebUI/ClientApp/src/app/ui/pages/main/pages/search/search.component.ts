@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { AppViewService } from 'src/app/infrastructure/backend/app-view.service';
+import { AppViewService } from 'src/app/core/utility/app-view.service';
 import { ShowCaseItemComponent } from 'src/app/ui/components/card/show-case-item/show-case-item.component';
 import { MainStateService } from 'src/app/ui/pages/main/components/main-nav/main-state.service';
 import { NavSearchComponent } from 'src/app/ui/components/nav/nav-search/nav-search.component';
@@ -35,7 +35,7 @@ export class SearchComponent implements OnInit {
     this.mainStateViewService.changeViewState({
       isFooterBarNeedToBeShown: false
     });
-    this.appViewService.device.pipe(untilDestroyed(this))
+    this.appViewService.getDevice().pipe(untilDestroyed(this))
         .subscribe(device => this.deviceSize = device);
   }
   goToShop(): void{}

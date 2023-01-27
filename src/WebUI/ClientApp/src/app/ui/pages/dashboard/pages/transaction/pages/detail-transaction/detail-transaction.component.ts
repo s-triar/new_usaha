@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { MatTabsModule } from '@angular/material/tabs';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DASHBOARD_ROUTE, DB_TRANS_ROUTE } from 'src/app/application/constant/routes';
+import { DASHBOARD_ROUTE, DB_TRANS_ROUTE } from 'src/app/core/constant/routes';
 import { DetailOrderDto } from 'src/app/domain/backend/Dtos';
 import { TransactionService } from 'src/app/infrastructure/backend/transaction.service';
 import { DashboardStateService } from 'src/app/ui/pages/dashboard/components/dashboard-nav/dashboard-state.service';

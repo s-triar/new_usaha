@@ -27,11 +27,11 @@ import { MatSelect, MatSelectChange, MatSelectModule } from '@angular/material/s
 import { MatTabsModule } from '@angular/material/tabs';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { switchMap, of, throwIfEmpty, filter } from 'rxjs';
-import { PRODUCT_DEFAULT } from 'src/app/application/constant';
-import { CustomUploadFileEventChange } from 'src/app/application/types';
+import { PRODUCT_DEFAULT } from 'src/app/core/constant';
+import { CustomUploadFileEventChange } from 'src/app/core/types';
 import { InfoOfGoodsForUpdatingDto, GoodsTypeDto, MyGoodsGroupsListItemDto, MyGoodsGroupsListMemberItemDto } from 'src/app/domain/backend/Dtos';
 import { GoodsTypeService } from 'src/app/infrastructure/backend/goods-type.service';
-import { GoodsService } from 'src/app/infrastructure/backend/goods.service';
+import { MyGoodsService } from 'src/app/infrastructure/backend/my-goods.service';
 import { ButtonUploadFileComponent } from 'src/app/ui/components/form/button-upload-file/button-upload-file.component';
 import { PopUpNotifService } from 'src/app/ui/components/pop-up/pop-up-notif/pop-up-notif.service';
 import { ScannerDialogComponent } from 'src/app/ui/components/pop-up/scanner-dialog/scanner-dialog.component';
@@ -145,7 +145,7 @@ export class FormUpdateInfoProductKuComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private readonly goodsService: GoodsService,
+    private readonly goodsService: MyGoodsService,
     private readonly goodsTypeService: GoodsTypeService,
     private dialog: MatDialog,
     private notifService: PopUpNotifService
@@ -153,7 +153,7 @@ export class FormUpdateInfoProductKuComponent implements OnInit {
 
   ngOnInit(): void {
     this.initForm();
-    this.goodsTypeService.GoodsTypes$.pipe(
+    this.goodsTypeService.getAll().pipe(
       untilDestroyed(this),
       filter(res => res.length > 0)
     ).subscribe(
@@ -205,7 +205,7 @@ export class FormUpdateInfoProductKuComponent implements OnInit {
         switchMap((x) =>
           this.notifService
             .show({
-              message: x.message,
+              message: "Sukses memperbarui info produk",
               title: 'Sukses',
               type: 'success',
             })

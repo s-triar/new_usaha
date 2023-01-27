@@ -5,7 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
-import { DuplicateRoleNameValidator } from '../../../../../../../application/form-validators/DuplicateRoleNameValidator';
+import { DuplicateRoleNameValidator } from '../../../../../../../core/form-validators/DuplicateRoleNameValidator';
 import { CommonModule, Location } from '@angular/common';
 import { PortalContainerComponent } from 'src/app/ui/components/utility/portal-container/portal-container.component';
 import { NavPageComponent } from 'src/app/ui/components/nav/nav-page/nav-page.component';

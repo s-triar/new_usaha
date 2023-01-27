@@ -8,7 +8,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatTableModule } from '@angular/material/table';
 import { debounceTime, distinctUntilChanged, Observable, of, switchMap } from 'rxjs';
-import { currentPageDescription } from 'src/app/application/types';
+import { currentPageDescription } from 'src/app/core/types';
 import { MyGoodsGroupsListMemberItemDto } from 'src/app/domain/backend/Dtos';
 import { PaginationComponent } from 'src/app/ui/components/pagination/pagination/pagination.component';
 

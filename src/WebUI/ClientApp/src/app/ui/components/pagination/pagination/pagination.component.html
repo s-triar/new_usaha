@@ -1,31 +1,21 @@
 <div class="product-list-page">
-    <button mat-icon-button color="primary" (click)="fastPreviousPage()" [disabled]="currentPage.isCurrentPageStartPage">
-        <!-- <i class="fa fa-fast-backward" aria-hidden="true" ></i> -->
-        <!-- <fa-icon [icon]="iconFullBack"></fa-icon> -->
-        <mat-icon>{{iconFullBack}}</mat-icon>
-    </button>
-    <button mat-icon-button color="primary" (click)="previousPage()" [disabled]="currentPage.isCurrentPageStartPage">
-        <!-- <i class="fa fa-step-backward" aria-hidden="true" ></i> -->
-        <!-- <fa-icon [icon]="iconBack"></fa-icon> -->
-        <mat-icon>{{iconBack}}</mat-icon>
-    </button>
+        <button mat-icon-button color="primary" (click)="fastPreviousPage()" [disabled]="(isFirstPage$ | async) ">
+            <mat-icon>{{iconFullBack}}</mat-icon>
+        </button>
+        <button mat-icon-button color="primary" (click)="previousPage()" [disabled]="(isFirstPage$ | async) ">
+            <mat-icon>{{iconBack}} </mat-icon>
+        </button>
     <form [formGroup]="formSearch">
             <mat-label>Page</mat-label>
             <mat-select formControlName="PageNumber" (selectionChange)="selectPage($event)">
-                <mat-option *ngFor="let p of pages" [value]="p">{{p}}</mat-option>
+                <mat-option *ngFor="let p of formSearch.controls.Pages.value"  [value]="p">{{p}}</mat-option>
             </mat-select>
     </form>
+        <button mat-icon-button color="primary" (click)="nextPage()" [disabled]="(isLastPage$ | async)">
+            <mat-icon>{{iconForward}}</mat-icon>
+        </button>
+        <button mat-icon-button color="primary" (click)="fastNextPage()" [disabled]="(isLastPage$ | async)">
+            <mat-icon>{{iconFullForward}} </mat-icon>
+        </button>
     
-    <button mat-icon-button color="primary" (click)="nextPage()" [disabled]="currentPage.isCurrentPageLastPage">
-        <!-- <fa-icon [icon]="iconForward"></fa-icon> -->
-        <mat-icon>{{iconForward}}</mat-icon>
-
-        <!-- <i class="fa fa-step-forward" aria-hidden="true" ></i> -->
-    </button>
-    <button mat-icon-button color="primary" (click)="fastNextPage()" [disabled]="currentPage.isCurrentPageLastPage">
-        <!-- <fa-icon [icon]="iconFullForward"></fa-icon> -->
-        <mat-icon>{{iconFullForward}}</mat-icon>
-
-        <!-- <i class="fa fa-fast-forward" aria-hidden="true" ></i> -->
-    </button>
 </div>

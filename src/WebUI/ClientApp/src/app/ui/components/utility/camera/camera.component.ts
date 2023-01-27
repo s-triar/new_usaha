@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, HostListener, OnInit, Output, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { FileConversionService } from 'src/app/application/utility/file-conversion.service';
+import { FileConversionService } from 'src/app/core/utility/file-conversion.service';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 // import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';

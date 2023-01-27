@@ -12,7 +12,7 @@ import { EnterpriseRoleDto, UserMinimalInfo } from 'src/app/domain/backend/Dtos'
 import { EmployeeService } from 'src/app/ui/pages/dashboard/pages/employee/employee.service';
 import { RoleService } from 'src/app/ui/pages/dashboard/pages/employee/role.service';
 import { PopUpConfirmationService } from 'src/app/ui/components/pop-up/pop-up-confirmation/pop-up-confirmation.service';
-import { EmployeeEmailValidator } from '../../../../../../../../application/form-validators/EmployeeEmailValidator';
+import { EmployeeEmailValidator } from '../../../../../../../../core/form-validators/EmployeeEmailValidator';
 import {MatAutocompleteModule, MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { PopUpNotifService } from 'src/app/ui/components/pop-up/pop-up-notif/pop-up-notif.service';

@@ -49,23 +49,23 @@ public class EmployeeController : ApiControllerBase
 
     //[EnterpriseAuthorize("Dashboard", "Peran", "Buat")]
     [HttpPost]
-    public async Task<Unit> CreateEmployee([FromForm] CreateEmployeeCommand command)
+    public async Task<Unit> CreateEmployee([FromBody] CreateEmployeeCommand command)
     {
         return await Mediator.Send(command);
     }
     [HttpPut]
-    public async Task<Unit> UpdateEmployee([FromForm] UpdateEmployeeCommand command)
+    public async Task<Unit> UpdateEmployee([FromBody] UpdateEmployeeCommand command)
     {
         return await Mediator.Send(command);
     }
     [HttpPut]
-    public async Task<Unit> DeleteEmployee([FromForm] DeleteEmployeeCommand command)
+    public async Task<Unit> DeleteEmployee([FromBody] DeleteEmployeeCommand command)
     {
         return await Mediator.Send(command);
     }
     
     [HttpPost]
-    public async Task<Guid> JoinEmployee([FromForm] JoinEmployeeCommand command)
+    public async Task<Unit> JoinEmployee([FromBody] JoinEmployeeCommand command)
     {
         return await Mediator.Send(command);
     }

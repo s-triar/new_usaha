@@ -1,21 +1,30 @@
 import { FocusMonitor, FocusOrigin } from '@angular/cdk/a11y';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, ChangeDetectionStrategy, Input, OnDestroy, HostBinding, Optional, Self, ElementRef, Inject, ViewChild } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { Component, OnInit, ChangeDetectionStrategy, Input, OnDestroy, HostBinding, Optional, Self, ElementRef, Inject, ViewChild, forwardRef, Output, EventEmitter } from '@angular/core';
+import { FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AbstractControl, ControlValueAccessor, FormBuilder, FormGroup, NgControl } from '@angular/forms';
 import { MatFormField, MatFormFieldControl, MAT_FORM_FIELD, MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { number } from 'echarts';
 import { Subject } from 'rxjs';
-import { CurrencyConversionService } from 'src/app/application/utility/currency-conversion.service';
+import { CurrencyConversionService } from 'src/app/core/utility/currency-conversion.service';
 
 @Component({
   selector: 'app-input-currency',
   templateUrl: './input-currency.component.html',
   styleUrls: ['./input-currency.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [{provide: MatFormFieldControl, useExisting: InputCurrencyComponent}],
+  providers: [
+    
+    {provide: MatFormFieldControl, useExisting: InputCurrencyComponent},
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(()=>InputCurrencyComponent),
+      multi:true
+    }
+  ],
   standalone: true,
   imports: [
     CommonModule,
@@ -42,7 +51,7 @@ export class InputCurrencyComponent implements OnInit, OnDestroy, MatFormFieldCo
         actual: [nominal],
         formated: [nominal.toString()]
       });
-      this.utilService.formatCurrencyReactiveForm(nominal.toString(), this.parts, 'actual', 'formated');
+      this.utilService.formCurrencyNew(nominal.toString(), this.parts, 'actual', 'formated');
       this.stateChanges.next();
     }
   }
@@ -78,6 +87,9 @@ export class InputCurrencyComponent implements OnInit, OnDestroy, MatFormFieldCo
   get shouldLabelFloat(): boolean {
     return this.focused || !this.empty;
   }
+
+  @Output() blur: EventEmitter<number> = new  EventEmitter<number>();
+
   constructor(
     private fb: FormBuilder,
     @Optional() @Self() public ngControl: NgControl,
@@ -170,6 +182,7 @@ export class InputCurrencyComponent implements OnInit, OnDestroy, MatFormFieldCo
       this.focused = false;
       this.onTouched();
       this.stateChanges.next();
+      this.blur.emit(this.parts.controls.actual.value);
     }
   }
   autoFocusNext(control: AbstractControl, nextElement?: HTMLInputElement): void {

@@ -10,7 +10,7 @@ import { MatSelect, MatSelectModule } from '@angular/material/select';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { PrintService, UsbDriver, WebPrintDriver } from 'ng-thermal-print';
 import { PrintDriver } from 'ng-thermal-print/lib/drivers/PrintDriver';
-import { PRINTER_CONNECTION, BLUETOOTH_CONNECTION, TEST_PRINTER_TEXT } from 'src/app/application/constant';
+import { PRINTER_CONNECTION, BLUETOOTH_CONNECTION, TEST_PRINTER_TEXT } from 'src/app/core/constant';
 import { PopUpNotifService } from 'src/app/ui/components/pop-up/pop-up-notif/pop-up-notif.service';
 import { BleDriver } from 'src/app/ui/components/utility/additional-ng-thermal-print/BleDriver';
 import { SerialDriver } from 'src/app/ui/components/utility/additional-ng-thermal-print/SerialDriver';

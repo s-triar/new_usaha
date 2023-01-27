@@ -27,7 +27,7 @@ public class OrderController : ApiControllerBase
         return new Guid("dadada");
     }
     [HttpPost]
-    public async Task<Guid> CreateOrderCashier([FromForm] CreateOrderCashierCommand command)
+    public async Task<CreateOrderCashierCommandResponse> CreateOrderCashier([FromForm] CreateOrderCashierCommand command)
     {
         return await Mediator.Send(command);
     }

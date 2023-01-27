@@ -9,14 +9,14 @@ namespace new_usaha.WebUI.Controllers;
 public class AccountController : ApiControllerBase
 {
     [HttpPost]
-    public async Task<string> Login([FromBody] LoginCommand command)
+    public async Task<LoginResponse> Login([FromBody] LoginCommand command)
     {
         return await Mediator.Send(command);
     }
     [HttpPost]
-    public async Task Register([FromBody] RegisterAnUserCommand command)
+    public async Task<Unit> Register([FromBody] RegisterAnUserCommand command)
     {
-        await Mediator.Send(command);
+        return await Mediator.Send(command);
     }
     [HttpGet]
     public async Task<bool> CheckDuplicateEmail([FromQuery] CheckDuplicateEmailQuery query)

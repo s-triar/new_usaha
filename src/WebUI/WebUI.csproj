@@ -42,6 +42,10 @@
     </ItemGroup>
 
     <ItemGroup>
+      <None Remove="Controllers\MyEnterpriseController.cs~RF23ceb09b.TMP" />
+    </ItemGroup>
+
+    <ItemGroup>
       <Folder Include="ClientApp\src\app\application\auth-jwt\" />
     </ItemGroup>
 

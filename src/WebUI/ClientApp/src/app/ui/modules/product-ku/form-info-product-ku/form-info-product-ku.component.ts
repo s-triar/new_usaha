@@ -13,7 +13,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { filter, find, map } from 'rxjs';
-import { PRODUCT_DEFAULT } from 'src/app/application/constant';
+import { PRODUCT_DEFAULT } from 'src/app/core/constant';
 import { InfoOfGoodsForUpdatingDto } from 'src/app/domain/backend/Dtos';
 import { GoodsTypeService } from 'src/app/infrastructure/backend/goods-type.service';
 import { InputCurrencyComponent } from 'src/app/ui/components/form/input-currency/input-currency.component';
@@ -79,7 +79,7 @@ export class FormInfoProductKuComponent implements OnInit {
       this.urlImg = this.dataGoods.photo;
     }
     console.log(this.url);
-    this.goodsTypeService.GoodsTypes$
+    this.goodsTypeService.getAll()
     .pipe(
       untilDestroyed(this),
       filter(x => x.length > 0),

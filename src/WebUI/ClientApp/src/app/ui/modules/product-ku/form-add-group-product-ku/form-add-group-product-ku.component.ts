@@ -7,7 +7,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Observer, of, switchMap } from 'rxjs';
-import { GoodsGroupService } from 'src/app/infrastructure/backend/goods-group.service';
+import { MyGoodsGroupService } from 'src/app/infrastructure/backend/my-goods-group.service';
 import { PopUpNotifService } from 'src/app/ui/components/pop-up/pop-up-notif/pop-up-notif.service';
 import { DuplicateGroupNameValidator } from './DuplicateGroupNameValidator';
 
@@ -46,7 +46,7 @@ export class FormAddGroupProductKuComponent implements OnInit {
   }
   constructor(
     private fb: FormBuilder,
-    private readonly goodsGroupService: GoodsGroupService,
+    private readonly goodsGroupService: MyGoodsGroupService,
     private readonly notifService: PopUpNotifService,
 
     ) { }

@@ -130,7 +130,4 @@ export type UpdateRoleCommand = {
 export type DeleteRoleCommand = {
     Id: string;
 };
-export type CreateGoodsGroupCommand = {
-    Name: string;
-    Description: string|null;
-};
+

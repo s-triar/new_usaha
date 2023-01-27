@@ -31,6 +31,6 @@ namespace new_usaha.Application.Common.Interfaces
         Task<(Result Result, string UserId)> CreateUserAsync(string fullname, string email, string phone, string password);
 
         Task<Result> DeleteUserAsync(string userId);
-        Task<ResultUserLogin> SignInWithEmailAndPasword(string email, string password);
+        Task<string> SignInWithEmailAndPasword(string email, string password);
     }
 }

@@ -6,9 +6,9 @@
     <div class="app-form-title">
       <span>Daftar</span>
     </div>
-    <div class="app-form-message" *ngIf="(formMessage$| async) as formMessage">
+    <ng-container class="app-form-message" *ngIf="(formMessage$| async) as formMessage">
       <span></span>
-    </div>
+    </ng-container>
     <mat-form-field appearance="fill" class="auth-form-field">
       <mat-icon class="auth-mat-form-field-prefix" matPrefix>person</mat-icon>
       <mat-label>Nama Lengkap</mat-label>
@@ -93,7 +93,7 @@
     <div class="app-form-action horizontal center">
       <button
         type="submit"
-        [disabled]="form.invalid || loading"
+        [disabled]="form.invalid || (submission_form$ | async)"
         mat-raised-button
         color="accent"
       >

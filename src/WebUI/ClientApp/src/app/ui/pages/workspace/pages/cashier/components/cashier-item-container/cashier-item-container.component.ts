@@ -3,8 +3,9 @@ import { Component, OnInit,  Input, Output, EventEmitter, AfterViewChecked, Chan
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { POSCashierContainerItem, POSCashierItem } from 'src/app/application/types';
+// import { POSCashierContainerItem, POSCashierItem } from 'src/app/core/types';
 import { InputCurrencyComponent } from 'src/app/ui/components/form/input-currency/input-currency.component';
+import { POSCashierContainerItem, POSCashierItem } from '../../services/cashier-data.service';
 // import { InputCurrencyComponent } from 'src/app/components/input-currency/input-currency.component';
 // import { POSCashierContainerItem, POSCashierItem } from 'src/app/shared/interfaces';
 // import { UtilityService } from 'src/app/shared/services/utility.service';
@@ -179,4 +180,6 @@ export class CashierItemContainerComponent implements OnInit, AfterViewChecked  
     item.usedTotalPrice = item.tempUsedTotalPrice - item.totalPriceDisc;
     this.updateTotalPayment();
   }
+
+  
 }

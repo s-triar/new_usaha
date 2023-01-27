@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { WORKSPACE_ROUTE } from 'src/app/application/constant/routes';
+import { WORKSPACE_ROUTE } from 'src/app/core/constant/routes';
 import { WorkspaceNavComponent } from './components/workspace-nav/workspace-nav.component';
 // import { linkworkspace } from 'src/app/shared/data';
 import { WorkspaceStateService } from './components/workspace-nav/workspace-state.service';

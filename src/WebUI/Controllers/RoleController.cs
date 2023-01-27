@@ -51,19 +51,19 @@ public class RoleController : ApiControllerBase
 
     [EnterpriseAuthorize("Dashboard", "Peran", "Buat")]
     [HttpPost]
-    public async Task<Unit> CreateRole([FromForm] CreateRoleCommand command)
+    public async Task<Unit> CreateRole([FromBody] CreateRoleCommand command)
     {
         return await Mediator.Send(command);
     }
     [EnterpriseAuthorize("Dashboard", "Peran", "Buat")]
     [HttpPut]
-    public async Task<Guid> UpdateRole([FromForm] UpdateRoleCommand command)
+    public async Task<Guid> UpdateRole([FromBody] UpdateRoleCommand command)
     {
         return await Mediator.Send(command);
     }
     [EnterpriseAuthorize("Dashboard", "Peran", "Buat")]
     [HttpPut]
-    public async Task<Guid> DeleteRole([FromForm] DeleteRoleCommand command)
+    public async Task<Guid> DeleteRole([FromBody] DeleteRoleCommand command)
     {
         return await Mediator.Send(command);
     }

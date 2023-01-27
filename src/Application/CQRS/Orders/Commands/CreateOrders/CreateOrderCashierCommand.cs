@@ -14,6 +14,10 @@ using new_usaha.Application.CQRS.MyGoodses.Queries;
 
 namespace new_usaha.Application.CQRS.Orders.Commands.CreateOrders;
 
+public class CreateOrderCashierCommandResponse
+{
+    public Guid Id { get; set; }
+}
 public class ItemOrdered
 {
     public Guid GoodsId { get; set; }
@@ -27,7 +31,7 @@ public class ItemOrdered
     public decimal PriceTotalFinal { get; set; }
     public int N { get; set; }
 }
-public class CreateOrderCashierCommand : IRequest<Guid>
+public class CreateOrderCashierCommand : IRequest<CreateOrderCashierCommandResponse>
 {
     public decimal Total { get; set; }
     public decimal Payment { get; set; }
@@ -37,17 +41,12 @@ public class CreateOrderCashierCommand : IRequest<Guid>
 }
 class CreateOrderCahsierCommandValidator : OrderValidator<CreateOrderCashierCommand>
 {
-    private readonly IApplicationDbContext context;
-    private readonly IMapper mapper;
-
     public CreateOrderCahsierCommandValidator(
         IApplicationDbContext context, 
         ICurrentEnterpriseService currentEnterprise,
         ICurrentUserService currentUserService,
         IMapper mapper): base(context, currentEnterprise, currentUserService, mapper)
     {
-        this.context = context;
-        this.mapper = mapper;
         RuleFor(v => v.Items)
             .NotEmpty()
             .WithMessage("Harus mempunyai item yang terjual");
@@ -61,7 +60,7 @@ class CreateOrderCahsierCommandValidator : OrderValidator<CreateOrderCashierComm
     }
 }
 
-public class CreateOrderCashierCommandHandler : IRequestHandler<CreateOrderCashierCommand, Guid>
+public class CreateOrderCashierCommandHandler : IRequestHandler<CreateOrderCashierCommand, CreateOrderCashierCommandResponse>
 {
     private readonly IApplicationDbContext context;
     private readonly ICurrentEnterpriseService _currentEnterprise;
@@ -76,14 +75,15 @@ public class CreateOrderCashierCommandHandler : IRequestHandler<CreateOrderCashi
         _currentEnterprise = currentEnterprise;
         this.mapper = mapper;
     }
-    public async Task<Guid> Handle(CreateOrderCashierCommand request, CancellationToken cancellationToken)
+    public async Task<CreateOrderCashierCommandResponse> Handle(CreateOrderCashierCommand request, CancellationToken cancellationToken)
     {
         await this.context.BeginTransactionAsync();
         var order = await this.CreateOrder(request, cancellationToken);
         await this.CreateOrderItem(order, request.Items, cancellationToken);
         await this.CreateProgressOrder(order, cancellationToken);
         await this.context.CommitTransactionAsync();
-        return order.Id;
+        //return order.Id;
+        return new CreateOrderCashierCommandResponse { Id = order.Id };
     }
     private async Task CreateProgressOrder(Order order, CancellationToken cancellationToken)
     {

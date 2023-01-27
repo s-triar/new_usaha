@@ -9,7 +9,7 @@ import { NgxEchartsModule } from 'ngx-echarts';
 import { startWith, tap, switchMap } from 'rxjs';
 import { DiagramRangeBuyPriceType, DiagramRangeSellPriceType, DiagramRangeSoldType, ResultBuyPriceLineDiagram, ResultBuyPriceLineDiagramItem, ResultSellPriceLineDiagram, ResultSellPriceLineDiagramItem } from 'src/app/domain/backend/Dtos';
 import { BuyPriceChangeInARangeQuery, SellPriceChangeInARangeQuery } from 'src/app/domain/backend/Queries';
-import { GoodsService } from 'src/app/infrastructure/backend/goods.service';
+import { MyGoodsService } from 'src/app/infrastructure/backend/my-goods.service';
 
 @UntilDestroy()
 @Component({
@@ -43,7 +43,7 @@ export class BuyPriceChartComponent implements OnInit{
   typeOptions = [];
 
   constructor(
-    private _mygoodsService: GoodsService
+    private _mygoodsService: MyGoodsService
     ) {}
 
    

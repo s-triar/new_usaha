@@ -7,9 +7,10 @@ import { MatCardModule } from '@angular/material/card';
 // import { NgxEchartsModule, NgxEchartsDirective } from 'ngx-echarts/';
 // import { AgChartsAngularModule } from 'ag-charts-angular';
 import { MatIconModule } from '@angular/material/icon';
-import { ListProductUnderThresholdComponent } from 'src/app/ui/modules/product-ku/list-product-under-threshold/list-product-under-threshold.component';
+// import { ListProductUnderThresholdComponent } from 'src/app/ui/modules/product-ku/list-product-under-threshold/list-product-under-threshold.component';
 import { OmzetChartComponent } from './components/omzet-chart/omzet-chart.component';
 import { NgxEchartsModule } from 'ngx-echarts';
+import { ListProductUnderThresholdComponent } from 'src/app/ui/modules/product-ku/list-product-under-threshold/list-product-under-threshold.component';
 @Component({
   selector: 'app-overview',
   templateUrl: './overview.component.html',

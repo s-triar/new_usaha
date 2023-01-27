@@ -1,10 +1,6 @@
 <div class="bussiness-liss-container">
   <form class="form-input-container" [formGroup]="formSearch">
-    <mat-form-field
-      
-      floatLabel="never"
-      appearance="fill"
-    >
+    <mat-form-field floatLabel="never" appearance="fill">
       <input
         type="text"
         matInput
@@ -16,57 +12,44 @@
       </span>
     </mat-form-field>
   </form>
-  <!-- <div *ngIf="((mybusinesseslist$ | async)?.length === 0); else listMyBussinessBlock" class="no-content" style="height:calc(100% - 6rem);">
-    <div style="padding: 2rem 1rem;">
-        <p style="white-space:pre-wrap;" [innerHTML]="messageStatusList"> </p>
-    </div>
-</div> -->
-
-  <div
-    *ngIf="mybusinesseslist?.length > 0; else noItem"
-    class="container-card-list app-list-contaner"
-    [ngClass]="{
-      handset: (isHandset$ | async),
-      tablet: (isTablet$ | async),
-      web: (isWeb$ | async)
-    }"
-  >
-    <app-my-businesses-list-item
-      class="card-list-item "
-      *ngFor="let item of mybusinesseslist"
-      [data]="item"
-    ></app-my-businesses-list-item>
+  <div>
+    <ng-container *ngIf="mybusinesseslist$ | async as mybusinesseslist">
+      <div
+        *ngIf="mybusinesseslist?.length > 0; else noItem"
+        class="container-card-list app-list-contaner"
+        [ngClass]="screenSize$ | async"
+      >
+        <app-my-businesses-list-item
+          class="card-list-item"
+          *ngFor="let item of mybusinesseslist"
+          [data]="item"
+        ></app-my-businesses-list-item>
+      </div>
+    </ng-container>
+    <ng-template #noItem>
+      <div class="app-no-item-container ">
+        <span>Tidak ada usaha.</span>
+      </div>
+    </ng-template>
   </div>
-
-  <ng-template #noItem>
-    <div class="app-no-item-container">
-      <span>Tidak ada usaha.</span>
-    </div>
-  </ng-template>
-
-  
+ 
   <app-pagination
+    [pageSize]="formSearch.controls.PageSize.value"
+    [pageNumber]="formSearch.controls.PageNumber.value"
     (pageSelectedChanged)="pageSelectedChanged($event)"
     (nPageChanged)="paginationNChanged($event)"
   ></app-pagination>
 </div>
-<!-- style="
-  position: sticky;
-  top: 0rem;
-  background-color: white;
-  padding: 0px 1rem;
-  z-index: 19;
-" -->
+
 <button
-    mat-fab
-    color="accent"
-    class="app-btn-add"
-    matTooltip="Tambah Usaha Baru"
-    matTooltipPosition="before"
-    matTooltipClass="app-tooltip"
-    matTooltipHideDelay="400"
-    (click)="addBusinessDialog()"
-  >
-    <!-- <fa-icon [icon]="icons.add"></fa-icon> -->
-    <mat-icon>{{ icons.add }}</mat-icon>
-  </button>
+  mat-fab
+  color="accent"
+  class="app-btn-add"
+  matTooltip="Tambah Usaha Baru"
+  matTooltipPosition="before"
+  matTooltipClass="app-tooltip"
+  matTooltipHideDelay="400"
+  (click)="addBusinessDialog()"
+>
+  <mat-icon>{{ icons.add }}</mat-icon>
+</button>

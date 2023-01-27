@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { MyEnterpriseAPI } from 'src/app/application/constant/apis';
+import { MyEnterpriseAPI } from 'src/app/core/constant/apis';
 import { MyEnterpriseContainerDto, MyEnterpriseDto } from 'src/app/domain/backend/Dtos';
 import { CheckAvailableEnterpriseCodeQuery,  GetMyEnterprisesSearchQuery } from 'src/app/domain/backend/Queries';
 

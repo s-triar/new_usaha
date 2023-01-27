@@ -37,9 +37,7 @@ export type CashierProductSearchQuery = {
     Search: string;
     EnterpriseId: string;
 };
-export type EnterpriseTokenQuery = {
-    EnterpriseId: string;
-};
+
 export type GetMyEnterpriseInfoQuery = {
     Id: string;
 };

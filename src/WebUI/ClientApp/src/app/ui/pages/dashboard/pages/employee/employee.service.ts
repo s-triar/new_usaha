@@ -1,9 +1,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { EmployeeAPI } from 'src/app/application/constant/apis';
-import { showErrorDialogContext } from 'src/app/application/interceptors/notification.interceptor';
-import { FormConversionService } from 'src/app/application/utility/form-conversion.service';
+import { EmployeeAPI } from 'src/app/core/constant/apis';
+import { setErrorDialogContext } from 'src/app/core/interceptors/notification.interceptor';
+import { FormConversionService } from 'src/app/core/utility/form-conversion.service';
 import { EnterpriseEmployeeListContainerDto, EnterpriseEmployeeDetailDto, UserMinimalInfo } from 'src/app/domain/backend/Dtos';
 import { CheckAvailableCandidateEmployeeQuery, GetCandidateEmployeeQuery, GetDetailEnterpriseEmployeeQuery, GetEnterpriseEmployeeQuery } from 'src/app/domain/backend/Queries';
 
@@ -30,15 +30,15 @@ export class EmployeeService implements EmployeeServiceInterface {
   }
   createEmployee(form: any): Observable<string> {
     const data = this.utilService.convertModelToFormData(form, null, null);
-    return this.httpClient.post<string>(EmployeeAPI.CreateEmployee, data, {context: showErrorDialogContext()});
+    return this.httpClient.post<string>(EmployeeAPI.CreateEmployee, data, {context: setErrorDialogContext()});
   }
   updateEmployee(form: any): Observable<string> {
     const data = this.utilService.convertModelToFormData(form, null, null);
-    return this.httpClient.post<string>(EmployeeAPI.UpdateEmployee, data, {context: showErrorDialogContext()});
+    return this.httpClient.post<string>(EmployeeAPI.UpdateEmployee, data, {context: setErrorDialogContext()});
   }
   deleteEmployee(form: any): Observable<string> {
     const data = this.utilService.convertModelToFormData(form, null, null);
-    return this.httpClient.post<string>(EmployeeAPI.DeleteEmployee, data, {context: showErrorDialogContext()});
+    return this.httpClient.post<string>(EmployeeAPI.DeleteEmployee, data, {context: setErrorDialogContext()});
   }
   getDetailEnterpriseEmployee(query: GetDetailEnterpriseEmployeeQuery): Observable<EnterpriseEmployeeDetailDto> {
     return this.httpClient.get<EnterpriseEmployeeDetailDto>(EmployeeAPI.GetDetailEnterpriseEmployee, {params: query});
@@ -55,7 +55,7 @@ export class EmployeeService implements EmployeeServiceInterface {
   }
   joinEmployee(form: any): Observable<string> {
     const data = this.utilService.convertModelToFormData(form, null, null);
-    return this.httpClient.post<string>(EmployeeAPI.JoinEmployee, data, {context: showErrorDialogContext()});
+    return this.httpClient.post<string>(EmployeeAPI.JoinEmployee, data, {context: setErrorDialogContext()});
   }
 
 }

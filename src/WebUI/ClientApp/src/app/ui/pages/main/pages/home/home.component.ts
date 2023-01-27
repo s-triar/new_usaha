@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { GLOBAL_PATH, MAIN_ENTERPRISE_ROUTE } from 'src/app/application/constant/routes';
-import { AppViewService } from 'src/app/infrastructure/backend/app-view.service';
+import { GLOBAL_PATH, MAIN_ENTERPRISE_ROUTE } from 'src/app/core/constant/routes';
+import { AppViewService } from 'src/app/core/utility/app-view.service';
 import { ShowCaseShopItemComponent } from 'src/app/ui/components/card/show-case-shop-item/show-case-shop-item.component';
 import { MainStateService } from 'src/app/ui/pages/main/components/main-nav/main-state.service';
 import { PaginationComponent } from 'src/app/ui/components/pagination/pagination/pagination.component';
@@ -37,7 +37,7 @@ export class HomeComponent implements OnInit {
     this.mainStateService.changeViewState({
       isFooterBarNeedToBeShown: true
     });
-    this.appViewService.device.pipe(untilDestroyed(this))
+    this.appViewService.getDevice().pipe(untilDestroyed(this))
         .subscribe(device => this.deviceSize = device);
   }
   goToShop(): void{

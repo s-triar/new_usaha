@@ -9,7 +9,7 @@ import { EChartsOption } from 'echarts';
 import { startWith, tap, switchMap } from 'rxjs';
 import { DiagramRangeSoldType, ResultOmzetLineDiagramItem, ResultSoldLineDiagram, ResultSoldLineDiagramItem } from 'src/app/domain/backend/Dtos';
 import { GetOmzetQuery, NumberSoldInARangeQuery } from 'src/app/domain/backend/Queries';
-import { GoodsService } from 'src/app/infrastructure/backend/goods.service';
+import { MyGoodsService } from 'src/app/infrastructure/backend/my-goods.service';
 
 @UntilDestroy()
 @Component({
@@ -43,7 +43,7 @@ export class NSoldChartComponent implements OnInit {
   typeOptions = [];
 
   constructor(
-    private _mygoodsService: GoodsService
+    private _mygoodsService: MyGoodsService
     ) {}
 
    

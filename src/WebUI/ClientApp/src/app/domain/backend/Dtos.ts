@@ -1,8 +1,4 @@
-export type EnterpriseTypeDto = {
-    id: number;
-    name: string;
-    provide: string;
-};
+
 export type EnterpriseAddressDto = {
     id: string;
     enterpriseId: string;
@@ -24,9 +20,6 @@ export type EnterpriseDto = {
     phone: string;
     email: string;
     address: EnterpriseAddressDto;
-};
-export type EnterpriseTokenDto = {
-    token: string;
 };
 
 export type MyEnterpriseDto = {

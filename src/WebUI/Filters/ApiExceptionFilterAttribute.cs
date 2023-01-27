@@ -17,6 +17,7 @@ namespace new_usaha.WebUI.Filters
                 { typeof(NotFoundException), HandleNotFoundException },
                 { typeof(UnauthorizedAccessException), HandleUnauthorizedAccessException },
                 { typeof(ForbiddenAccessException), HandleForbiddenAccessException },
+                { typeof(BadRequestException),  HandleBadRRequestException}
             };
         }
 
@@ -77,7 +78,9 @@ namespace new_usaha.WebUI.Filters
             {
                 Type = "https://tools.ietf.org/html/rfc7231#section-6.5.4",
                 Title = "The specified resource was not found.",
-                Detail = exception.Message
+                Detail = exception.Message,
+                Status = StatusCodes.Status404NotFound,
+
             };
 
             context.Result = new NotFoundObjectResult(details);
@@ -87,8 +90,10 @@ namespace new_usaha.WebUI.Filters
 
         private void HandleUnauthorizedAccessException(ExceptionContext context)
         {
-            var details = new ProblemDetails
+            var exception = (UnauthorizedAccessException)context.Exception;
+            var details = new ProblemDetails()
             {
+                Detail = exception.Message,
                 Status = StatusCodes.Status401Unauthorized,
                 Title = "Unauthorized",
                 Type = "https://tools.ietf.org/html/rfc7235#section-3.1"
@@ -104,8 +109,10 @@ namespace new_usaha.WebUI.Filters
 
         private void HandleForbiddenAccessException(ExceptionContext context)
         {
-            var details = new ProblemDetails
+            var exception = (ForbiddenAccessException)context.Exception;
+            var details = new ProblemDetails()
             {
+                Detail = exception.Message,
                 Status = StatusCodes.Status403Forbidden,
                 Title = "Forbidden",
                 Type = "https://tools.ietf.org/html/rfc7231#section-6.5.3"
@@ -115,6 +122,22 @@ namespace new_usaha.WebUI.Filters
             {
                 StatusCode = StatusCodes.Status403Forbidden
             };
+
+            context.ExceptionHandled = true;
+        }
+        private void HandleBadRRequestException(ExceptionContext context)
+        {
+            var exception = (BadRequestException)context.Exception;
+
+            var details = new ProblemDetails()
+            {
+                Detail = exception.Message,
+                Status = StatusCodes.Status400BadRequest,
+                Title = "Bad Request",
+                Type = "https://tools.ietf.org/html/rfc7231#section-6.5.1"
+            };
+
+            context.Result = new BadRequestResult();
 
             context.ExceptionHandled = true;
         }

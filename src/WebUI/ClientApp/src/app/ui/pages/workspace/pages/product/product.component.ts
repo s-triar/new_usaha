@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component,  OnInit } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
-import { WORKSPACE_ROUTE, WS_PRODUCT, GLOBAL_PATH } from 'src/app/application/constant/routes';
+import { WORKSPACE_ROUTE, WS_PRODUCT, GLOBAL_PATH } from 'src/app/core/constant/routes';
 import { WorkspaceStateService } from '../../components/workspace-nav/workspace-state.service';
 
 @Component({
@@ -38,7 +38,7 @@ export class ProductComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.loadGoodses('');
+    // this.loadGoodses('');
     // this.wsStateService.changeTab(WS_PRODUCT._KEY_);
     this.wsStateService.changeViewState({
       currentTab: WS_PRODUCT._KEY_,
@@ -48,23 +48,23 @@ export class ProductComponent implements OnInit {
     });
   }
 
-  loadGoodses(search: string): void{
-    // this.store.dispatch(LoadGoodses({
-    //   payload: {
-    //     EnterpriseId: this.idUsaha,
-    //     N: 20,
-    //     Page: 1,
-    //     Search: search
-    //   }
-    // }));
-  }
+  // loadGoodses(search: string): void{
+  //   // this.store.dispatch(LoadGoodses({
+  //   //   payload: {
+  //   //     EnterpriseId: this.idUsaha,
+  //   //     N: 20,
+  //   //     Page: 1,
+  //   //     Search: search
+  //   //   }
+  //   // }));
+  // }
 
-  generateUrlInfo(id: string): string{
-    let infoSplit = this.linkToInfoBluePrint.split(this.PARAM_WORKSPACE_ID_USAHA);
-    const tempInfo = infoSplit[0] + this.idUsaha + infoSplit[1];
-    infoSplit = tempInfo.split(this.PARAM_PRODUCT_ID_PRODUCT_INFO);
-    const res =   infoSplit[0] + id + infoSplit[1];
-    return res;
-  }
+  // generateUrlInfo(id: string): string{
+  //   let infoSplit = this.linkToInfoBluePrint.split(this.PARAM_WORKSPACE_ID_USAHA);
+  //   const tempInfo = infoSplit[0] + this.idUsaha + infoSplit[1];
+  //   infoSplit = tempInfo.split(this.PARAM_PRODUCT_ID_PRODUCT_INFO);
+  //   const res =   infoSplit[0] + id + infoSplit[1];
+  //   return res;
+  // }
 
 }

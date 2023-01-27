@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using new_usaha.Application.Common.Exceptions;
 using new_usaha.Application.Common.Interfaces;
 using new_usaha.Application.Common.Models;
 
@@ -127,24 +128,24 @@ namespace new_usaha.Infrastructure.Identity
         }
 
 
-        public async Task<ResultUserLogin> SignInWithEmailAndPasword(string email, string password)
+        public async Task<string> SignInWithEmailAndPasword(string email, string password)
         {
             var user = await _userManager.FindByEmailAsync(email);
             if (user == null)
             {
                 string Message = "Pengguna tidak ditemukan";
-                return new ResultUserLogin(false,new List<string>() { }, Message, null);
+                throw new NotFoundException( Message);
             }
             var result = await _signManager.CheckPasswordSignInAsync(user, password, false);
             if (result.IsNotAllowed)
             {
                 string Message = "Akun belum aktif";
-                return new ResultUserLogin(false, new List<string>() { }, Message, null);
+                throw new BadRequestException(Message);
             }
             if (!result.Succeeded)
             {
                 string Message = "Password salah";
-                return new ResultUserLogin(false, new List<string>() { }, Message, null);
+                throw new BadRequestException(Message);
             }
             else
             {
@@ -164,7 +165,7 @@ namespace new_usaha.Infrastructure.Identity
                 var tokenJson = new JwtSecurityTokenHandler().WriteToken(token);
                 string Message = "Berhasil masuk";
                 string Token = tokenJson;
-                return new ResultUserLogin(true, new List<string>() { }, Message, Token);
+                return Token;
 
             }
         }

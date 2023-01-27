@@ -9,9 +9,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatTableModule } from '@angular/material/table';
 import { debounceTime, distinctUntilChanged, Observable, switchMap } from 'rxjs';
-import { currentPageDescription } from 'src/app/application/types';
+import { currentPageDescription } from 'src/app/core/types';
 import { MyGoodsGroupsListItemDto, MyGoodsGroupsListContainerDto } from 'src/app/domain/backend/Dtos';
-import { GoodsGroupService } from 'src/app/infrastructure/backend/goods-group.service';
+import { MyGoodsGroupService } from 'src/app/infrastructure/backend/my-goods-group.service';
 import { PaginationComponent, PageSizeChangedEvent, PageNumberChangedEvent } from 'src/app/ui/components/pagination/pagination/pagination.component';
 import { AddGroupProductKuDialogComponent } from '../add-group-product-ku-dialog/add-group-product-ku-dialog.component';
 import { MemberGroupProductKuDialogComponent } from '../member-group-product-ku-dialog/member-group-product-ku-dialog.component';
@@ -34,7 +34,7 @@ type MyGoodsGroupsListItemChoiceDto= MyGoodsGroupsListItemDto&{
     MatTableModule,
     PaginationComponent,
     // FlexLayoutModule
-  ]
+  ],
 })
 export class GroupProductKuDialogComponent implements OnInit {
   @ViewChild(PaginationComponent, {static: true}) pagination!: PaginationComponent;
@@ -57,7 +57,7 @@ export class GroupProductKuDialogComponent implements OnInit {
     private dialogRef: MatDialogRef<GroupProductKuDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public groupSelected: MyGoodsGroupsListItemDto[],
     private dialog: MatDialog,
-    private readonly goodsGroupService: GoodsGroupService
+    private readonly goodsGroupService: MyGoodsGroupService
   ) { }
 
   ngOnInit(): void {

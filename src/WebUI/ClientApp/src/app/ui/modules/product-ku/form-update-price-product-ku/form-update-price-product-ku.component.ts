@@ -8,7 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { of, switchMap } from 'rxjs';
-import { GoodsService } from 'src/app/infrastructure/backend/goods.service';
+import { MyGoodsService } from 'src/app/infrastructure/backend/my-goods.service';
 import { InputCurrencyComponent } from 'src/app/ui/components/form/input-currency/input-currency.component';
 import { PopUpNotifService } from 'src/app/ui/components/pop-up/pop-up-notif/pop-up-notif.service';
 
@@ -69,7 +69,7 @@ export class FormUpdatePriceProductKuComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private notifService: PopUpNotifService,
-    private readonly goodsService: GoodsService
+    private readonly goodsService: MyGoodsService
 
   ) { }
 
@@ -107,7 +107,7 @@ export class FormUpdatePriceProductKuComponent implements OnInit {
         .pipe(
           untilDestroyed(this),
           switchMap(x =>
-            this.notifService.show({message: x.message, title: 'Sukses', type: 'success'}).afterClosed()
+            this.notifService.show({message: "Sukses memperbarui harga produk", title: 'Sukses', type: 'success'}).afterClosed()
                              .pipe(switchMap(y => of(x)))
           )
         )

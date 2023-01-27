@@ -6,11 +6,8 @@
     <div class="app-form-title">
       <span>Masuk</span>
     </div>
-    <div class="app-form-message" *ngIf=" (formMessage$ | async) as formMessage">
-      <ng-container *ngIf="formMessage!==null">
-        <span> </span>
-      </ng-container>
-    </div>
+    <ng-container  class="app-form-message" *ngIf=" (formMessage$ | async) as formMessage">
+    </ng-container >
     <mat-form-field appearance="fill" class="auth-form-field">
       <mat-icon class="auth-mat-form-field-prefix" matPrefix>email</mat-icon>
       <mat-label>Email or Username</mat-label>
@@ -18,9 +15,6 @@
       <mat-error *ngIf="form.getError('required', 'Identifier')">
         Email or Username is required
       </mat-error>
-      <!-- <mat-error *ngIf="form.getError('maxlength', 'Identifier')">
-        Email or Username has max length of 255 characters
-      </mat-error> -->
     </mat-form-field>
     <mat-form-field appearance="fill" class="auth-form-field">
       <mat-icon class="auth-mat-form-field-prefix" matPrefix>password</mat-icon>
@@ -29,14 +23,11 @@
       <mat-error *ngIf="form.getError('required', 'Password')">
         Password is required
       </mat-error>
-      <!-- <mat-error *ngIf="form.getError('maxlength', 'Password')">
-        Password has max length of 255 characters
-      </mat-error> -->
     </mat-form-field>
     <div class="app-form-action horizontal center">
       <button
         type="submit"
-        [disabled]="form.invalid || loading"
+        [disabled]="form.invalid || (submit_state$ | async)"
         mat-raised-button
         color="accent"
       >
@@ -45,12 +36,4 @@
     </div>
   </form>
   <div style="margin-top: 1rem">Belum punya akun? <a [routerLink]="pathToRegister">Daftar</a></div>
-  <!-- <div style="font-size: large; text-align: center;margin-bottom:4rem;" class="color-primary">
-        <p><span style="font-weight: 500;font-size: larger;">Usahaku</span> memakai authentikasi yang terintegrasi dengan berbagai produk dari Usahaku.</p>
-        <p>Untuk masuk dan daftar silahkan melalui <span style="font-weight: 500;font-size: larger;">Usahaku Auth</span>.</p>
-    </div>
-    <div style="display: flex;flex-direction: row;justify-content: center;justify-items: center;align-items: center;align-content: center;">
-        <button mat-raised-button color="warn" (click)="logout()" style="margin-right: 1rem;">Keluar</button>
-        <button mat-raised-button color="primary" (click)="login()" style="margin-right: 1rem;">Masuk</button>
-    </div> -->
 </div>

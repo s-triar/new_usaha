@@ -1,30 +1,29 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { Observable, Subject, Subscription, switchMap } from 'rxjs';
+import { Observable, switchMap } from 'rxjs';
 import {
   debounceTime,
   distinctUntilChanged,
   map,
   shareReplay,
+  startWith,
   tap,
 } from 'rxjs/operators';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
-import { BUSINESS_DEFAULT } from 'src/app/application/constant';
-import { GLOBAL_PATH } from 'src/app/application/constant/routes';
-import { DataAddBusiness } from 'src/app/application/types';
+import { BUSINESS_DEFAULT } from 'src/app/core/constant';
+import { GLOBAL_PATH } from 'src/app/core/constant/routes';
+import { DataAddBusiness } from 'src/app/core/types';
 import {
   MyEnterpriseDto,
   SearchPageResponse,
 } from 'src/app/domain/backend/Dtos';
 import { MyBussinessService } from 'src/app/infrastructure/backend/my-bussiness.service';
 import { MainStateService } from 'src/app/ui/pages/main/components/main-nav/main-state.service';
-import { AddBusinessDialogComponent } from 'src/app/ui/pages/main/pages/my-businesses/pages/business-list/add-business-dialog/add-business-dialog.component';
 import { MyBusinessesListItemComponent } from 'src/app/ui/components/card/my-businesses-list-item/my-businesses-list-item.component';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
@@ -33,6 +32,7 @@ import {
   PageSizeChangedEvent,
   PaginationComponent,
 } from 'src/app/ui/components/pagination/pagination/pagination.component';
+import { AppViewService } from 'src/app/core/utility/app-view.service';
 
 @UntilDestroy()
 @Component({
@@ -57,10 +57,6 @@ export class BussinessListComponent implements OnInit {
   @ViewChild(PaginationComponent, { static: true })
   pagination!: PaginationComponent;
 
-  messageStatusListDEFAULT =
-    'Belum ada usaha. <br/><br/> Ayo buat usahamu sendiri.';
-  messageStatusList = this.messageStatusListDEFAULT;
-
   formSearch = this.formBuilder.nonNullable.group({
     Search: this.formBuilder.nonNullable.control(''),
     PageSize: this.formBuilder.nonNullable.control(20),
@@ -80,32 +76,12 @@ export class BussinessListComponent implements OnInit {
       title: 'Bergabung',
     },
   ];
-  mybusinesseslist!: MyEnterpriseDto[];
+  mybusinesseslist$: Observable<MyEnterpriseDto[]>;
 
-  isHandset$: Observable<boolean> = this.breakpointObserver
-    .observe(Breakpoints.Handset)
-    .pipe(
-      untilDestroyed(this),
-      map((result) => result.matches),
-      shareReplay()
-    );
-  isTablet$: Observable<boolean> = this.breakpointObserver
-    .observe(Breakpoints.Tablet)
-    .pipe(
-      untilDestroyed(this),
-      map((result) => result.matches),
-      shareReplay()
-    );
-  isWeb$: Observable<boolean> = this.breakpointObserver
-    .observe(Breakpoints.Web)
-    .pipe(
-      untilDestroyed(this),
-      map((result) => result.matches),
-      shareReplay()
-    );
+  screenSize$: Observable<string> = this.appView.getDevice();
 
   constructor(
-    private breakpointObserver: BreakpointObserver,
+    private appView: AppViewService,
     private formBuilder: FormBuilder,
     public dialog: MatDialog,
     private router: Router,
@@ -113,17 +89,16 @@ export class BussinessListComponent implements OnInit {
     private mainStateService: MainStateService
   ) {}
 
-
   ngOnInit(): void {
     this.mainStateService.changeViewState({ isFooterBarNeedToBeShown: true });
     this.searchOwnedEnterprise();
     this.setPaginationConfig();
-    this.formSearch.controls.Search.setValue('', { onlySelf: true });
-    this.formSearch.controls.Search.updateValueAndValidity();
+    // this.formSearch.controls.Search.setValue('', { onlySelf: true });
+    // this.formSearch.controls.Search.updateValueAndValidity();
   }
 
   addBusinessDialog(): void {
-      this.router.navigateByUrl(this.businessOptionList[0].link);
+    this.router.navigateByUrl(this.businessOptionList[0].link);
     // JANGAN HAPUS
     // const dialogConfig = new MatDialogConfig();
     // dialogConfig.autoFocus = true;
@@ -142,21 +117,24 @@ export class BussinessListComponent implements OnInit {
     //   });
   }
   searchOwnedEnterprise(): void {
-    this.formSearch.valueChanges.pipe(
-      untilDestroyed(this),
+    this.mybusinesseslist$ = this.formSearch.valueChanges.pipe(
+      // untilDestroyed(this),
+      startWith(this.formSearch.value),
       debounceTime(400),
       distinctUntilChanged(),
-      switchMap((x) =>  this.myBussinessService.getOwned(this.formSearch.getRawValue())),
+      switchMap((x) =>
+        this.myBussinessService.getOwned(this.formSearch.getRawValue())
+      ),
       tap((x) => this.pagination.setPagesNumbers(x.totalPages)),
       map((x) => x.items),
-      map((x) => {
-        for (const iterator of x) {
-          iterator.photo = iterator.photo ?? BUSINESS_DEFAULT;
-        }
-        return x;
-      }),
-      tap(t=>console.log(t))
-    ).subscribe(x=>this.mybusinesseslist=x);
+      map((x) =>
+        x.map((element) => {
+          element.photo = element.photo ?? BUSINESS_DEFAULT;
+          return element;
+        })
+      ),
+      tap((t) => console.log(t))
+    );
   }
   setPaginationConfig(): void {
     this.pagination.setPageSize(this.formSearch.controls.PageSize.value);

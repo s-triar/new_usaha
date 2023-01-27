@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { RoleAPI } from 'src/app/application/constant/apis';
-import { showErrorDialogContext } from 'src/app/application/interceptors/notification.interceptor';
-import { FormConversionService } from 'src/app/application/utility/form-conversion.service';
+import { RoleAPI } from 'src/app/core/constant/apis';
+import { setErrorDialogContext } from 'src/app/core/interceptors/notification.interceptor';
+import { FormConversionService } from 'src/app/core/utility/form-conversion.service';
 import { CreateRoleCommand, UpdateRoleCommand, DeleteRoleCommand } from 'src/app/domain/backend/Commands';
 import { EnterpriseClaimDto, EnterpriseRoleDetailDto, EnterpriseRoleContainerDto, EnterpriseRoleDto } from 'src/app/domain/backend/Dtos';
 import { CheckDuplicateRoleNameQuery, GetEnterpriseRoleClaimsQuery, GetEnterpriseRoleQuery, GetEnterpriseRoleListQuery } from 'src/app/domain/backend/Queries';
@@ -37,16 +37,16 @@ export class RoleService  implements RoleServiceInterface{
   }
   createEnterpriseRole(form: CreateRoleCommand): Observable<string> {
     const data = this.utilService.convertModelToFormData(form, null, null);
-    return this.httpClient.post<string>(RoleAPI.CreateEnterpriseRole, data, {context: showErrorDialogContext()});
+    return this.httpClient.post<string>(RoleAPI.CreateEnterpriseRole, data, {context: setErrorDialogContext()});
   }
   updateEnterpriseRole(form: UpdateRoleCommand): Observable<string> {
     const data = this.utilService.convertModelToFormData(form, null, null);
-    return this.httpClient.put<string>(RoleAPI.UpdateEnterpriseRole, data, {context: showErrorDialogContext()});
+    return this.httpClient.put<string>(RoleAPI.UpdateEnterpriseRole, data, {context: setErrorDialogContext()});
   }
   deleteEnterpriseRole(form: DeleteRoleCommand): Observable<string> {
     const data = this.utilService.convertModelToFormData(form, null, null);
     console.log(data);
-    return this.httpClient.put<string>(RoleAPI.DeleteEnterpriseRole, data, {context: showErrorDialogContext()});
+    return this.httpClient.put<string>(RoleAPI.DeleteEnterpriseRole, data, {context: setErrorDialogContext()});
   }
 
   checkDuplicateRoleName(query: CheckDuplicateRoleNameQuery): Observable<boolean> {

@@ -1,12 +1,12 @@
 import { AbstractControl, ValidationErrors, AsyncValidatorFn } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, debounceTime, switchMap, map, catchError, of, take } from 'rxjs';
-import { GoodsGroupService } from 'src/app/infrastructure/backend/goods-group.service';
+import { MyGoodsGroupService } from 'src/app/infrastructure/backend/my-goods-group.service';
 
 
 export class DuplicateGroupNameValidator{
     static validate(
-        goodsGroupService: GoodsGroupService
+        goodsGroupService: MyGoodsGroupService
     ): (ctrl: AbstractControl) => Observable<ValidationErrors | null> {
     return (ctrl: AbstractControl) => {
         return ctrl.valueChanges.pipe(
@@ -28,7 +28,7 @@ export class DuplicateGroupNameValidator{
 }
 
 
-export function groupNameCheck(goodsGroupService: GoodsGroupService, routes: ActivatedRoute): AsyncValidatorFn |null {
+export function groupNameCheck(goodsGroupService: MyGoodsGroupService, routes: ActivatedRoute): AsyncValidatorFn |null {
     return (c: AbstractControl): Observable<{ [key: string]: any } | null> => {
         return c.valueChanges.pipe(
             debounceTime(700),

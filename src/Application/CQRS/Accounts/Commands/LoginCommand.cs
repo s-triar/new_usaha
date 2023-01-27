@@ -8,7 +8,13 @@ using MediatR;
 using new_usaha.Application.Common.Interfaces;
 
 namespace new_usaha.Application.CQRS.Accounts.Commands;
-public class LoginCommand: IRequest<ResultUserLogin>
+
+public class LoginResponse
+{
+    public string AccessToken { get; set; }
+}
+
+public class LoginCommand: IRequest<LoginResponse>
 {
     public string Identifier { get; set; }
     public string Password { get; set; }
@@ -25,7 +31,7 @@ public class LoginCommandValidator: AbstractValidator<LoginCommand>
     }
 }
 
-public class LoginCommandHandler : IRequestHandler<LoginCommand, ResultUserLogin>
+public class LoginCommandHandler : IRequestHandler<LoginCommand, LoginResponse>
 {
     private readonly IIdentityService _ids;
 
@@ -33,8 +39,12 @@ public class LoginCommandHandler : IRequestHandler<LoginCommand, ResultUserLogin
     {
         _ids = ids;
     }
-    public async Task<ResultUserLogin> Handle(LoginCommand request, CancellationToken cancellationToken)
+    public async Task<LoginResponse> Handle(LoginCommand request, CancellationToken cancellationToken)
     {
-        return await _ids.SignInWithEmailAndPasword(request.Identifier, request.Password);
+        var token =  await _ids.SignInWithEmailAndPasword(request.Identifier, request.Password);
+        return new LoginResponse
+        {
+            AccessToken=token
+        };
     }
 }

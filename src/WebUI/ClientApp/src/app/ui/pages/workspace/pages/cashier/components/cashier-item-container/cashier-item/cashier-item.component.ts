@@ -4,7 +4,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSlideToggleChange, MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { POSCashierItem } from 'src/app/application/types';
+import { POSCashierItem } from 'src/app/core/types';
 import { InputCurrencyComponent } from 'src/app/ui/components/form/input-currency/input-currency.component';
 // import { InputCurrencyComponent } from 'src/app/components/input-currency/input-currency.component';
 // import { POSCashierItem } from 'src/app/shared/interfaces';

@@ -1,11 +1,4 @@
-.img-preview{
-    max-height: 480px;
-    background-size: cover;
-    position:relative;
-    margin-left: auto;
-    margin-right: auto;
-    background-position: center;
-}
+
 
 .form-input-container{
     display: grid;
@@ -22,10 +15,7 @@
     }
     >.group{
        display: block;
-       >.mat-form-field{
-           width: 100%;
-           margin-bottom: 0.3rem;
-       }
+       margin-top: 2.5rem;
     }
 }
 

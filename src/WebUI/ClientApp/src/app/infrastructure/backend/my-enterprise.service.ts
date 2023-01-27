@@ -1,18 +1,17 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { MyEnterpriseAPI } from 'src/app/application/constant/apis';
-import { showErrorDialogContext } from 'src/app/application/interceptors/notification.interceptor';
-import { FormConversionService } from 'src/app/application/utility/form-conversion.service';
-import { MyEnterpriseDto, EnterpriseTokenDto, MyEnterpriseContainerDto, ResultOmzetLineDiagram } from 'src/app/domain/backend/Dtos';
-import { CheckAvailableEnterpriseCodeQuery, GetMyEnterprisesQuery, GetAvailableEnterpriseCodeQuery, EnterpriseTokenQuery, GetMyEnterpriseInfoQuery, GetOmzetQuery } from 'src/app/domain/backend/Queries';
+import { MyEnterpriseAPI } from 'src/app/core/constant/apis';
+import { setErrorDialogContext } from 'src/app/core/interceptors/notification.interceptor';
+import { FormConversionService } from 'src/app/core/utility/form-conversion.service';
+import { MyEnterpriseDto, MyEnterpriseContainerDto, ResultOmzetLineDiagram } from 'src/app/domain/backend/Dtos';
+import { CheckAvailableEnterpriseCodeQuery, GetMyEnterprisesQuery, GetAvailableEnterpriseCodeQuery, GetMyEnterpriseInfoQuery, GetOmzetQuery } from 'src/app/domain/backend/Queries';
 
 export interface MyEnterpriseServiceInterface{
   checkAvailableEnterpriseCode(query: CheckAvailableEnterpriseCodeQuery): Observable<boolean>;
   getOwned(query: GetMyEnterprisesQuery): Observable<MyEnterpriseContainerDto>;
   create(data: FormData): Observable<string>;
   GetAvailableEnterpriseCode(query: GetAvailableEnterpriseCodeQuery): Observable<string[]>;
-  getEnterpriseToken(query: EnterpriseTokenQuery): Observable<EnterpriseTokenDto>;
   getMyEnterpriseInfo(query: GetMyEnterpriseInfoQuery): Observable<MyEnterpriseDto>;
   GetOmzetMyEnterprise(query: GetOmzetQuery):Observable<ResultOmzetLineDiagram>;
 }
@@ -43,10 +42,8 @@ export class MyEnterpriseService  implements MyEnterpriseServiceInterface{
   }
   create(form: any): Observable<string>{
     const data = this.utilService.convertModelToFormData(form, null, null);
-    return this.http.post<string>(MyEnterpriseAPI.Create, data, {context: showErrorDialogContext()});
+    return this.http.post<string>(MyEnterpriseAPI.Create, data, {context: setErrorDialogContext()});
   }
-  getEnterpriseToken(query: EnterpriseTokenQuery): Observable<EnterpriseTokenDto>{
-    return this.http.get<EnterpriseTokenDto>(MyEnterpriseAPI.GetMyEnterpriseToken, {params: query});
-  }
+
 
 }

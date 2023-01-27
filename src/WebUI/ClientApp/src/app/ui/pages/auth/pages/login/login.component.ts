@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -10,19 +11,26 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { Route, Router, RouterModule } from '@angular/router';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { catchError, delay, Observable, Subject, takeUntil, tap, timeout } from 'rxjs';
+import { Router, RouterModule } from '@angular/router';
+// import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import {
-  AuthService,
-} from 'src/app/application/auth-jwt/auth.service';
-import { GLOBAL_PATH } from 'src/app/application/constant/routes';
-import { LocalStorageService } from 'src/app/application/utility/local-storage.service';
+  catchError,
+  filter,
+  map,
+  Observable,
+  shareReplay,
+  Subject,
+  switchMap,
+  tap,
+} from 'rxjs';
+import { AuthService } from 'src/app/core/auth-jwt/auth.service';
+import { GLOBAL_PATH } from 'src/app/core/constant/routes';
 
 import { NavPageComponent } from 'src/app/ui/components/nav/nav-page/nav-page.component';
+import { PopUpLoadingService } from 'src/app/ui/components/pop-up/pop-up-loading/pop-up-loading.service';
+import { PopUpNotifService } from 'src/app/ui/components/pop-up/pop-up-notif/pop-up-notif.service';
 import { PortalContainerComponent } from 'src/app/ui/components/utility/portal-container/portal-container.component';
 
-@UntilDestroy()
 @Component({
   selector: 'app-auth-login',
   templateUrl: './login.component.html',
@@ -39,11 +47,10 @@ import { PortalContainerComponent } from 'src/app/ui/components/utility/portal-c
     MatIconModule,
     RouterModule,
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
   pathToRegister = GLOBAL_PATH.AUTH_REGISTER;
-  formMessage$: Observable<string>;
-  loading: boolean = false;
   form: FormGroup = this._fb.nonNullable.group({
     Identifier: this._fb.nonNullable.control('', {
       validators: [Validators.required],
@@ -53,32 +60,52 @@ export class LoginComponent implements OnInit {
     }),
   });
 
+  submit_state$: Subject<boolean> = new Subject<boolean>();
+  formMessage$: Observable<void> = this.submit_state$
+    .pipe(shareReplay({ bufferSize: 1, refCount: true }))
+    .pipe(
+      tap((x) => {
+        if (x === false) {
+          this._loadingService.close();
+        } else {
+          this._loadingService.show();
+        }
+      }),
+      filter((x) => x === true),
+      switchMap(() => this._authService.login(this.form.value)),
+      tap(() => this.submit_state$.next(false)),
+      tap((lastPath) => {
+        this._router.navigateByUrl(
+          lastPath !== null ? lastPath : GLOBAL_PATH.MAIN_HOME,
+          { replaceUrl: true }
+        );
+      }),
+      switchMap(() =>
+        this._notifService
+          .show({
+            title: 'Sukses',
+            message: 'Berhasil masuk',
+            type: 'success',
+          })
+          .afterClosed()
+      ),
+      map((x) => void 0),
+      catchError((error, source) => {
+        this.submit_state$.next(false);
+        return source; // to make observable alive again. because observable die if fail
+      })
+    );
   constructor(
     private _authService: AuthService,
     private _fb: FormBuilder,
     private _router: Router,
-    private _localStorage: LocalStorageService
+    private _loadingService: PopUpLoadingService,
+    private _notifService: PopUpNotifService
   ) {}
-
-  ngOnInit(): void {
-    this.form.valueChanges.subscribe(x=>console.log(this.form.errors))
-  }
-
-  async login(): Promise<void> {
-    this.formMessage$ = this._authService.login(this.form.value).pipe(
-      delay(1000),
-      tap(() => (this.loading = false)),
-      tap(() => {
-        const lastPath = this._localStorage.load('last_path');
-        this._router.navigateByUrl(lastPath  !== null?lastPath: GLOBAL_PATH.MAIN_HOME, {replaceUrl:true});
-      })
-    );
-  }
 
   submit(): void {
     if (this.form.valid) {
-      this.loading = true;
-      this.login();
+      this.submit_state$.next(true);
     }
   }
 }

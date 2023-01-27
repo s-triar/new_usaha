@@ -27,6 +27,7 @@
       <Folder Include="CQRS\Goodses\Queries\" />
       <Folder Include="CQRS\MyGoodsGroups\Commands\" />
       <Folder Include="CQRS\MyGoodsGroups\Queries\" />
+      <Folder Include="CQRS\MyGoodsPhotos\Commands\" />
       <Folder Include="CQRS\MyGoodsPhotos\Queries\" />
     </ItemGroup>
 

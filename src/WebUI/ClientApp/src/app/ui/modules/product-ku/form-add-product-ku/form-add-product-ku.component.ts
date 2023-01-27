@@ -7,13 +7,13 @@ import { MatDialog } from '@angular/material/dialog';
 import { GroupProductKuDialogComponent } from '../group-product-ku-dialog/group-product-ku-dialog.component';
 import { MemberGroupProductKuDialogComponent } from '../member-group-product-ku-dialog/member-group-product-ku-dialog.component';
 import { of, switchMap } from 'rxjs';
-import { PRODUCT_DEFAULT } from 'src/app/application/constant';
-import { CustomUploadFileEventChange } from 'src/app/application/types';
+import { PRODUCT_DEFAULT } from 'src/app/core/constant';
+import { CustomUploadFileEventChange } from 'src/app/core/types';
 import { GoodsTypeDto, MyGoodsGroupsListItemDto } from 'src/app/domain/backend/Dtos';
 import { GoodsTypeService } from 'src/app/infrastructure/backend/goods-type.service';
-import { GoodsService } from 'src/app/infrastructure/backend/goods.service';
+import { MyGoodsService } from 'src/app/infrastructure/backend/my-goods.service';
 import { ScannerDialogComponent } from 'src/app/ui/components/pop-up/scanner-dialog/scanner-dialog.component';
-import { DuplicateBarcodeValidator } from '../../../../application/form-validators/DuplicateBarcodeValidator';
+import { DuplicateBarcodeValidator } from '../../../../core/form-validators/DuplicateBarcodeValidator';
 import { PopUpNotifService } from 'src/app/ui/components/pop-up/pop-up-notif/pop-up-notif.service';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -182,7 +182,7 @@ export class FormAddProductKuComponent implements OnInit {
   }
   constructor(
     private fb: FormBuilder,
-    private readonly goodsService: GoodsService,
+    private readonly goodsService: MyGoodsService,
     private readonly goodsTypeService: GoodsTypeService,
     private dialog: MatDialog,
     private notifService: PopUpNotifService
@@ -190,7 +190,7 @@ export class FormAddProductKuComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.goodsTypeService.GoodsTypes$.pipe(untilDestroyed(this)).subscribe(res => {
+    this.goodsTypeService.getAll().pipe(untilDestroyed(this)).subscribe(res => {
       if (res.length > 0){
         this.GoodsTypesData = res;
         this.GoodsTypes$ = res.filter(y => y.parentGoodsTypeId === null);
@@ -216,7 +216,7 @@ export class FormAddProductKuComponent implements OnInit {
         .pipe(
           untilDestroyed(this),
           switchMap(x =>
-            this.notifService.show({message: x.message, title: 'Sukses', type: 'success'}).afterClosed()
+            this.notifService.show({message: "Sukses menambah produk", title: 'Sukses', type: 'success'}).afterClosed()
                              .pipe(switchMap(y => of(x)))
           )
         )

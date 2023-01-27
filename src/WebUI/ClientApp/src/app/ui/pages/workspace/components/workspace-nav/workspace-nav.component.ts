@@ -12,8 +12,8 @@ import { Router, RouterModule } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Observable } from 'rxjs';
 import { delay, map, shareReplay } from 'rxjs/operators';
-import { GLOBAL_PATH, WORKSPACE_ROUTE, WS_CASHIER, WS_PRODUCT } from 'src/app/application/constant/routes';
-import { DataNavList } from 'src/app/application/types';
+import { GLOBAL_PATH, WORKSPACE_ROUTE, WS_CASHIER, WS_PRODUCT } from 'src/app/core/constant/routes';
+import { DataNavList } from 'src/app/core/types';
 import { ButtonBackDirective } from 'src/app/ui/directives/button-back/button-back.directive';
 
 import { WorkspaceSettingComponent } from '../workspace-setting/workspace-setting.component';

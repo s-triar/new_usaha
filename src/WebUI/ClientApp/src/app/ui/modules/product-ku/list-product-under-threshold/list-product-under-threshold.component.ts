@@ -7,8 +7,8 @@ import { MatListModule } from '@angular/material/list';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import {debounceTime,distinctUntilChanged, Observable, startWith, switchMap} from 'rxjs';
 import { MyGoodsGroupsListContainerDto, MyGoodsGroupsListItemDto } from 'src/app/domain/backend/Dtos';
-import { GoodsService } from 'src/app/infrastructure/backend/goods.service';
-import { GoodsGroupService } from 'src/app/infrastructure/backend/goods-group.service';
+import { MyGoodsService } from 'src/app/infrastructure/backend/my-goods.service';
+import { MyGoodsGroupService } from 'src/app/infrastructure/backend/my-goods-group.service';
 // import { FlexLayoutModule } from '@angular/flex-layout';
 type MyGoodsGroupsListItemChoiceDto= MyGoodsGroupsListItemDto&{
   selected: boolean;
@@ -38,7 +38,7 @@ export class ListProductUnderThresholdComponent implements OnInit {
   pages: number[] = [1];
   groupList: MyGoodsGroupsListItemChoiceDto[] = [];
 
-  constructor(private fb: FormBuilder, private goodsService: GoodsService, private goodsGroupService: GoodsGroupService) { 
+  constructor(private fb: FormBuilder, private goodsService: MyGoodsService, private goodsGroupService: MyGoodsGroupService) { 
     
   }
 

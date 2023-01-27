@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
-import { DASHBOARD_ROUTE } from 'src/app/application/constant/routes';
+import { DASHBOARD_ROUTE } from 'src/app/core/constant/routes';
 import { DashboardNavComponent } from './components/dashboard-nav/dashboard-nav.component';
 
 @Component({

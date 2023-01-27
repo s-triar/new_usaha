@@ -5,7 +5,7 @@ import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { CashierDataService } from '../../services/cashier-data.service';
-import { QueueKeyValidator } from '../../../../../../../application/form-validators/QueueKeyValidator';
+import { QueueKeyValidator } from '../../../../../../../core/form-validators/QueueKeyValidator';
 import { MatButtonModule } from '@angular/material/button';
 
 @Component({
@@ -40,7 +40,6 @@ export class AddQueuePopupComponent implements OnInit {
     this.dialogRef.close(true);
   }
   closeWithValue(): void{
-    console.log('trigger', this.form.controls.Key.value);
     this.dialogRef.close(this.form.controls.Key.value);
   }
 }

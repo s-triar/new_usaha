@@ -12,7 +12,7 @@ using new_usaha.Domain.Entities;
 
 namespace new_usaha.Application.CQRS.Employees.Commands;
 
-public class JoinEmployeeCommand: IRequest<Guid>
+public class JoinEmployeeCommand: IRequest<Unit>
 {
     public int Code { get; set; }
 }
@@ -25,7 +25,7 @@ public class JoinEmployeeCommandValidator : AbstractValidator<JoinEmployeeComman
     }
 }
 
-public class JoinEmployeeCommandHandler : IRequestHandler<JoinEmployeeCommand, Guid>
+public class JoinEmployeeCommandHandler : IRequestHandler<JoinEmployeeCommand, Unit>
 {
     private readonly IApplicationDbContext _context;
     private readonly ICurrentUserService _cs;
@@ -44,10 +44,10 @@ public class JoinEmployeeCommandHandler : IRequestHandler<JoinEmployeeCommand, G
         _ids = ids;
     }
 
-    public async Task<Guid> Handle(JoinEmployeeCommand request, CancellationToken cancellationToken)
+    public async Task<Unit> Handle(JoinEmployeeCommand request, CancellationToken cancellationToken)
     {
         DateTime now = DateTime.Now;
-        EmployeeJoin ej = await _context.EmployeeJoins
+        var ej = await this._context.EmployeeJoins
                                     .Where(x => x.UserId == _cs.UserId)
                                     .Where(x => x.Code == request.Code)
                                     .Where(x=>x.ExpiredTime > now)
@@ -69,6 +69,6 @@ public class JoinEmployeeCommandHandler : IRequestHandler<JoinEmployeeCommand, G
         };
         await _context.EnterpriseEmployees.AddAsync(new_employee, cancellationToken);
         await _context.SaveChangesAsync(cancellationToken);
-        return new_employee.Id;
+        return Unit.Value;
     }
 }

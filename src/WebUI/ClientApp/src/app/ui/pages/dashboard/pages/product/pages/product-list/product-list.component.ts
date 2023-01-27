@@ -11,9 +11,9 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, ignoreElements, switchMap, tap } from 'rxjs/operators';
-import { WORKSPACE_ROUTE, WS_PRODUCT, GLOBAL_PATH, DASHBOARD_ROUTE, DSHB_PRODUCT } from 'src/app/application/constant/routes';
+import { WORKSPACE_ROUTE, WS_PRODUCT, GLOBAL_PATH, DASHBOARD_ROUTE, DSHB_PRODUCT } from 'src/app/core/constant/routes';
 import { MyGoodsesListItemDto, MyGoodsesListContainerDto } from 'src/app/domain/backend/Dtos';
-import { GoodsService } from 'src/app/infrastructure/backend/goods.service';
+import { MyGoodsService } from 'src/app/infrastructure/backend/my-goods.service';
 import { currentPageDescription, PageNumberChangedEvent, PageSizeChangedEvent, PaginationComponent } from 'src/app/ui/components/pagination/pagination/pagination.component';
 import { SearchInputBarcodeComponent } from 'src/app/ui/components/search/search-input-barcode/search-input-barcode.component';
 import { PortalContainerComponent } from 'src/app/ui/components/utility/portal-container/portal-container.component';
@@ -79,7 +79,7 @@ export class ProductListComponent implements OnInit {
     private router: Router,
     private formBuilder: FormBuilder,
     // private wsStateService: WorkspaceStateService,
-    private myGoodsService: GoodsService
+    private myGoodsService: MyGoodsService
   ) {
     this.routes.parent?.parent?.params.pipe(untilDestroyed(this)).subscribe(params => {
       this.idUsaha = params[this.PARAM_DASHBOARD_ID_USAHA.substring(1)];

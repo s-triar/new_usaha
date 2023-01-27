@@ -1,9 +1,52 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { POSCashierList, POSCashierContainerItem, POSCashierItem } from 'src/app/application/types';
+
 import { MyGoodsForCashierDto } from 'src/app/domain/backend/Dtos';
 
 import {v1 as uuidV1} from 'uuid';
+export type WholesalepricesItem={
+  wholesalerPrice: number;
+  wholesalerMin: number;
+  id: string;
+}
+
+export type POSCashierItem = {
+  id: string;
+  enterpriseId: string;
+  barcode: string;
+  name: string;
+  price: number;
+  basePriceUsed:number;
+  // wholesalerPrice: number;
+  // wholesalerMin: number;
+  wholessalePrices: WholesalepricesItem[];
+  isWholesalerPriceAuto: boolean;
+  isWholesalerPriceUsed: boolean;
+  isWholesaleAvailable:boolean;
+  goodsPackaging: string;
+  promos: any[];
+  singlePriceDisc: number;
+  // singlePriceDiscFormatted: string|null;
+  totalPriceDisc: number;
+  // totalPriceDiscFormatted: string|null;
+  usedPrice: number;
+  tempUsedTotalPrice: number;
+  usedTotalPrice: number;
+  qty: number;
+};
+export type POSCashierContainerItem = {
+  items: POSCashierItem[],
+  totalPayment: number,
+  payment: number,
+  paymentFormatted: string|null,
+  return: number
+};
+export type POSCashierList = {
+  [queue: string]: POSCashierContainerItem
+};
+
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -93,13 +136,8 @@ export class CashierDataService {
         wholesaleUsed = element.wholesalerPrice;
       }
     }
-    
-    // const isWholesalerPriceUsed = item.isWholesalerPriceAuto || isWholesaleOk ? true : false;
     const isWholesalerPriceUsed =(item.isWholesalerPriceAuto || item.isWholesalerPriceUsed) && isWholesaleOk;
-    
-    
     const basePriceUsed = (isWholesalerPriceUsed ?  wholesaleUsed : item.price);
-    console.log(wholesaleUsed, basePriceUsed);
     const usedPrice =  basePriceUsed - item.singlePriceDisc;
     const tempUsedTotalPrice = incrementQty * usedPrice;
     const usedTotalPrice = tempUsedTotalPrice - item.totalPriceDisc;
@@ -118,12 +156,9 @@ export class CashierDataService {
       basePriceUsed,
       isWholesaleAvailable:isWholesaleOk,
       singlePriceDisc: item.singlePriceDisc,
-      // singlePriceDiscFormatted: item.singlePriceDiscFormatted,
       totalPriceDisc: item.totalPriceDisc,
-      // totalPriceDiscFormatted: item.totalPriceDiscFormatted,
       usedPrice,
       usedTotalPrice,
-      
       tempUsedTotalPrice
     };
   }
@@ -138,9 +173,7 @@ export class CashierDataService {
         break;
       }
     }
-    // const isWholesalerPriceUsed = item.isWholesalerPriceAuto || (isWholesaleOk) ? true : false;
     const isWholesalerPriceUsed = (item.isWholesalerPriceAuto && isWholesaleOk);
-
     const basePriceUsed = (isWholesalerPriceUsed ?  wholesaleUsed : item.price);
     const usedPrice =  basePriceUsed;
     
@@ -158,9 +191,7 @@ export class CashierDataService {
       qty: 1,
       isWholesaleAvailable:isWholesaleOk,
       singlePriceDisc: 0,
-      // singlePriceDiscFormatted: null,
       totalPriceDisc: 0,
-      // totalPriceDiscFormatted: null,
       usedPrice,
       usedTotalPrice: usedPrice,
       wholessalePrices: item.wholessalePrices,
@@ -168,7 +199,7 @@ export class CashierDataService {
     };
   }
   checkKey(key: string): boolean{
-    console.log(this.POSList.value[key], !!this.POSList.value[key]);
+    // console.log(this.POSList.value[key], !!this.POSList.value[key]);
     return !!this.POSList.value[key];
   }
 }

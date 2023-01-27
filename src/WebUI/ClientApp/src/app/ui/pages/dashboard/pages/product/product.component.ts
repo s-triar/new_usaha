@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component,  OnInit } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
-import { WORKSPACE_ROUTE, WS_PRODUCT, GLOBAL_PATH } from 'src/app/application/constant/routes';
+import { WORKSPACE_ROUTE, WS_PRODUCT, GLOBAL_PATH } from 'src/app/core/constant/routes';
 
 
 @Component({

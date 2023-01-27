@@ -13,8 +13,8 @@ import { CommonModule } from '@angular/common';
 import { ObserversModule } from '@angular/cdk/observers';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
-import { FileConversionService } from 'src/app/application/utility/file-conversion.service';
-import { CustomUploadFileEventChange } from 'src/app/application/types';
+import { FileConversionService } from 'src/app/core/utility/file-conversion.service';
+import { CustomUploadFileEventChange } from 'src/app/core/types';
 import { CameraComponent } from '../../utility/camera/camera.component';
 import { MatIconModule } from '@angular/material/icon';
 

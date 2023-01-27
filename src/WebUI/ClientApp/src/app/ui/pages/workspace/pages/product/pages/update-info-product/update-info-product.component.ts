@@ -4,7 +4,7 @@ import { CommonModule, Location } from '@angular/common';
 import { PortalContainerComponent } from 'src/app/ui/components/utility/portal-container/portal-container.component';
 import { NavPageComponent } from 'src/app/ui/components/nav/nav-page/nav-page.component';
 import { FormUpdateInfoProductKuComponent } from 'src/app/ui/modules/product-ku/form-update-info-product-ku/form-update-info-product-ku.component';
-import { WORKSPACE_ROUTE } from 'src/app/application/constant/routes';
+import { WORKSPACE_ROUTE } from 'src/app/core/constant/routes';
 import { InfoOfGoodsForUpdatingDto } from 'src/app/domain/backend/Dtos';
 import { WorkspaceStateService } from '../../../../components/workspace-nav/workspace-state.service';
 

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { Location } from '@angular/common';
-import { GLOBAL_PATH } from 'src/app/application/constant/routes';
+import { GLOBAL_PATH } from 'src/app/core/constant/routes';
 
 @Injectable()
 export class NavigationBackService {

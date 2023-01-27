@@ -7,7 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { iif } from 'rxjs';
 import { concatMap, debounceTime, distinctUntilChanged, distinctUntilKeyChanged, ignoreElements, mergeMap, startWith, switchMap, tap } from 'rxjs/operators';
-import { DASHBOARD_ROUTE, DB_TRANS_ROUTE } from 'src/app/application/constant/routes';
+import { DASHBOARD_ROUTE, DB_TRANS_ROUTE } from 'src/app/core/constant/routes';
 import { OrderDto } from 'src/app/domain/backend/Dtos';
 import { TransactionService } from 'src/app/infrastructure/backend/transaction.service';
 import { DashboardStateService } from 'src/app/ui/pages/dashboard/components/dashboard-nav/dashboard-state.service';

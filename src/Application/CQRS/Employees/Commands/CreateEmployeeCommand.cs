@@ -60,8 +60,8 @@ public class CreateEmployeeCommandHandler : IRequestHandler<CreateEmployeeComman
     public async Task<Unit> Handle(CreateEmployeeCommand request, CancellationToken cancellationToken)
     {
         DateTime expiredTime = DateTime.Now.AddHours(2);
-        EnterpriseRole enterpriseRole = await _context.EnterpriseRoles.FirstOrDefaultAsync(x => x.EnterpriseId.ToString() == _ce.EnterpriseId && x.Name.ToLower() == request.EnterpriseRoleName.ToLower());
-        var usaha = await _context.Enterprises.FirstOrDefaultAsync(x => x.Id.ToString() == _ce.EnterpriseId);
+        EnterpriseRole enterpriseRole = await _context.EnterpriseRoles.FirstOrDefaultAsync(x => x.EnterpriseId.ToString() == _ce.EnterpriseId && x.Name.ToLower() == request.EnterpriseRoleName.ToLower(), cancellationToken);
+        var usaha = await _context.Enterprises.FirstOrDefaultAsync(x => x.Id.ToString() == _ce.EnterpriseId, cancellationToken);
         var user = await _cs.GetMinimalInfoUserByEmailAsync(request.Email);
         var rand = new Random();
         string code = "";
@@ -80,7 +80,7 @@ public class CreateEmployeeCommandHandler : IRequestHandler<CreateEmployeeComman
             UserId = user.Id,
             EnterpriseRoleId = enterpriseRole.Id
         };
-        await _context.EmployeeJoins.AddAsync(new_employee);
+        await _context.EmployeeJoins.AddAsync(new_employee, cancellationToken);
         await _context.SaveChangesAsync(cancellationToken);
         //await _email.SendEmployeeHiredAsync(request.Email, usaha.Name, code, expiredTime);
         return Unit.Value;

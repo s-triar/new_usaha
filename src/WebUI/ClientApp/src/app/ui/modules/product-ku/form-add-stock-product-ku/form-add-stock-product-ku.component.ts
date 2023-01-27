@@ -6,7 +6,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { switchMap, of } from 'rxjs';
-import { GoodsService } from 'src/app/infrastructure/backend/goods.service';
+import { MyGoodsService } from 'src/app/infrastructure/backend/my-goods.service';
 import { InputCurrencyComponent } from 'src/app/ui/components/form/input-currency/input-currency.component';
 import { PopUpNotifService } from 'src/app/ui/components/pop-up/pop-up-notif/pop-up-notif.service';
 
@@ -46,7 +46,7 @@ export class FormAddStockProductKuComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private notifService: PopUpNotifService,
-    private readonly goodsService: GoodsService
+    private readonly goodsService: MyGoodsService
   ) { }
 
   ngOnInit(): void {

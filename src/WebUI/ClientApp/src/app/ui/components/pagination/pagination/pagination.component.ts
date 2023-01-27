@@ -1,26 +1,44 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter, ElementRef } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import {
+  Component,
+  OnInit,
+  ChangeDetectionStrategy,
+  Input,
+  Output,
+  EventEmitter,
+  ElementRef,
+} from '@angular/core';
+import { FormBuilder, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
+import {
+  BehaviorSubject,
+  combineLatest,
+  distinctUntilChanged,
+  map,
+  Observable,
+  shareReplay,
+  startWith,
+  Subject,
+  switchMap,
+  tap,
+} from 'rxjs';
 // import { faStepBackward, faStepForward, faFastBackward, faFastForward } from '@fortawesome/free-solid-svg-icons';
 // import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-
 
 export type currentPageDescription = {
   isCurrentPageStartPage: boolean;
   isCurrentPageLastPage: boolean;
 };
 export type PageNumberChangedEvent = {
-  pageNumber: number
+  pageNumber: number;
 };
 export type PageSizeChangedEvent = {
-  pageSize: number
+  pageSize: number;
 };
-
 
 @Component({
   selector: 'app-pagination',
@@ -35,106 +53,96 @@ export type PageSizeChangedEvent = {
     MatButtonModule,
     MatInputModule,
     MatFormFieldModule,
-    MatIconModule
-  ]
+    MatIconModule,
+  ],
 })
 export class PaginationComponent implements OnInit {
   @Input() pageSize = 20;
   @Input() pageNumber = 1;
-  @Output() pageSelectedChanged: EventEmitter<PageNumberChangedEvent> = new EventEmitter<PageNumberChangedEvent>();
-  @Output() nPageChanged: EventEmitter<PageSizeChangedEvent> = new EventEmitter<PageSizeChangedEvent>();
+
   iconBack = 'arrow_back_ios';
   iconFullBack = 'first_page';
   iconForward = 'arrow_forward_ios';
   iconFullForward = 'last_page';
-  currentPage: currentPageDescription = {
-    isCurrentPageStartPage: true,
-    isCurrentPageLastPage: true
-  };
+
   formSearch = this.formBuilder.group({
     PageSize: this.formBuilder.nonNullable.control(this.pageSize),
-    PageNumber: this.formBuilder.nonNullable.control(this.pageNumber)
+    PageNumber: this.formBuilder.nonNullable.control(this.pageNumber),
+    Pages: this.formBuilder.nonNullable.array([1])
   });
-  pages: number[] = [1];
+  @Output() pageSelectedChanged: Observable<PageNumberChangedEvent> =
+    this.formSearch.controls.PageNumber.valueChanges.pipe(
+      startWith(this.pageNumber),
+      map((x) => {
+        return { pageNumber: x };
+      })
+    );
 
-  constructor(private formBuilder: FormBuilder) { }
+  @Output() nPageChanged: Observable<PageSizeChangedEvent> =
+    this.formSearch.controls.PageSize.valueChanges.pipe(
+      startWith(this.pageSize),
+      map((x) => {
+        return { pageSize: x };
+      })
+    );
+  
+  formChanges$ =this.formSearch.valueChanges.pipe(
+    startWith(this.formSearch.value),
+    distinctUntilChanged(),
+    shareReplay({refCount:true,bufferSize:1})
+  )
+  isFirstPage$ = this.formChanges$.pipe(
+    map(x=>{
+      const indx = x.Pages.findIndex(y=>y === x.PageNumber)
+      return indx === 0;
+    }),
+    shareReplay({refCount:true, bufferSize:1})
+  );
+  isLastPage$ = this.formChanges$.pipe(
+    map(x=>{
+      const indx = x.Pages.findIndex(y=>y === x.PageNumber)   
+      return indx === x.Pages.length-1;
+    }),
+    shareReplay({refCount:true, bufferSize:1})
+  )
+  constructor(private formBuilder: FormBuilder) {}
 
   ngOnInit(): void {
-    this.formSearch.controls.PageNumber.valueChanges
-        .subscribe(x => {
-          this.pageSelectedChanged.emit({pageNumber: x});
-        });
-    this.formSearch.controls.PageSize.valueChanges
-        .subscribe(x => {
-          this.nPageChanged.emit({pageSize: x});
-        });
+    this.setPagesNumbers(this.pageNumber);
   }
-  setPagesNumbers(ns: number): void{
-    const temp: number[] = [];
-    for (let i = 0; i < ns; i++){
-      temp.push(i + 1);
+
+  setPagesNumbers(ns: number): void {  
+    if (this.formSearch.controls.Pages.length !== ns) {
+      this.pageNumber = ns;
+      this.formSearch.controls.Pages.clear();
+      for (let i = 0; i < ns; i++) {
+        this.formSearch.controls.Pages.push(new FormControl(i+1));
+      }
     }
-    this.pages = temp;
-    this.checkCurrentPagePos();
   }
-  setPageSize(n: number): void{
+
+  setPageSize(n: number): void {
     this.formSearch.controls.PageSize.setValue(n);
   }
+  setPageValue(v: number): void {
+    this.formSearch.controls.PageNumber.setValue(v);
+  }
+  // button click
+  nextPage(): void {
+     this.setPageValue(this.formSearch.controls.PageNumber.value + 1);
+  }
+  fastNextPage(): void {
+    this.setPageValue(this.formSearch.controls.Pages.length);
+  }
+  previousPage(): void {
+    this.setPageValue(this.formSearch.controls.PageNumber.value - 1);
+  }
+  fastPreviousPage(): void {
+    this.setPageValue(1);
+  }
+  // end button click
 
-  private switchCurrentPageDescription(s: boolean, l: boolean): void{
-    this.currentPage.isCurrentPageStartPage = s;
-    this.currentPage.isCurrentPageLastPage = l;
-  }
-  checkCurrentPagePos(): void{
-    const index = this.getCurrentPageIndex();
-    if (index === 0 && index === (this.pages.length - 1)){
-      this.switchCurrentPageDescription(true, true);
-    }
-    else if (index === 0){
-      this.switchCurrentPageDescription(true, false);
-    }
-    else if (index === (this.pages.length - 1)){
-      this.switchCurrentPageDescription(false, true);
-    }else{
-      this.switchCurrentPageDescription(false, false);
-    }
-  }
-  getCurrentPageIndex(): number{
-    // const currentPage = parseInt(this.formSearch.controls.PageNumber.value, 10);
-    const currentPage = this.formSearch.controls.PageNumber.value;
-    const currentPageIndex = this.pages.findIndex(x => x === currentPage);
-    return currentPageIndex;
-  }
-  setPageValue(v: number): void{
-    this.formSearch.controls.PageNumber.setValue(v, {
-      onlySelf: true
-    });
-    this.formSearch.controls.PageNumber.updateValueAndValidity();
-    this.checkCurrentPagePos();
-
-  }
-  nextPage(): void{
-    if (!this.currentPage.isCurrentPageLastPage){
-      const v = this.pages[this.getCurrentPageIndex() + 1];
-      this.setPageValue(v);
-    }
-  }
-
-  fastNextPage(): void{
-    const v = this.pages[this.pages.length - 1];
-    this.setPageValue(v);
-  }
-  previousPage(): void{
-    if (!this.currentPage.isCurrentPageStartPage){
-      const v = this.pages[this.getCurrentPageIndex() - 1];
-      this.setPageValue(v);
-    }
-  }
-  fastPreviousPage(): void{
-    const v = this.pages[0];
-    this.setPageValue(v);
-  }
-  selectPage(event: MatSelectChange): void{
+  selectPage(event: MatSelectChange): void {
     this.setPageValue(parseInt(event.value, 10));
   }
 }

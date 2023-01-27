@@ -1,0 +1,38 @@
+<div [formGroup]="form">
+    <mat-form-field appearance="fill" class="w-100p" shouldLabelFloat="true" floatLabel="always">
+        <mat-label>Jalan</mat-label>
+        <input matInput placeholder="Jalan" formControlName="Street" required>
+        <mat-hint class="color-warn" *ngIf="(AddressStreet?.dirty || AddressStreet?.touched) && AddressStreet?.errors?.required">Nama jalan harus diisi.</mat-hint>
+    <mat-hint class="color-warn" *ngIf="AddressStreet?.errors?.maxlength">Maksimal panjang nama jalan 255 karakter.</mat-hint>
+    </mat-form-field>
+    <mat-form-field appearance="fill" class="w-100p" shouldLabelFloat="true" floatLabel="always">
+        <mat-label>Desa</mat-label>
+        <input matInput placeholder="Desa" formControlName="SubDistrict" required>
+        <mat-hint class="color-warn" *ngIf="(AddressSubDistrict?.dirty || AddressSubDistrict?.touched) && AddressSubDistrict?.errors?.required">Nama desa harus diisi.</mat-hint>
+    <mat-hint class="color-warn" *ngIf="AddressSubDistrict?.errors?.maxlength">Maksimal panjang nama desa 255 karakter.</mat-hint>
+    </mat-form-field>
+    <mat-form-field appearance="fill" class="w-100p" shouldLabelFloat="true" floatLabel="always">
+        <mat-label>Kecamatan</mat-label>
+        <input matInput placeholder="Kecamatan" formControlName="District" required>
+        <mat-hint class="color-warn" *ngIf="(AddressDistrict?.dirty || AddressDistrict?.touched) && AddressDistrict?.errors?.required">Nama kecamatan harus diisi.</mat-hint>
+    <mat-hint class="color-warn" *ngIf="AddressDistrict?.errors?.maxlength">Maksimal panjang nama kecamatan 255 karakter.</mat-hint>
+    </mat-form-field>
+    <mat-form-field appearance="fill" class="w-100p" shouldLabelFloat="true" floatLabel="always">
+        <mat-label>Kabupaten/Kota</mat-label>
+        <input matInput placeholder="Kabupaten/Kota" formControlName="City" required>
+        <mat-hint class="color-warn" *ngIf="(AddressCity?.dirty || AddressCity?.touched) && AddressCity?.errors?.required">Nama kabupaten/kota harus diisi.</mat-hint>
+    <mat-hint class="color-warn" *ngIf="AddressCity?.errors?.maxlength">Maksimal panjang nama kabupaten/kota 255 karakter.</mat-hint>
+    </mat-form-field>
+    <mat-form-field appearance="fill" class="w-100p" shouldLabelFloat="true" floatLabel="always">
+        <mat-label>Provinsi</mat-label>
+        <input matInput placeholder="Provinsi" formControlName="Province" required>
+        <mat-hint class="color-warn" *ngIf="(AddressProvince?.dirty || AddressProvince?.touched) && AddressProvince?.errors?.required">Nama provinsi harus diisi.</mat-hint>
+    <mat-hint class="color-warn" *ngIf="AddressProvince?.errors?.maxlength">Maksimal panjang nama provinsi 255 karakter.</mat-hint>
+    </mat-form-field>
+    <mat-form-field appearance="fill" class="w-100p" shouldLabelFloat="true" floatLabel="always">
+        <mat-label>Kode Pos</mat-label>
+        <input matInput placeholder="Kode Pos" formControlName="PostalCode" required>
+        <mat-hint class="color-warn" *ngIf="(AddressPostalCode?.dirty || AddressPostalCode?.touched) && AddressPostalCode?.errors?.required">Kode pos harus diisi.</mat-hint>
+    <mat-hint class="color-warn" *ngIf="AddressPostalCode?.errors?.maxlength">Maksimal panjang kode pos 6 karakter.</mat-hint>
+    </mat-form-field>
+</div>
