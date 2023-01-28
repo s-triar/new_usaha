@@ -2,7 +2,9 @@
   <mat-card-header >
     <mat-card-title class="color-primary">{{data.name}}</mat-card-title>
   </mat-card-header>
-  <div class="img-card-usaha"  [style]="'background-image: url('+data.photo+');'"></div>
+  <div class="img-card-usaha">
+    <img [src]="data.photo" style="max-width: 100%;" (error) ="changeSource($event)"  [alt]="'photo of '+data.name">
+  </div>
   <mat-card-content style="padding:7px 7px;">
     <p>{{data.address}}</p>
   </mat-card-content>

@@ -24,7 +24,7 @@ import {
 } from 'src/app/domain/backend/Dtos';
 import { MyBussinessService } from 'src/app/infrastructure/backend/my-bussiness.service';
 import { MainStateService } from 'src/app/ui/pages/main/components/main-nav/main-state.service';
-import { MyBusinessesListItemComponent } from 'src/app/ui/components/card/my-businesses-list-item/my-businesses-list-item.component';
+import { MyBusinessesListItemComponent } from './components/my-businesses-list-item/my-businesses-list-item.component';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import {

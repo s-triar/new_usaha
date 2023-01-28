@@ -1,0 +1,12 @@
+.img-card-usaha{
+    width: 100%;
+    height: 300px;
+    background-position: center;
+    background-size: cover;
+    >img{
+        object-position: center;
+        height: 300px;
+        object-fit: cover;
+        width: 100%;
+    }
+}

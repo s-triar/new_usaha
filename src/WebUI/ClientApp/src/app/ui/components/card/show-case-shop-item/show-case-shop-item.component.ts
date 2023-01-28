@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { ShowCaseRatingComponent } from '../../utility/show-case-rating/show-case-rating.component';
 import { MatIconModule } from '@angular/material/icon';
+import { PRODUCT_DEFAULT } from 'src/app/core/constant';
 export type EnterpriseItemShow = {
   name: string;
   category: string;
@@ -35,7 +36,7 @@ export class ShowCaseShopItemComponent implements OnInit {
     description: 'deskripsi',
     distance: 0,
     rating: 4,
-    image: 'https://material.angular.io/assets/img/examples/shiba2.jpg'
+    image: PRODUCT_DEFAULT
   };
   iconLoc = 'place';
   constructor() { }

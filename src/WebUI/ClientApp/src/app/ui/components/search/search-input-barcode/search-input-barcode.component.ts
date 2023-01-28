@@ -18,6 +18,7 @@ import {
 import { MatButtonModule } from '@angular/material/button';
 import { MatOptionModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import {MatSelectChange, MatSelectModule } from '@angular/material/select';
 import { BarcodeFormat } from '@zxing/library';
@@ -38,6 +39,7 @@ import { ZXingScannerModule } from '@zxing/ngx-scanner';
     MatSelectModule,
     MatButtonModule,
     MatOptionModule,
+    MatIconModule
   ],
   // changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [

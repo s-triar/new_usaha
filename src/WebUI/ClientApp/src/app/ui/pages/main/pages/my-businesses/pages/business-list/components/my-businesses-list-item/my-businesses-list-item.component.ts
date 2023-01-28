@@ -3,6 +3,7 @@ import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { RouterModule } from '@angular/router';
+import { BUSINESS_DEFAULT } from 'src/app/core/constant';
 import { WORKSPACE_ROUTE, DASHBOARD_ROUTE, GLOBAL_PATH } from 'src/app/core/constant/routes';
 import { MyEnterpriseDto } from 'src/app/domain/backend/Dtos';
 
@@ -23,6 +24,7 @@ import { MyEnterpriseDto } from 'src/app/domain/backend/Dtos';
 export class MyBusinessesListItemComponent  {
   @Input()
   data!: MyEnterpriseDto;
+  defaultImg = BUSINESS_DEFAULT;
   defaultWorkspace = WORKSPACE_ROUTE.CASHIER;
   defaultDashboard = DASHBOARD_ROUTE.OVERVIEW;
 
@@ -30,6 +32,10 @@ export class MyBusinessesListItemComponent  {
   pathDASHBOARD = GLOBAL_PATH.DASHBOARD;
   constructor() { }
 
+  changeSource(event:Event):void{
+    const e = event.target as HTMLImageElement;
+    e.src = this.defaultImg;
+  }
 
 
 }
