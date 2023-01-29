@@ -149,13 +149,13 @@ const routes: Routes = [
             path: `${WS_PRODUCT.PRODUCT_INFO}/${WS_PRODUCT._ID_PRODUCT_INFO}`,
             // tslint:disable-next-line:max-line-length
             loadComponent: () => import('./ui/pages/workspace/pages/product/pages/info-product/info-product.component').then(c => c.InfoProductComponent),
-            resolve: { dataGoods: InfoProductResolver },
+            // resolve: { dataGoods: InfoProductResolver },
           },
           {
             path: `${WS_PRODUCT.PRODUCT_UPDATE}/${WS_PRODUCT._ID_PRODUCT_INFO}`,
             // tslint:disable-next-line:max-line-length
             loadComponent: () => import('./ui/pages/workspace/pages/product/pages/update-info-product/update-info-product.component').then(c => c.UpdateInfoProductComponent),
-            resolve: { dataGoods: InfoProductResolver },
+            // resolve: { dataGoods: InfoProductResolver },
           },
         ]
       },

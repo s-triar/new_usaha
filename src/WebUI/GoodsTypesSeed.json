@@ -178,7 +178,7 @@
       },
       {
         "Id": 50003,
-        "Name": "Perawatan Wubuh",
+        "Name": "Perawatan Tubuh",
         "ParentGoodsTypeId": 50000,
         "Children": []
       },

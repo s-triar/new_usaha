@@ -6,8 +6,8 @@ import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { QueueKeyValidator } from 'src/app/core/form-validators/QueueKeyValidator';
-import { AddQueuePopupComponent } from '../../../cashier/components/add-queue-popup/add-queue-popup.component';
-import { CashierDataService } from '../../../cashier/services/cashier-data.service';
+import { PosCashierDataService } from '../../services/pos-cashier-data.service';
+
 
 @Component({
   selector: 'app-queue',
@@ -21,7 +21,8 @@ import { CashierDataService } from '../../../cashier/services/cashier-data.servi
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule
-  ]
+  ],
+  
 })
 export class QueueComponent {
   form = this.formBuilder.group({
@@ -30,8 +31,8 @@ export class QueueComponent {
 
   constructor(
     private formBuilder: FormBuilder,
-    private dialogRef: MatDialogRef<AddQueuePopupComponent>,
-    private cashierDataService: CashierDataService
+    private dialogRef: MatDialogRef<QueueComponent>,
+    private cashierDataService: PosCashierDataService
   ) { }
 
   ngOnInit(): void {

@@ -5,11 +5,11 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { NgxEchartsModule } from 'ngx-echarts';
 import { DiagramRangeSellPriceType, DiagramRangeSoldType, ResultOmzetLineDiagramItem, ResultSellPriceLineDiagram, ResultSellPriceLineDiagramItem, ResultSoldLineDiagram, ResultSoldLineDiagramItem } from 'src/app/domain/backend/Dtos';
-import { MyGoodsService } from 'src/app/infrastructure/backend/my-goods.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { EChartsOption } from 'echarts';
 import { startWith, tap, switchMap } from 'rxjs';
 import { NumberSoldInARangeQuery, SellPriceChangeInARangeQuery } from 'src/app/domain/backend/Queries';
+import { MyGoodsService } from 'src/app/ui/modules/product-ku/services/my-goods.service';
 
 @UntilDestroy()
 @Component({
@@ -25,6 +25,9 @@ import { NumberSoldInARangeQuery, SellPriceChangeInARangeQuery } from 'src/app/d
     ReactiveFormsModule,
     NgxEchartsModule
   ],
+  providers:[
+    MyGoodsService
+  ]
 })
 export class SellPriceChartComponent implements OnInit{
   @Input() id!:string;

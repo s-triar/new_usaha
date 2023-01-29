@@ -7,8 +7,8 @@ import { MatListModule } from '@angular/material/list';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import {debounceTime,distinctUntilChanged, Observable, startWith, switchMap} from 'rxjs';
 import { MyGoodsGroupsListContainerDto, MyGoodsGroupsListItemDto } from 'src/app/domain/backend/Dtos';
-import { MyGoodsService } from 'src/app/infrastructure/backend/my-goods.service';
-import { MyGoodsGroupService } from 'src/app/infrastructure/backend/my-goods-group.service';
+import { MyGoodsGroupService } from '../services/my-goods-group.service';
+import { MyGoodsService } from '../services/my-goods.service';
 // import { FlexLayoutModule } from '@angular/flex-layout';
 type MyGoodsGroupsListItemChoiceDto= MyGoodsGroupsListItemDto&{
   selected: boolean;
@@ -27,6 +27,10 @@ type MyGoodsGroupsListItemChoiceDto= MyGoodsGroupsListItemDto&{
     MatListModule,
     // FlexLayoutModule
   ],
+  providers:[
+    MyGoodsGroupService,
+    MyGoodsService
+  ]
 })
 export class ListProductUnderThresholdComponent implements OnInit {
   @ViewChild(PaginationComponent, {static: true}) pagination!: PaginationComponent;

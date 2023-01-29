@@ -6,9 +6,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { Observer, of, switchMap } from 'rxjs';
-import { MyGoodsGroupService } from 'src/app/infrastructure/backend/my-goods-group.service';
+import { Observer, of, switchMap, take } from 'rxjs';
 import { PopUpNotifService } from 'src/app/ui/components/pop-up/pop-up-notif/pop-up-notif.service';
+import { MyGoodsGroupService } from '../services/my-goods-group.service';
 import { DuplicateGroupNameValidator } from './DuplicateGroupNameValidator';
 
 @UntilDestroy()
@@ -24,6 +24,9 @@ import { DuplicateGroupNameValidator } from './DuplicateGroupNameValidator';
     MatButtonModule,
     ReactiveFormsModule,
     // FlexLayoutModule
+  ],
+  providers:[
+    MyGoodsGroupService
   ]
 })
 export class FormAddGroupProductKuComponent implements OnInit {
@@ -61,7 +64,8 @@ export class FormAddGroupProductKuComponent implements OnInit {
             switchMap(x =>
                 this.notifService.show({message: 'Grup produk berhasil ditambah.', title: 'Sukses', type: 'success'}).afterClosed()
                                  .pipe(switchMap(y => of(x)))
-              )
+              ),
+              take(1)
             )
           .subscribe(
             (x: string) => this.Submitted.emit(x)

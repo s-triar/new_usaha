@@ -13,10 +13,10 @@ import { Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, ignoreElements, switchMap, tap } from 'rxjs/operators';
 import { WORKSPACE_ROUTE, WS_PRODUCT, GLOBAL_PATH, DASHBOARD_ROUTE, DSHB_PRODUCT } from 'src/app/core/constant/routes';
 import { MyGoodsesListItemDto, MyGoodsesListContainerDto } from 'src/app/domain/backend/Dtos';
-import { MyGoodsService } from 'src/app/infrastructure/backend/my-goods.service';
 import { currentPageDescription, PageNumberChangedEvent, PageSizeChangedEvent, PaginationComponent } from 'src/app/ui/components/pagination/pagination/pagination.component';
 import { SearchInputBarcodeComponent } from 'src/app/ui/components/search/search-input-barcode/search-input-barcode.component';
 import { PortalContainerComponent } from 'src/app/ui/components/utility/portal-container/portal-container.component';
+import { MyGoodsService } from 'src/app/ui/modules/product-ku/services/my-goods.service';
 import { MyProductListItemComponent } from '../../components/my-product-list-item/my-product-list-item.component';
 
 
@@ -38,6 +38,9 @@ import { MyProductListItemComponent } from '../../components/my-product-list-ite
     RouterModule,
     // FontAwesomeModule
     MatIconModule
+  ],
+  providers:[
+    MyGoodsService
   ]
 })
 export class ProductListComponent implements OnInit {

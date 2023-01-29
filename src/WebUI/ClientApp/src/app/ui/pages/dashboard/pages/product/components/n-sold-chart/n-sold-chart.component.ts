@@ -9,7 +9,7 @@ import { EChartsOption } from 'echarts';
 import { startWith, tap, switchMap } from 'rxjs';
 import { DiagramRangeSoldType, ResultOmzetLineDiagramItem, ResultSoldLineDiagram, ResultSoldLineDiagramItem } from 'src/app/domain/backend/Dtos';
 import { GetOmzetQuery, NumberSoldInARangeQuery } from 'src/app/domain/backend/Queries';
-import { MyGoodsService } from 'src/app/infrastructure/backend/my-goods.service';
+import { MyGoodsService } from 'src/app/ui/modules/product-ku/services/my-goods.service';
 
 @UntilDestroy()
 @Component({
@@ -24,6 +24,9 @@ import { MyGoodsService } from 'src/app/infrastructure/backend/my-goods.service'
     ReactiveFormsModule,
     NgxEchartsModule
   ],
+  providers:[
+    MyGoodsService
+  ]
 })
 export class NSoldChartComponent implements OnInit {
   @Input() id!:string;

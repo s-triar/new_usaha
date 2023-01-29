@@ -93,7 +93,7 @@ export type Receipt = {
     InputCurrencyComponent
   ],
   providers:[
-    PosCashierDataService
+    PosCashierApiService
   ]
 })
 export class PosCashierComponent implements OnInit {

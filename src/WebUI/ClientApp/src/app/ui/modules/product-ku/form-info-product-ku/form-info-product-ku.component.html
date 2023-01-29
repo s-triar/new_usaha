@@ -61,7 +61,7 @@
           matInput
           placeholder="Kategori Produk"
           autocomplete="off"
-          [value]="GoodsTypesDataShow"
+          [value]="GoodsTypesDataShow$ |async"
         />
       </mat-form-field>
       <mat-form-field

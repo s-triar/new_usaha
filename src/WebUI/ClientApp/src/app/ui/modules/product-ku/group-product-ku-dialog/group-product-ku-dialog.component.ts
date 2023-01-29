@@ -11,10 +11,10 @@ import { MatTableModule } from '@angular/material/table';
 import { debounceTime, distinctUntilChanged, Observable, switchMap } from 'rxjs';
 import { currentPageDescription } from 'src/app/core/types';
 import { MyGoodsGroupsListItemDto, MyGoodsGroupsListContainerDto } from 'src/app/domain/backend/Dtos';
-import { MyGoodsGroupService } from 'src/app/infrastructure/backend/my-goods-group.service';
 import { PaginationComponent, PageSizeChangedEvent, PageNumberChangedEvent } from 'src/app/ui/components/pagination/pagination/pagination.component';
 import { AddGroupProductKuDialogComponent } from '../add-group-product-ku-dialog/add-group-product-ku-dialog.component';
 import { MemberGroupProductKuDialogComponent } from '../member-group-product-ku-dialog/member-group-product-ku-dialog.component';
+import { MyGoodsGroupService } from '../services/my-goods-group.service';
 
 type MyGoodsGroupsListItemChoiceDto= MyGoodsGroupsListItemDto&{
   selected: boolean;
@@ -35,6 +35,9 @@ type MyGoodsGroupsListItemChoiceDto= MyGoodsGroupsListItemDto&{
     PaginationComponent,
     // FlexLayoutModule
   ],
+  providers:[
+    MyGoodsGroupService
+  ]
 })
 export class GroupProductKuDialogComponent implements OnInit {
   @ViewChild(PaginationComponent, {static: true}) pagination!: PaginationComponent;

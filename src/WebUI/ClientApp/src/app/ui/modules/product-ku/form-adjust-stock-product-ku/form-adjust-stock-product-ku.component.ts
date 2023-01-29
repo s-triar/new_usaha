@@ -6,8 +6,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { switchMap, of } from 'rxjs';
-import { MyGoodsService } from 'src/app/infrastructure/backend/my-goods.service';
 import { PopUpNotifService } from 'src/app/ui/components/pop-up/pop-up-notif/pop-up-notif.service';
+import { MyGoodsService } from '../services/my-goods.service';
 
 
 @UntilDestroy()
@@ -22,6 +22,9 @@ import { PopUpNotifService } from 'src/app/ui/components/pop-up/pop-up-notif/pop
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule
+  ],
+  providers:[
+    MyGoodsService
   ]
 })
 export class FormAdjustStockProductKuComponent implements OnInit {

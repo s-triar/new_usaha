@@ -9,7 +9,7 @@ import { NgxEchartsModule } from 'ngx-echarts';
 import { startWith, tap, switchMap } from 'rxjs';
 import { DiagramRangeBuyPriceType, DiagramRangeSellPriceType, DiagramRangeSoldType, ResultBuyPriceLineDiagram, ResultBuyPriceLineDiagramItem, ResultSellPriceLineDiagram, ResultSellPriceLineDiagramItem } from 'src/app/domain/backend/Dtos';
 import { BuyPriceChangeInARangeQuery, SellPriceChangeInARangeQuery } from 'src/app/domain/backend/Queries';
-import { MyGoodsService } from 'src/app/infrastructure/backend/my-goods.service';
+import { MyGoodsService } from 'src/app/ui/modules/product-ku/services/my-goods.service';
 
 @UntilDestroy()
 @Component({
@@ -24,6 +24,9 @@ import { MyGoodsService } from 'src/app/infrastructure/backend/my-goods.service'
     ReactiveFormsModule,
     NgxEchartsModule
   ],
+  providers:[
+    MyGoodsService
+  ]
 })
 export class BuyPriceChartComponent implements OnInit{
   @Input() id!:string;

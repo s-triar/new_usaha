@@ -6,11 +6,12 @@ import {
 } from '@angular/router';
 import { Observable} from 'rxjs';
 import { InfoOfGoodsForUpdatingDto } from 'src/app/domain/backend/Dtos';
-import { MyGoodsService } from 'src/app/infrastructure/backend/my-goods.service';
+import { MyGoodsService } from 'src/app/ui/modules/product-ku/services/my-goods.service';
+
 import { WS_PRODUCT } from '../constant/routes';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 
 export class InfoProductResolver implements Resolve<InfoOfGoodsForUpdatingDto> {

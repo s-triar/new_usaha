@@ -1,12 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatListModule } from '@angular/material/list';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { iif } from 'rxjs';
-import { concatMap, debounceTime, distinctUntilChanged, distinctUntilKeyChanged, ignoreElements, mergeMap, startWith, switchMap, tap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { catchError, debounceTime, distinctUntilChanged,  map, startWith, switchMap, tap } from 'rxjs/operators';
 import { DASHBOARD_ROUTE, DB_TRANS_ROUTE } from 'src/app/core/constant/routes';
 import { OrderDto } from 'src/app/domain/backend/Dtos';
 import { TransactionService } from 'src/app/infrastructure/backend/transaction.service';
@@ -15,8 +14,8 @@ import { PageNumberChangedEvent, PageSizeChangedEvent, PaginationComponent } fro
 import { SearchInputBarcodeComponent } from 'src/app/ui/components/search/search-input-barcode/search-input-barcode.component';
 import { PortalContainerComponent } from 'src/app/ui/components/utility/portal-container/portal-container.component';
 import { GetOrderEnterpriseQuery } from '../../../../../../../domain/backend/Queries';
+import { MatIconModule } from '@angular/material/icon';
 
-@UntilDestroy()
 @Component({
   templateUrl: './transaction-list.component.html',
   styleUrls: ['./transaction-list.component.scss'],
@@ -28,7 +27,8 @@ import { GetOrderEnterpriseQuery } from '../../../../../../../domain/backend/Que
     SearchInputBarcodeComponent,
     MatListModule,
     PaginationComponent,
-    MatButtonModule
+    MatButtonModule,
+    MatIconModule
   ]
 })
 export class TransactionListComponent implements OnInit {
@@ -42,7 +42,15 @@ export class TransactionListComponent implements OnInit {
     PageSize: [20],
     PageNumber: [1]
   });
-  list: OrderDto[] = [];
+  list$: Observable<OrderDto[]> = this.formSearch.valueChanges.pipe(
+    startWith(this.formSearch.value),
+    debounceTime(400),
+    distinctUntilChanged(),
+    switchMap((x: GetOrderEnterpriseQuery) => this.transactionService.getEnterpriseTransaction(x)),
+    tap((x) => this.pagination.setPagesNumbers(x.totalPages)),
+    map(x=>x.items),
+    catchError((err,source)=>source)
+  );
   constructor(
     private readonly formBuilder: FormBuilder,
     private readonly routes: ActivatedRoute,
@@ -54,32 +62,9 @@ export class TransactionListComponent implements OnInit {
   ngOnInit(): void {
     this.dashboardStateService.changeViewState({currentTab: 'Daftar Transaksi', isFooterBarNeedToBeShown: true});
     // tslint:disable-next-line:no-non-null-assertion
-    this.idUsaha = this.routes.parent?.parent?.snapshot.paramMap.get(DASHBOARD_ROUTE._ID_USAHA.substr(1))!;
-    this.formSearch.controls.Search.valueChanges.pipe(
-      startWith(''),
-      untilDestroyed(this),
-      debounceTime(700),
-      tap(x => {
-        this.pagination.setPageValue(1);
-      }),
-      ignoreElements()
-    ).subscribe(x => console.log('ignored'));
-    this.formSearch.valueChanges.pipe(
-      untilDestroyed(this),
-      switchMap((x: GetOrderEnterpriseQuery) => this.transactionService.getEnterpriseTransaction(x))
-    )
-    .subscribe(x => {
-      this.list = x.items;
-      this.pagination.setPagesNumbers(x.totalPages);
-    });
+    this.idUsaha = this.routes.parent?.parent?.snapshot.paramMap.get(DASHBOARD_ROUTE._ID_USAHA.substring(1))!;
 
-    // this.formSearch.controls.EnterpriseId.setValue(this.idUsaha);
-    this.setPaginationConfig();
-  }
 
-  setPaginationConfig(): void{
-    this.pagination.setPageSize(this.formSearch.controls.PageSize.value);
-    this.pagination.setPagesNumbers(this.formSearch.controls.PageNumber.value);
   }
 
   paginationNChanged(event: PageSizeChangedEvent): void{

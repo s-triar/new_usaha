@@ -58,9 +58,7 @@ export interface MyGoodsServiceInterface {
     query: NumberSoldInARangeQuery
   ): Observable<ResultSoldLineDiagram>;
 }
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class MyGoodsService implements MyGoodsServiceInterface {
   constructor(
     private httpClient: HttpClient,

@@ -30,13 +30,13 @@ import {
 import {
   MyGoodsesListItemDto,
 } from 'src/app/domain/backend/Dtos';
-import { MyGoodsService } from 'src/app/infrastructure/backend/my-goods.service';
 import {
   PageNumberChangedEvent,
   PaginationComponent,
 } from 'src/app/ui/components/pagination/pagination/pagination.component';
 import { SearchInputBarcodeComponent } from 'src/app/ui/components/search/search-input-barcode/search-input-barcode.component';
 import { PortalContainerComponent } from 'src/app/ui/components/utility/portal-container/portal-container.component';
+import { MyGoodsService } from 'src/app/ui/modules/product-ku/services/my-goods.service';
 import { WorkspaceStateService } from '../../../../components/workspace-nav/workspace-state.service';
 import { MyProductListItemComponent } from './ui/my-product-list-item/my-product-list-item.component';
 
@@ -61,6 +61,9 @@ export type MyGoodsesListItemDtoWithLink = MyGoodsesListItemDto & {
     // FontAwesomeModule
     MatIconModule,
   ],
+  providers:[
+    MyGoodsService
+  ]
 })
 export class ProductListComponent implements OnInit {
   icons = {

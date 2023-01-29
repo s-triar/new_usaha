@@ -23,8 +23,8 @@
             </mat-form-field>
             <mat-form-field appearance="fill" shouldLabelFloat="true" floatLabel="always" >
                 <mat-label>Kategori Produk</mat-label>
-                <mat-select formControlName="GoodsTypeId" #selectGoodType (selectionChange)="selectGoodsType($event)">
-                        <mat-option *ngFor="let item of GoodsTypes$ ; let i = index" [value]="item.id" [ngStyle]="GoodsTypeIdProduct?.value !==null && i ==0 ? {'display':'none'}:{}">{{item.name}}</mat-option>
+                <mat-select formControlName="GoodsTypeId" #selectGoodType >
+                        <mat-option *ngFor="let item of goodTypesOptions$ | async" [value]="item.id" >{{item.name}}</mat-option>
                 </mat-select>
                 <mat-hint class="color-warn" *ngIf="(GoodsTypeIdProduct?.dirty || GoodsTypeIdProduct?.touched) && GoodsTypeIdProduct?.errors?.required">Kategori produk harus diisi.</mat-hint>
             </mat-form-field>

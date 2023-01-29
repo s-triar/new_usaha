@@ -6,7 +6,6 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { FormInfoProductKuComponent } from 'src/app/ui/modules/product-ku/form-info-product-ku/form-info-product-ku.component';
 import { WORKSPACE_ROUTE, WS_PRODUCT } from 'src/app/core/constant/routes';
 import { InfoOfGoodsForUpdatingDto } from 'src/app/domain/backend/Dtos';
-import { MyGoodsService } from 'src/app/infrastructure/backend/my-goods.service';
 import { NavPageComponent } from 'src/app/ui/components/nav/nav-page/nav-page.component';
 import { PortalContainerComponent } from 'src/app/ui/components/utility/portal-container/portal-container.component';
 import { AddStockProductKuBottomSheetComponent } from 'src/app/ui/modules/product-ku/add-stock-product-ku-bottom-sheet/add-stock-product-ku-bottom-sheet.component';
@@ -18,6 +17,7 @@ import { NSoldChartComponent } from '../../components/n-sold-chart/n-sold-chart.
 import { SellPriceChartComponent } from '../../components/sell-price-chart/sell-price-chart.component';
 import { BuyPriceChartComponent } from '../../components/buy-price-chart/buy-price-chart.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MyGoodsService } from 'src/app/ui/modules/product-ku/services/my-goods.service';
 
 @UntilDestroy()
 @Component({
@@ -37,6 +37,9 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     SellPriceChartComponent,
     BuyPriceChartComponent,
     MatSnackBarModule
+  ],
+  providers:[
+    MyGoodsService
   ]
 })
 export class InfoProductComponent implements OnInit {

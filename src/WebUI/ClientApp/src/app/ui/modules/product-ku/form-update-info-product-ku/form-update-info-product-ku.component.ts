@@ -26,17 +26,17 @@ import { MatSelect, MatSelectChange, MatSelectModule } from '@angular/material/s
 
 import { MatTabsModule } from '@angular/material/tabs';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { switchMap, of, throwIfEmpty, filter } from 'rxjs';
+import { switchMap, of, throwIfEmpty, filter, Observable, shareReplay, startWith, map, tap } from 'rxjs';
 import { PRODUCT_DEFAULT } from 'src/app/core/constant';
 import { CustomUploadFileEventChange } from 'src/app/core/types';
-import { InfoOfGoodsForUpdatingDto, GoodsTypeDto, MyGoodsGroupsListItemDto, MyGoodsGroupsListMemberItemDto } from 'src/app/domain/backend/Dtos';
-import { GoodsTypeService } from 'src/app/infrastructure/backend/goods-type.service';
-import { MyGoodsService } from 'src/app/infrastructure/backend/my-goods.service';
+import { InfoOfGoodsForUpdatingDto,  MyGoodsGroupsListItemDto, MyGoodsGroupsListMemberItemDto } from 'src/app/domain/backend/Dtos';
+import { GoodsTypeDto, GoodsTypeService } from 'src/app/infrastructure/backend/goods-type.service';
 import { ButtonUploadFileComponent } from 'src/app/ui/components/form/button-upload-file/button-upload-file.component';
 import { PopUpNotifService } from 'src/app/ui/components/pop-up/pop-up-notif/pop-up-notif.service';
 import { ScannerDialogComponent } from 'src/app/ui/components/pop-up/scanner-dialog/scanner-dialog.component';
 import { GroupProductKuDialogComponent } from '../group-product-ku-dialog/group-product-ku-dialog.component';
 import { MemberGroupProductKuDialogComponent } from '../member-group-product-ku-dialog/member-group-product-ku-dialog.component';
+import { MyGoodsService } from '../services/my-goods.service';
 
 @UntilDestroy()
 @Component({
@@ -57,6 +57,9 @@ import { MemberGroupProductKuDialogComponent } from '../member-group-product-ku-
     MatSelectModule,
     ButtonUploadFileComponent,
     
+  ],
+  providers:[
+    MyGoodsService
   ]
 })
 export class FormUpdateInfoProductKuComponent implements OnInit {
@@ -142,6 +145,7 @@ export class FormUpdateInfoProductKuComponent implements OnInit {
   get RemoveGoodsGroups(): FormArray {
     return this.form.controls.RemoveGoodsGroups as FormArray;
   }
+  goodTypesOptions$:Observable<GoodsTypeDto[]>; 
 
   constructor(
     private fb: FormBuilder,
@@ -152,31 +156,61 @@ export class FormUpdateInfoProductKuComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    console.log(this.dataGoods);
     this.initForm();
-    this.goodsTypeService.getAll().pipe(
-      untilDestroyed(this),
-      filter(res => res.length > 0)
-    ).subscribe(
-      (res) => {
-        if (res.length > 0) {
-          this.GoodsTypesData = res;
-          const temp = this.GoodsTypesData.find(
-            (x) => x.id === this.dataGoods.goodsTypeId
+    this.goodTypesOptions$ = this.GoodsTypeIdProduct.valueChanges.pipe(shareReplay({bufferSize:1, refCount:true})).pipe(
+      startWith(this.dataGoods.goodsTypeId),
+      tap(x=>console.log(x)),
+      switchMap((x) => {
+
+        if(!this.GoodsTypeIdProduct.dirty){
+          return this.goodsTypeService.getItemForUpdate(x).pipe(
+            tap((xx) => (this.goodTypeBack.parentGoodsTypeId = xx[0].parentGoodsTypeId)),
+            map((xx) => {
+              if (!xx.every((y) => y.parentGoodsTypeId === null)) {
+                xx.push(this.goodTypeBack);
+                xx.push(this.goodTypeReset);
+              }
+              return xx;
+            })
           );
-          this.GoodsTypes$ = res.filter((y) =>
-            temp?.parentGoodsTypeId
-              ? y.parentGoodsTypeId === temp?.parentGoodsTypeId
-              : y.parentGoodsTypeId === null
-          );
-          if (temp?.parentGoodsTypeId) {
-            this.temporarySelectedGoodType = temp?.parentGoodsTypeId;
-            this.GoodsTypes$.push(this.goodTypeBack);
-            this.GoodsTypes$.push(this.goodTypeReset);
-          }
         }
-      }
+
+        else if (x === this.goodTypeReset.id || x===null || x===0) {
+          console.log("ke root");
+          return this.goodsTypeService.getRoot();
+        } else if (x === this.goodTypeBack.id) {
+          console.log("ke parent");
+          return this.goodsTypeService.getParent(x).pipe(
+            tap((xx) => (this.goodTypeBack.parentGoodsTypeId = x)),
+            map((xx) => {
+              if (!xx.every((y) => y.parentGoodsTypeId === null)) {
+                xx.push(this.goodTypeBack);
+                xx.push(this.goodTypeReset);
+              }
+              return xx;
+            })
+          );
+        } else {
+          console.log("ke children");
+          return this.goodsTypeService.getChildren(x).pipe(
+            tap((xx) => (this.goodTypeBack.parentGoodsTypeId = x)),
+            map((xx) => {
+              xx.push(this.goodTypeBack);
+              xx.push(this.goodTypeReset);
+              return xx;
+            })
+          );
+        }
+      }),
+      tap(x=>{
+        if(this.GoodsTypeIdProduct.dirty){
+          setTimeout(()=>{
+            this.selectGoodType.open();
+          },200)
+        }
+      })
     );
-    console.log(this.GoodsTypesData);
   }
   cancel(): void {
     this.Canceled.emit();

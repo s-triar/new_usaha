@@ -12,7 +12,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { filter, find, map } from 'rxjs';
+import { filter, find, map, Observable } from 'rxjs';
 import { PRODUCT_DEFAULT } from 'src/app/core/constant';
 import { InfoOfGoodsForUpdatingDto } from 'src/app/domain/backend/Dtos';
 import { GoodsTypeService } from 'src/app/infrastructure/backend/goods-type.service';
@@ -21,6 +21,7 @@ import { InputCurrencyComponent } from 'src/app/ui/components/form/input-currenc
 // import { GoodsTypeDto, InfoOfGoodsForUpdatingDto } from 'src/app/shared/types/Dtos';
 // import { PRODUCT_DEFAULT } from 'src/app/shared/values';
 import { MemberGroupProductKuDialogComponent } from '../member-group-product-ku-dialog/member-group-product-ku-dialog.component';
+// import { MyGoodsService } from '../services/my-goods.service';
 // import { ChartConfiguration, ChartEvent, ChartType } from 'chart.js';
 
 @UntilDestroy()
@@ -43,7 +44,7 @@ import { MemberGroupProductKuDialogComponent } from '../member-group-product-ku-
     MatTableModule
   ],
   providers:[
-    CurrencyPipe
+    CurrencyPipe,
   ]
 })
 export class FormInfoProductKuComponent implements OnInit {
@@ -56,7 +57,7 @@ export class FormInfoProductKuComponent implements OnInit {
   @Output() adjustStockClickEvent: EventEmitter<void> = new EventEmitter<void>();
 
   // GoodsTypesData!: GoodsTypeDto[];
-  GoodsTypesDataShow!: string;
+  GoodsTypesDataShow$!: Observable<string>;
 
   defaultImg: string = PRODUCT_DEFAULT;
   url: string|null|ArrayBuffer = null;
@@ -79,17 +80,19 @@ export class FormInfoProductKuComponent implements OnInit {
       this.urlImg = this.dataGoods.photo;
     }
     console.log(this.url);
-    this.goodsTypeService.getAll()
+    this.GoodsTypesDataShow$ = this.goodsTypeService.getAll()
     .pipe(
       untilDestroyed(this),
       filter(x => x.length > 0),
       map(x => x.find(r => r.id === this.dataGoods.goodsTypeId)),
-      filter(x => x !== undefined && x !== null)
-    ).subscribe(res => {
-      if (res){
-        this.GoodsTypesDataShow = res.name;
-      }
-    });
+      filter(x => x !== undefined && x !== null),
+      map(x=>x.name)
+    );
+    // .subscribe(res => {
+    //   if (res){
+    //     this.GoodsTypesDataShow = res.name;
+    //   }
+    // });
   }
   copy(fieldLabel: string, val: string): void{
     // console.log(event, event.target.value);

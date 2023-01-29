@@ -45,7 +45,9 @@ export type CurrentPOSCashierContainerItem = {
   data: POSCashierContainerItem;
 };
 
-@Injectable()
+@Injectable({
+  providedIn:'root'
+})
 export class PosCashierDataService {
   private POSList: BehaviorSubject<POSCashierList> =
     new BehaviorSubject<POSCashierList>({});

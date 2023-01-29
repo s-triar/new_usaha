@@ -24,7 +24,7 @@ public class UpdateMyGoodsSellingPriceCommand : IRequest<Unit>
 {
     public Guid Id { get; set; }
     public decimal Price { get; set; }
-    public IEnumerable<UpdateMyGoodsWholesalePrice> WholesalePrices { get; set; }
+    public IEnumerable<UpdateMyGoodsWholesalePrice>? WholesalePrices { get; set; }
 }
 public class UpdateMyGoodsSellingPriceCommandValidator : GoodsValidator<UpdateMyGoodsSellingPriceCommand>
 {
@@ -87,20 +87,24 @@ public class UpdateMyGoodsSellingPriceCommandHandler : IRequestHandler<UpdateMyG
         };
         _context.GoodsPrices.Add(entity);
     }
-    private void AddGWholesalePrice(Guid GoodsId, IEnumerable<UpdateMyGoodsWholesalePrice> request)
+    private void AddGWholesalePrice(Guid GoodsId, IEnumerable<UpdateMyGoodsWholesalePrice>? request)
     {
-        foreach(var j in request)
+        if (request != null)
         {
-            var entity = new GoodsWholesalePrice
+            foreach (var j in request)
             {
-                GoodsId = GoodsId,
-                End = null,
-                Start = this._tanggal.Now,
-                WholesalerPrice = j.WholesalerPrice,
-                WholesalerMin = j.WholesalerMin,
-            };
-            _context.GoodsWholesalePrices.Add(entity);
+                var entity = new GoodsWholesalePrice
+                {
+                    GoodsId = GoodsId,
+                    End = null,
+                    Start = this._tanggal.Now,
+                    WholesalerPrice = j.WholesalerPrice,
+                    WholesalerMin = j.WholesalerMin,
+                };
+                _context.GoodsWholesalePrices.Add(entity);
+            }
         }
+        
         
     }
 }

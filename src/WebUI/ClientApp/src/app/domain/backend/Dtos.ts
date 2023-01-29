@@ -41,12 +41,7 @@ export type GoodsPackagingDto= {
     id: number;
     name: string;
 };
-export type GoodsTypeDto= {
-    id: number;
-    name: string;
-    parentGoodsTypeId: number|null;
-    subGoodsTypes: GoodsTypeDto[] | null;
-};
+
 export type MyGoodsRelationDto= {
     id: string;
     name: string;

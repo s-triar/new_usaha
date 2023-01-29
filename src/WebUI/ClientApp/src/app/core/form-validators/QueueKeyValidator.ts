@@ -1,11 +1,12 @@
 import { AbstractControl } from '@angular/forms';
 import { Observable, of } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap, map, catchError, take } from 'rxjs/operators';
-import { CashierDataService } from '../../ui/pages/workspace/pages/cashier/services/cashier-data.service';
+import { PosCashierDataService } from 'src/app/ui/pages/workspace/pages/pos-cashier/services/pos-cashier-data.service';
+
 
 export class QueueKeyValidator {
     static validate(
-      cashierDataService: CashierDataService
+      cashierDataService: PosCashierDataService
     ): (ctrl: AbstractControl) => Observable<{ keyIsReservedError: boolean } | null> {
       return (ctrl: AbstractControl) => {
         return ctrl.valueChanges.pipe(

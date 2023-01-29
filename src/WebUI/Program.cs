@@ -18,7 +18,7 @@ app.UseSwaggerUi3(settings =>
 {
 
     settings.Path = "/api";
-    settings.DocumentPath = "/api/specification.json";
+    settings.DocumentPath = "/swagger/v1/swagger.json";
 });
 
 // Configure the HTTP request pipeline.

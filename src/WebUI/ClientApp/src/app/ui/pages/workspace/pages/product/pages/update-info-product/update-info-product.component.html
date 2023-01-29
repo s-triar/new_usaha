@@ -1,4 +1,8 @@
 <app-portal-container querySelector="#workspace-header">
     <app-nav-page [title]="titlePage" ></app-nav-page>
 </app-portal-container>
-<app-form-update-info-product-ku [idUsaha]="idUsaha" [dataGoods]="dataGoods" (Submitted)="submitted()" (Canceled)="canceled()"></app-form-update-info-product-ku>
+<ng-container *ngIf="idUsaha$ | async as idUsaha">
+    <ng-container *ngIf="dataGoods$ | async as dataGoods">
+        <app-form-update-info-product-ku [idUsaha]="idUsaha" [dataGoods]="dataGoods" (Submitted)="submitted()" (Canceled)="canceled()"></app-form-update-info-product-ku>
+    </ng-container>
+</ng-container>

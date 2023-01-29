@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { Observable } from 'rxjs';
 import { catchError, debounceTime, map, switchMap, take } from 'rxjs/operators';
-import { MyGoodsService } from 'src/app/infrastructure/backend/my-goods.service';
+import { MyGoodsService } from 'src/app/ui/modules/product-ku/services/my-goods.service';
 
 export class DuplicateBarcodeValidator{
     static validate(

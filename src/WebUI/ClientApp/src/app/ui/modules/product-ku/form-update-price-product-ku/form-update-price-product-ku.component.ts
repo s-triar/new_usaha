@@ -8,9 +8,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { of, switchMap } from 'rxjs';
-import { MyGoodsService } from 'src/app/infrastructure/backend/my-goods.service';
 import { InputCurrencyComponent } from 'src/app/ui/components/form/input-currency/input-currency.component';
 import { PopUpNotifService } from 'src/app/ui/components/pop-up/pop-up-notif/pop-up-notif.service';
+import { MyGoodsService } from '../services/my-goods.service';
 
 export type WholeSalesPrice={
     wholesalerPrice: number;
@@ -33,6 +33,9 @@ export type WholeSalesPrice={
     MatCheckboxModule,
     MatButtonModule,
     MatIconModule
+  ],
+  providers:[
+    MyGoodsService
   ]
 })
 

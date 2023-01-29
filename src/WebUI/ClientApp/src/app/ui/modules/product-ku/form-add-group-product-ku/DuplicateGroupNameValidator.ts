@@ -1,7 +1,7 @@
 import { AbstractControl, ValidationErrors, AsyncValidatorFn } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, debounceTime, switchMap, map, catchError, of, take } from 'rxjs';
-import { MyGoodsGroupService } from 'src/app/infrastructure/backend/my-goods-group.service';
+import { MyGoodsGroupService } from '../services/my-goods-group.service';
 
 
 export class DuplicateGroupNameValidator{

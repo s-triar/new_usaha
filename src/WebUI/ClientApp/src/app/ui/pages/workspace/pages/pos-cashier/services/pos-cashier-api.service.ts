@@ -35,9 +35,7 @@ export interface PosCashierServiceInterface{
   pay(data: any): Observable<PosCashierPaymentResponseDto>;
 }
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class PosCashierApiService implements PosCashierServiceInterface{
 
   constructor(
