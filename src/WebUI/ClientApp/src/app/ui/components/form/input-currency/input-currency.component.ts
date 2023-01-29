@@ -19,11 +19,11 @@ import { CurrencyConversionService } from 'src/app/core/utility/currency-convers
   providers: [
     
     {provide: MatFormFieldControl, useExisting: InputCurrencyComponent},
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(()=>InputCurrencyComponent),
-      multi:true
-    }
+    // {
+    //   provide: NG_VALUE_ACCESSOR,
+    //   useExisting: forwardRef(()=>InputCurrencyComponent),
+    //   multi:true
+    // }
   ],
   standalone: true,
   imports: [

@@ -118,8 +118,8 @@ export class AddBusinessComponent implements OnInit {
         Validators.required,
         Validators.maxLength(6),
       ]),
-      Latitude: this.formBuilder.control<string>(''),
-      Longitude: this.formBuilder.control<string>(''),
+      Latitude: this.formBuilder.control<number>(0),
+      Longitude: this.formBuilder.control<number>(0),
     }),
   });
   enterpriseTypes$: Observable<EnterpriseTypeDto[]> = new Observable<

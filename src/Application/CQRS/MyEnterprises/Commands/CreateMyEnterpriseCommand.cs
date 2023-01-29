@@ -23,18 +23,24 @@ public class CreateEnterpriseAddressCommand
     public decimal Latitude { get; set; }
     public decimal Longitude { get; set; }
 }
-public class CreateMyEnterpriseCommand: IRequest<Unit>
+public class CreateEnterpriseInfoCommand
 {
     public string Code { get; set; }
     public string Name { get; set; }
     public string? Description { get; set; }
-    public string? Photo { get; set; }
     public string Phone { get; set; }
     public string Email { get; set; }
     public int EnterpriseTypeId { get; set; }
+}
+public class CreateEnterprisePhotoCommand
+{
+    public string? Photo { get; set; }
     public IFormCollection? PhotoFile { get; set; }
-
-
+}
+public class CreateMyEnterpriseCommand: IRequest<Unit>
+{
+    public CreateEnterpriseInfoCommand Info { get; set; }
+    public CreateEnterprisePhotoCommand Photo { get; set; }
     public CreateEnterpriseAddressCommand Address { get; set; }
 
 }
@@ -55,13 +61,13 @@ public class CreateMyEnterpriseCommandHandler : IRequestHandler<CreateMyEnterpri
         var entity = new Enterprise
         {
             UserOwnerId = _cs.UserId!,
-            Description = request.Description,
-            Name = request.Name,
-            Code = request.Code.Trim(),
-            EnterpriseTypeId = request.EnterpriseTypeId,
-            Phone = request.Phone,
-            Photo = request.Photo,
-            Email = request.Email
+            Description = request.Info.Description,
+            Name = request.Info.Name,
+            Code = request.Info.Code.Trim(),
+            EnterpriseTypeId = request.Info.EnterpriseTypeId,
+            Phone = request.Info.Phone,
+            Photo = request.Photo.Photo,
+            Email = request.Info.Email
         };
 
         _context.Enterprises.Add(entity);
@@ -82,12 +88,12 @@ public class CreateMyEnterpriseCommandHandler : IRequestHandler<CreateMyEnterpri
 
         try
         {
-            foreach(var f in request.PhotoFile!.Files)
+            foreach(var f in request.Photo.PhotoFile!.Files)
             {
                 var folderName = Path.Combine(ResourcesPath.RESOURCES, ResourcesPath.ENTERPRISE_FOLDER);
                 var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
                 var file = f;
-                var fileName = string.Concat(Guid.NewGuid().ToString().AsSpan(9,16), ((new DateTime()).Ticks).ToString(), request.Photo); 
+                var fileName = string.Concat(Guid.NewGuid().ToString().AsSpan(9,16), ((new DateTime()).Ticks).ToString(), request.Photo.Photo); 
                 var fullPath = Path.Combine(pathToSave, fileName);
                 var dbPath = Path.Combine(folderName, fileName);
                 using (var stream = new FileStream(fullPath, FileMode.Create))
