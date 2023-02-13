@@ -61,7 +61,7 @@
           matInput
           placeholder="Kategori Produk"
           autocomplete="off"
-          [value]="GoodsTypesDataShow$ |async"
+          [value]="GoodsTypesDataShow$ | async"
         />
       </mat-form-field>
       <mat-form-field
@@ -146,13 +146,10 @@
         </button>
       </div>
     </div>
-   
   </mat-tab>
   <mat-tab label="Harga">
-    <div style="display: block;">
+    <div style="display: block">
       <ng-content select="#sellproductchart"></ng-content>
-
-      
     </div>
     <div class="form-input-container">
       <mat-form-field
@@ -221,18 +218,20 @@
     </div>
   </mat-tab>
   <mat-tab label="Stok">
-    <div style="display: flex;">
-      <div style="display: flex;
-      flex-direction: row;
-      flex-wrap: wrap;
-      align-content: center;
-      justify-content: center;
-      align-items: center;
-      flex: 1 1 auto;">
-
-        
-      <ng-content  select="#nsoldthischart"></ng-content>
-        <ng-content  select="#buyproductchart"></ng-content>
+    <div style="display: flex">
+      <div
+        style="
+          display: flex;
+          flex-direction: row;
+          flex-wrap: wrap;
+          align-content: center;
+          justify-content: center;
+          align-items: center;
+          flex: 1 1 auto;
+        "
+      >
+        <ng-content select="#nsoldthischart"></ng-content>
+        <ng-content select="#buyproductchart"></ng-content>
       </div>
     </div>
     <div class="form-input-container">
@@ -247,7 +246,22 @@
           readonly
           placeholder="Harga Beli Produk"
           [value]="dataGoods.buyPrice"
+          [type]="showPurchaseProduct ? 'text' : 'password'"
         ></app-input-currency>
+        <button
+          matSuffix
+          mat-icon-button
+          color="primary"
+          (click)="showPurchaseProduct = !showPurchaseProduct"
+          type="button"
+        >
+          <mat-icon *ngIf="showPurchaseProduct === false; else showPruch"
+            >visibility_off</mat-icon
+          >
+          <ng-template #showPruch>
+            <mat-icon>visibility</mat-icon>
+          </ng-template>
+        </button>
       </mat-form-field>
       <mat-form-field
         appearance="fill"
@@ -260,7 +274,23 @@
           readonly
           placeholder="Harga Beli Produk"
           [value]="dataGoods.baseBuyPrice"
+          [type]="showPurchaseProductBase ? 'text' : 'password'"
         ></app-input-currency>
+        <button
+          matSuffix
+          mat-icon-button
+          color="primary"
+          (click)="showPurchaseProductBase = !showPurchaseProductBase"
+          type="button"
+        >
+          <mat-icon
+            *ngIf="showPurchaseProductBase === false; else showPruchBase"
+            >visibility_off</mat-icon
+          >
+          <ng-template #showPruchBase>
+            <mat-icon>visibility</mat-icon>
+          </ng-template>
+        </button>
       </mat-form-field>
       <mat-form-field
         appearance="fill"

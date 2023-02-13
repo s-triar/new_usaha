@@ -39,6 +39,7 @@ import { CurrencyConversionService } from 'src/app/core/utility/currency-convers
   // }
 })
 export class InputCurrencyComponent implements OnInit, OnDestroy, MatFormFieldControl<number|null>, ControlValueAccessor  {
+  @Input() type:string = 'text';
   @Input()
   get value(): number|null {
     return parseFloat(this.parts.controls.actual.value);

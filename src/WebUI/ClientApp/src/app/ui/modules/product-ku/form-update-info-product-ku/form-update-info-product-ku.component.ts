@@ -16,6 +16,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatOptionModule } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -56,7 +57,7 @@ import { MyGoodsService } from '../services/my-goods.service';
     MatOptionModule,
     MatSelectModule,
     ButtonUploadFileComponent,
-    
+    MatCheckboxModule
   ],
   providers:[
     MyGoodsService
@@ -103,7 +104,8 @@ export class FormUpdateInfoProductKuComponent implements OnInit {
     PhotoString: [null],
     GoodsTypeId: [null, [Validators.required]],
     Contain: [1, [Validators.required, Validators.min(1)]],
-    AvailableOnline: [false],
+    AvailableOnline: this.fb.nonNullable.control(false),
+    IsWholesalerPriceAuto: this.fb.nonNullable.control(false),
     ParentBarcode: [null, [Validators.maxLength(255)]],
     // GoodsGroups: [this.fb.array([])],
     AddGoodsGroups: [this.fb.array([])],
@@ -265,7 +267,8 @@ export class FormUpdateInfoProductKuComponent implements OnInit {
         this.dataGoods.contain,
         [Validators.required, Validators.min(1)],
       ],
-      AvailableOnline: [this.dataGoods.availableOnline],
+      AvailableOnline: this.fb.nonNullable.control(this.dataGoods.availableOnline),
+      IsWholesalerPriceAuto: this.fb.nonNullable.control(this.dataGoods.isWholesalerPriceAuto),
       ParentBarcode: [
         this.dataGoods.parent?.barcode,
         [Validators.maxLength(255)],

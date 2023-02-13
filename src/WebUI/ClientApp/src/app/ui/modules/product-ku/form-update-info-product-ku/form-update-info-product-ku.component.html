@@ -41,7 +41,10 @@
         <mat-hint class="color-warn" *ngIf="(ContainProduct?.dirty || ContainProduct?.touched) && ContainProduct?.errors?.min">Nilai minimal adalah 1.</mat-hint>
     </mat-form-field>
     <div class="mat-form-field">
-        <!-- <mat-checkbox formControlName="AvailableOnline"  >Jual Online?</mat-checkbox> -->
+        <mat-checkbox formControlName="AvailableOnline"  >Jual Online?</mat-checkbox>
+    </div>
+    <div class="mat-form-field">
+        <mat-checkbox formControlName="IsWholesalerPriceAuto">Otomatis harga grosir jika minimal terpenuhi?</mat-checkbox>
     </div>
     <mat-form-field appearance="fill" shouldLabelFloat="true" floatLabel="always">
         <mat-label>Barcode Produk Packaging Lebih Besar</mat-label>

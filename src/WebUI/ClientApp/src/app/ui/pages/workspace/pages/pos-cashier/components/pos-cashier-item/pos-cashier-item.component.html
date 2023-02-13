@@ -20,7 +20,7 @@
           type="number"
           matInput
           #qtyinput
-          (blur)="changeQty($event)"
+          (change)="changeQty($event)"
           [value]="item.qty"
           style="text-align: right"
         />
@@ -121,7 +121,7 @@
                     <span matPrefix>Rp.</span>
                     <app-input-currency
                       #singleD
-                      (blur)="changeSingleDisc(singleD)"
+                      (keyup)="changeSingleDisc(singleD)"
                       [value]="item.singlePriceDisc"
                     ></app-input-currency>
                   </mat-form-field>
@@ -155,7 +155,7 @@
                     <span matPrefix>Rp.</span>
                     <app-input-currency
                       #totalD
-                      (blur)="changeTotalDisc(totalD)"
+                      (keyup)="changeTotalDisc(totalD)"
                       [value]="item.totalPriceDisc"
                     ></app-input-currency>
                   </mat-form-field>

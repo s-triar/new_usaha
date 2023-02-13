@@ -155,7 +155,8 @@ export class PosCashierDataService {
       }
     } else {
       item = this._calculateUsedTotalPrice(item);
-      data.items[itemIndex] = { ...item };
+      // data.items[itemIndex] = { ...item };
+      data.items[itemIndex] = item;
     }
     this._updateTotalMustPay(data);
   }
@@ -179,7 +180,9 @@ export class PosCashierDataService {
       item.basePriceUsed = item.isWholesalerPriceUsed ? t : item.price;
 
       item = this._calculateUsedTotalPrice(item);
-      data.items[itemIndex] = { ...item };
+      // data.items[itemIndex] = { ...item };
+      data.items[itemIndex] = item;
+
     }
   }
   singleDiscChange(id: string, val: number): void {
@@ -189,7 +192,9 @@ export class PosCashierDataService {
     if (item) {
       item.singlePriceDisc = val;
       item = this._calculateUsedTotalPrice(item);
-      data.items[itemIndex] = { ...item };
+      // data.items[itemIndex] = { ...item };
+      data.items[itemIndex] = item;
+
       this._updateTotalMustPay(data);
     }
   }
@@ -200,7 +205,9 @@ export class PosCashierDataService {
     if (item) {
       item.totalPriceDisc = val;
       item = this._calculateUsedTotalPrice(item);
-      data.items[itemIndex] = { ...item };
+      // data.items[itemIndex] = { ...item };
+      data.items[itemIndex] = item;
+
       this._updateTotalMustPay(data);
     }
   }

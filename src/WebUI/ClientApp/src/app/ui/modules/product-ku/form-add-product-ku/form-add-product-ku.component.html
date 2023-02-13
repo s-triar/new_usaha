@@ -46,6 +46,9 @@
             <div class="mat-form-field">
                 <mat-checkbox formControlName="AvailableOnline"  >Jual Online?</mat-checkbox>
             </div>
+            <div class="mat-form-field">
+                <mat-checkbox formControlName="IsWholesalerPriceAuto">Otomatis harga grosir jika minimal terpenuhi?</mat-checkbox>
+            </div>
             <mat-form-field appearance="fill" shouldLabelFloat="true" floatLabel="always">
                 <mat-label>Barcode Produk Packaging Lebih Besar</mat-label>
                 <input matInput placeholder="Barcode Produk Packaging Lebih Besar" formControlName="ParentBarcode" autocomplete="off">
@@ -86,9 +89,7 @@
                 <mat-hint class="color-warn" *ngIf="(PriceProduct?.dirty || PriceProduct?.touched) && PriceProduct?.errors?.required">Harga jual produk harus diisi.</mat-hint>
                 <mat-hint class="color-warn" *ngIf="(PriceProduct?.dirty || PriceProduct?.touched) && PriceProduct?.errors?.min">Nilai minimal adalah 0.</mat-hint>
             </mat-form-field>
-            <div class="mat-form-field">
-                <mat-checkbox formControlName="IsWholesalerPriceAuto">Otomatis harga grosir jika minimal terpenuhi?</mat-checkbox>
-            </div>
+
             <div class="wholesaler-container" formArrayName="WholesalesPrices" >
                 <span>Harga Jual Grosir</span>
                 <ng-container *ngFor="let WholesalesPricesForm of WholesalesPricesProduct.value.controls; let i = index">

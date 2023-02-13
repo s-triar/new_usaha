@@ -64,7 +64,8 @@ export class FormInfoProductKuComponent implements OnInit {
   urlImg: string|null|ArrayBuffer = null;
 
   // Selling chart
-  
+  showPurchaseProduct=false;
+  showPurchaseProductBase=false;
 
   constructor(
     private dialog: MatDialog,
@@ -80,11 +81,9 @@ export class FormInfoProductKuComponent implements OnInit {
       this.urlImg = this.dataGoods.photo;
     }
     console.log(this.url);
-    this.GoodsTypesDataShow$ = this.goodsTypeService.getAll()
+    this.GoodsTypesDataShow$ = this.goodsTypeService.getItem(this.dataGoods.goodsTypeId)
     .pipe(
       untilDestroyed(this),
-      filter(x => x.length > 0),
-      map(x => x.find(r => r.id === this.dataGoods.goodsTypeId)),
       filter(x => x !== undefined && x !== null),
       map(x=>x.name)
     );

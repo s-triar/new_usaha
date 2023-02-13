@@ -121,7 +121,7 @@
                   <span matPrefix>Rp.</span>
                   <app-input-currency
                     #paymentComp
-                    (blur)="updatePayment(paymentComp)"
+                    (keyup)="updatePayment(paymentComp)"
                     [value]="data.payment"
                   ></app-input-currency>
                 </mat-form-field>

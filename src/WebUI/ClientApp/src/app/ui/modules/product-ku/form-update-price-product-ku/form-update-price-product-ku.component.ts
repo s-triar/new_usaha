@@ -49,7 +49,7 @@ export class FormUpdatePriceProductKuComponent implements OnInit {
   form: FormGroup = this.fb.group({
     Id: [this.id, [Validators.required]],
     Price: [0, [Validators.required, Validators.min(1)]],
-    WholesalesPrices:[this.fb.array([])]
+    WholesalePrices:[this.fb.array([])]
     // WholesalerPrice: [0, [Validators.required, Validators.min(1)]],
     // WholesalerMin: [1, [Validators.required, Validators.min(1)]],
     // IsWholesalerPriceAuto: [false],
@@ -57,8 +57,8 @@ export class FormUpdatePriceProductKuComponent implements OnInit {
   get PriceProduct(): AbstractControl|null{
     return this.form.get('Price');
   }
-  get WholesalesPricesProduct(): FormArray{
-    return this.form.controls.WholesalesPrices as FormArray;
+  get WholesalePricesProduct(): FormArray{
+    return this.form.controls.WholesalePrices as FormArray;
   }
   // get WholesalerPriceProduct(): AbstractControl|null{
   //   return this.form.get('WholesalerPrice');
@@ -83,13 +83,13 @@ export class FormUpdatePriceProductKuComponent implements OnInit {
     this.form = this.fb.group({
       Id: [this.id, [Validators.required]],
       Price: [0, [Validators.required, Validators.min(1)]],
-      WholesalesPrices:[this.fb.array([])]
+      WholesalePrices:[this.fb.array([])]
     // WholesalerPrice: [0, [Validators.required, Validators.min(1)]],
     // WholesalerMin: [1, [Validators.required, Validators.min(1)]],
     // IsWholesalerPriceAuto: [false],
     });
     for (const iterator of this.wholesalesprices) {
-      this.WholesalesPricesProduct.value.push(this.fb.group({
+      this.WholesalePricesProduct.value.push(this.fb.group({
           WholesalerPrice: [iterator.wholesalerPrice, [Validators.required]],
           WholesalerMin: [iterator.wholesalerMin, [Validators.required, Validators.min(1)]],
       }));
@@ -105,7 +105,7 @@ export class FormUpdatePriceProductKuComponent implements OnInit {
       return;
     }
     const temp = this.form.value;
-    temp.WholesalesPrices = this.WholesalesPricesProduct.value.value === null ? []:this.WholesalesPricesProduct.value.value;
+    temp.WholesalePrices = this.WholesalePricesProduct.value.value === null ? []:this.WholesalePricesProduct.value.value;
     this.goodsService.changeSellPrice(temp)
         .pipe(
           untilDestroyed(this),
@@ -120,12 +120,12 @@ export class FormUpdatePriceProductKuComponent implements OnInit {
   }
   addWholesaleprice():void{
        
-    this.WholesalesPricesProduct.value.push(this.fb.group({
+    this.WholesalePricesProduct.value.push(this.fb.group({
       WholesalerPrice: [0, [Validators.required]],
       WholesalerMin: [1, [Validators.required, Validators.min(1)]],
     }));
   }
   deleteWholesaleprice(idx:number):void{
-    this.WholesalesPricesProduct.value.removeAt(idx);
+    this.WholesalePricesProduct.value.removeAt(idx);
   }
 }

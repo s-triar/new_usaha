@@ -30,6 +30,7 @@ export interface GoodsTypeServiceInterface {
   getRoot(): Observable<GoodsTypeDto[]>;
   getParent(idCurrent: number): Observable<GoodsTypeDto[]>;
   getChildren(idParent: number | null): Observable<GoodsTypeDto[]>;
+  getItem(id:number):Observable<GoodsTypeDto>;
 }
 
 @Injectable({
@@ -89,6 +90,15 @@ export class GoodsTypeService implements GoodsTypeServiceInterface {
       tap(x=>console.log(x)),
       map(x=>x.subGoodsTypes),
       filter((x) => x.length > 0)
+    );
+  }
+  getItem(id:number):Observable<GoodsTypeDto>{
+    return this.goodsType.asObservable().pipe(
+      filter(x=>x.length>0),
+      tap(x=>console.log(x)),
+      map((x) => x.find((y) => y.id === id)),
+      filter(x=>!!x),
+      tap(x=>console.log(x))
     );
   }
 

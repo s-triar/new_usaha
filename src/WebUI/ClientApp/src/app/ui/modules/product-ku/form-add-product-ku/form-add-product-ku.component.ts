@@ -25,7 +25,18 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { MatDialog } from '@angular/material/dialog';
 import { GroupProductKuDialogComponent } from '../group-product-ku-dialog/group-product-ku-dialog.component';
 import { MemberGroupProductKuDialogComponent } from '../member-group-product-ku-dialog/member-group-product-ku-dialog.component';
-import { iif, map, Observable, of, pairwise, shareReplay, startWith, switchMap, take, tap } from 'rxjs';
+import {
+  iif,
+  map,
+  Observable,
+  of,
+  pairwise,
+  shareReplay,
+  startWith,
+  switchMap,
+  take,
+  tap,
+} from 'rxjs';
 import { PRODUCT_DEFAULT } from 'src/app/core/constant';
 import { CustomUploadFileEventChange } from 'src/app/core/types';
 import { MyGoodsGroupsListItemDto } from 'src/app/domain/backend/Dtos';
@@ -115,13 +126,13 @@ export class FormAddProductKuComponent implements OnInit {
       GoodsTypeId: [null, [Validators.required]],
       Contain: [1, [Validators.required, Validators.min(1)]],
       AvailableOnline: this.fb.nonNullable.control<boolean>(false),
+      IsWholesalerPriceAuto: this.fb.nonNullable.control<boolean>(false),
       ParentBarcode: [null, [Validators.maxLength(255)]],
       GoodsGroups: [this.fb.array([])],
     }),
     pricing: this.fb.group({
       BuyPrice: [0, [Validators.required, Validators.min(0)]],
       Price: [0, [Validators.required, Validators.min(0)]],
-      IsWholesalerPriceAuto: [false],
 
       WholesalesPrices: [this.fb.array([])],
     }),
@@ -130,7 +141,7 @@ export class FormAddProductKuComponent implements OnInit {
       Threshold: [0, [Validators.required, Validators.min(0)]],
     }),
   });
-  
+
   get infoGroup(): FormGroup {
     return this.form.controls.info as FormGroup;
   }
@@ -199,7 +210,7 @@ export class FormAddProductKuComponent implements OnInit {
   get ThresholdProduct(): AbstractControl | null {
     return this.stockGroup.get('Threshold');
   }
-  goodTypesOptions$:Observable<GoodsTypeDto[]>; 
+  goodTypesOptions$: Observable<GoodsTypeDto[]>;
   constructor(
     private fb: FormBuilder,
     private readonly goodsService: MyGoodsService,
@@ -209,48 +220,49 @@ export class FormAddProductKuComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    
     this.initForm();
 
-    this.goodTypesOptions$ = this.GoodsTypeIdProduct.valueChanges.pipe(shareReplay({bufferSize:1, refCount:true})).pipe(
-      startWith(null),
-      tap(x=>console.log(x)),
-      switchMap((x) => {
-        if (x === this.goodTypeReset.id || x===null || x===0) {
-          console.log("ke root");
-          return this.goodsTypeService.getRoot();
-        } else if (x === this.goodTypeBack.id) {
-          console.log("ke parent");
-          return this.goodsTypeService.getParent(x).pipe(
-            tap((xx) => (this.goodTypeBack.parentGoodsTypeId = x)),
-            map((xx) => {
-              if (!xx.every((y) => y.parentGoodsTypeId === null)) {
+    this.goodTypesOptions$ = this.GoodsTypeIdProduct.valueChanges
+      .pipe(shareReplay({ bufferSize: 1, refCount: true }))
+      .pipe(
+        startWith(null),
+        tap((x) => console.log(x)),
+        switchMap((x) => {
+          if (x === this.goodTypeReset.id || x === null || x === 0) {
+            console.log('ke root');
+            return this.goodsTypeService.getRoot();
+          } else if (x === this.goodTypeBack.id) {
+            console.log('ke parent');
+            return this.goodsTypeService.getParent(x).pipe(
+              tap((xx) => (this.goodTypeBack.parentGoodsTypeId = x)),
+              map((xx) => {
+                if (!xx.every((y) => y.parentGoodsTypeId === null)) {
+                  xx.push(this.goodTypeBack);
+                  xx.push(this.goodTypeReset);
+                }
+                return xx;
+              })
+            );
+          } else {
+            console.log('ke children');
+            return this.goodsTypeService.getChildren(x).pipe(
+              tap((xx) => (this.goodTypeBack.parentGoodsTypeId = x)),
+              map((xx) => {
                 xx.push(this.goodTypeBack);
                 xx.push(this.goodTypeReset);
-              }
-              return xx;
-            })
-          );
-        } else {
-          console.log("ke children");
-          return this.goodsTypeService.getChildren(x).pipe(
-            tap((xx) => (this.goodTypeBack.parentGoodsTypeId = x)),
-            map((xx) => {
-              xx.push(this.goodTypeBack);
-              xx.push(this.goodTypeReset);
-              return xx;
-            })
-          );
-        }
-      }),
-      tap(x=>{
-        if(this.GoodsTypeIdProduct.dirty){
-          setTimeout(()=>{
-            this.selectGoodType.open();
-          },200)
-        }
-      })
-    );
+                return xx;
+              })
+            );
+          }
+        }),
+        tap((x) => {
+          if (this.GoodsTypeIdProduct.dirty) {
+            setTimeout(() => {
+              this.selectGoodType.open();
+            }, 200);
+          }
+        })
+      );
   }
   submit(): void {
     if (!this.form.valid) {
@@ -262,9 +274,7 @@ export class FormAddProductKuComponent implements OnInit {
           type: 'warning',
         })
         .afterClosed()
-        .pipe(
-          take(1)
-        )
+        .pipe(take(1))
         .subscribe();
       return;
     }
@@ -315,7 +325,9 @@ export class FormAddProductKuComponent implements OnInit {
         PhotoString: [null],
         GoodsTypeId: [null, [Validators.required]],
         Contain: [1, [Validators.required, Validators.min(1)]],
-        AvailableOnline: [false],
+        AvailableOnline: this.fb.nonNullable.control<boolean>(false),
+        IsWholesalerPriceAuto: this.fb.nonNullable.control<boolean>(false),
+
         ParentBarcode: [null, [Validators.maxLength(255)]],
         GoodsGroups: [this.fb.array([])],
       }),
@@ -326,7 +338,6 @@ export class FormAddProductKuComponent implements OnInit {
 
         // WholesalerPrice: [0, [Validators.required]],
         // WholesalerMin: [1, [Validators.required, Validators.min(1)]],
-        IsWholesalerPriceAuto: [false],
       }),
       stock: this.fb.group({
         N: [0, [Validators.required, Validators.min(0)]],
@@ -368,7 +379,7 @@ export class FormAddProductKuComponent implements OnInit {
     }
   }
   selectGoodsType(event: MatSelectChange): void {
-    console.log(event)
+    console.log(event);
     const val = event.value as string;
     const v = parseInt(val, 10);
     this.GoodsTypeIdProduct.patchValue(val);
@@ -377,7 +388,6 @@ export class FormAddProductKuComponent implements OnInit {
     setTimeout(() => {
       this.selectGoodType.open();
     }, 200);
-    
   }
   openDialogGroup(): void {
     this.dialog
