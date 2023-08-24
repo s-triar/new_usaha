@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { AbstractControl, FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
+import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
 import { MatIconModule } from '@angular/material/icon';
-import { MatListModule } from '@angular/material/list';
-import { MatSelectChange } from '@angular/material/select';
+import { MatLegacyListModule as MatListModule } from '@angular/material/legacy-list';
+import { MatLegacySelectChange as MatSelectChange } from '@angular/material/legacy-select';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 // import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 // import { faPlus } from '@fortawesome/free-solid-svg-icons';

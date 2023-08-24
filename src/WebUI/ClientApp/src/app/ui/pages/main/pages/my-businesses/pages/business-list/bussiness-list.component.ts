@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog, MatLegacyDialogConfig as MatDialogConfig } from '@angular/material/legacy-dialog';
 import { Router } from '@angular/router';
 import { Observable, switchMap } from 'rxjs';
 import {
@@ -13,8 +13,8 @@ import {
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatButtonModule } from '@angular/material/button';
+import { MatLegacyFormFieldModule as MatFormFieldModule } from '@angular/material/legacy-form-field';
+import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
 import { BUSINESS_DEFAULT } from 'src/app/core/constant';
 import { GLOBAL_PATH } from 'src/app/core/constant/routes';
 import { DataAddBusiness } from 'src/app/core/types';
@@ -25,7 +25,7 @@ import {
 import { MyBussinessService } from 'src/app/infrastructure/backend/my-bussiness.service';
 import { MainStateService } from 'src/app/ui/pages/main/components/main-nav/main-state.service';
 import { MyBusinessesListItemComponent } from './components/my-businesses-list-item/my-businesses-list-item.component';
-import { MatInputModule } from '@angular/material/input';
+import { MatLegacyInputModule as MatInputModule } from '@angular/material/legacy-input';
 import { MatIconModule } from '@angular/material/icon';
 import {
   PageNumberChangedEvent,

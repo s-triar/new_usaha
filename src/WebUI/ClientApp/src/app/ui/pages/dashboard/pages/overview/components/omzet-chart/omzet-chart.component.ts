@@ -15,8 +15,8 @@ import {
   ResultOmzetLineDiagramItem,
 } from 'src/app/domain/backend/Dtos';
 import { EChartsOption, LegendComponentOption } from 'echarts';
-import { MatSelectModule } from '@angular/material/select';
-import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatLegacySelectModule as MatSelectModule } from '@angular/material/legacy-select';
+import { MatLegacyFormFieldModule as MatFormFieldModule } from '@angular/material/legacy-form-field';
 import { NgxEchartsModule } from 'ngx-echarts';
 
 @UntilDestroy()

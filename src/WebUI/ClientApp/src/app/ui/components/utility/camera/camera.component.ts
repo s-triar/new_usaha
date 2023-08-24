@@ -2,7 +2,7 @@ import { AfterViewInit, Component, ElementRef, EventEmitter, HostListener, OnIni
 import { CommonModule } from '@angular/common';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { FileConversionService } from 'src/app/core/utility/file-conversion.service';
-import { MatButtonModule } from '@angular/material/button';
+import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
 import { MatIconModule } from '@angular/material/icon';
 // import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 // import { faCamera } from '@fortawesome/free-solid-svg-icons';

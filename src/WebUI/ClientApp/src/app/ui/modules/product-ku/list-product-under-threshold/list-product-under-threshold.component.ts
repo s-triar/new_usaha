@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PageNumberChangedEvent, PageSizeChangedEvent, PaginationComponent } from 'src/app/ui/components/pagination/pagination/pagination.component';
-import { MatInputModule } from '@angular/material/input';
+import { MatLegacyInputModule as MatInputModule } from '@angular/material/legacy-input';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { MatListModule } from '@angular/material/list';
-import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatLegacyListModule as MatListModule } from '@angular/material/legacy-list';
+import { MatLegacyFormFieldModule as MatFormFieldModule } from '@angular/material/legacy-form-field';
 import {debounceTime,distinctUntilChanged, Observable, startWith, switchMap} from 'rxjs';
 import { MyGoodsGroupsListContainerDto, MyGoodsGroupsListItemDto } from 'src/app/domain/backend/Dtos';
 import { MyGoodsGroupService } from '../services/my-goods-group.service';

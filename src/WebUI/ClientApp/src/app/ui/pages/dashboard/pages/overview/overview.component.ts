@@ -3,7 +3,7 @@ import { AfterContentInit, Component, OnInit, ViewChild } from '@angular/core';
 // import { FlexLayoutModule } from '@angular/flex-layout';
 import { RouterModule } from '@angular/router';
 import { DashboardStateService } from 'src/app/ui/pages/dashboard/components/dashboard-nav/dashboard-state.service';
-import { MatCardModule } from '@angular/material/card';
+import { MatLegacyCardModule as MatCardModule } from '@angular/material/legacy-card';
 // import { NgxEchartsModule, NgxEchartsDirective } from 'ngx-echarts/';
 // import { AgChartsAngularModule } from 'ag-charts-angular';
 import { MatIconModule } from '@angular/material/icon';

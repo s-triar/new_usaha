@@ -1,10 +1,10 @@
 import { CdkConnectedOverlay, CdkOverlayOrigin, Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { Component, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import {FormControl} from '@angular/forms';
-import { MatButton, MatButtonModule } from '@angular/material/button';
-import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatLegacyButton as MatButton, MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
+import { MatLegacyFormFieldModule as MatFormFieldModule } from '@angular/material/legacy-form-field';
 import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
+import { MatLegacyInputModule as MatInputModule } from '@angular/material/legacy-input';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import { PortalContainerComponent } from '../../utility/portal-container/portal-container.component';

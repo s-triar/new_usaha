@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatCheckbox, MatCheckboxModule } from '@angular/material/checkbox';
+import { MatLegacyCheckbox as MatCheckbox, MatLegacyCheckboxModule as MatCheckboxModule } from '@angular/material/legacy-checkbox';
 import { ActivatedRoute } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { of } from 'rxjs';
@@ -9,9 +9,9 @@ import { DuplicateRoleNameValidator } from '../../../../../../../core/form-valid
 import { CommonModule, Location } from '@angular/common';
 import { PortalContainerComponent } from 'src/app/ui/components/utility/portal-container/portal-container.component';
 import { NavPageComponent } from 'src/app/ui/components/nav/nav-page/nav-page.component';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatButtonModule } from '@angular/material/button';
+import { MatLegacyInputModule as MatInputModule } from '@angular/material/legacy-input';
+import { MatLegacyFormFieldModule as MatFormFieldModule } from '@angular/material/legacy-form-field';
+import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
 import { ButtonBackDirective } from 'src/app/ui/directives/button-back/button-back.directive';
 import { EnterpriseClaimDto, EnterpriseRoleDetailDto } from 'src/app/domain/backend/Dtos';
 import { RoleService } from 'src/app/ui/pages/dashboard/pages/employee/role.service';

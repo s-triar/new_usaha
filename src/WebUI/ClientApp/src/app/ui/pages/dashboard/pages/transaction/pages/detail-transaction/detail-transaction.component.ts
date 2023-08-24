@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { MatTabsModule } from '@angular/material/tabs';
+import { MatLegacyTabsModule as MatTabsModule } from '@angular/material/legacy-tabs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DASHBOARD_ROUTE, DB_TRANS_ROUTE } from 'src/app/core/constant/routes';
 import { DetailOrderDto } from 'src/app/domain/backend/Dtos';

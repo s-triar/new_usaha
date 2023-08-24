@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { MatDialogRef, MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialogRef as MatDialogRef, MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { PopUpLoadingComponent } from './pop-up-loading.component';
 import { BehaviorSubject, Observable } from 'rxjs';
 @Injectable({

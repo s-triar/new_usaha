@@ -16,7 +16,7 @@ import { WholeSalesPrice } from 'src/app/ui/modules/product-ku/form-update-price
 import { NSoldChartComponent } from '../../components/n-sold-chart/n-sold-chart.component';
 import { SellPriceChartComponent } from '../../components/sell-price-chart/sell-price-chart.component';
 import { BuyPriceChartComponent } from '../../components/buy-price-chart/buy-price-chart.component';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatLegacySnackBarModule as MatSnackBarModule } from '@angular/material/legacy-snack-bar';
 import { MyGoodsService } from 'src/app/ui/modules/product-ku/services/my-goods.service';
 
 @UntilDestroy()

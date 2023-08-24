@@ -31,7 +31,7 @@ import { AuthorizeInterceptor } from './core/interceptors/authorize.interceptor'
 import { EnterpriseInterceptor } from './core/interceptors/enterprise.interceptor';
 // import { AuthorizeServerInterceptor } from './core/interceptors/authorize-server.interceptor';
 import { NotificationInterceptor } from './core/interceptors/notification.interceptor';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MatLegacyDialogModule as MatDialogModule } from '@angular/material/legacy-dialog';
 // import { NgxEchartsModule } from 'ngx-echarts';
 export const BASE_URL = new InjectionToken<string>('BASE_URL');
 // import { AgChartsAngularModule } from 'ag-charts-angular';

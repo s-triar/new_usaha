@@ -37,8 +37,8 @@ import { PopUpConfirmationService } from 'src/app/ui/components/pop-up/pop-up-co
 import { PopUpNotifService } from 'src/app/ui/components/pop-up/pop-up-notif/pop-up-notif.service';
 import { WorkspaceStateService } from '../../components/workspace-nav/workspace-state.service';
 import { PrintService } from 'ng-thermal-print';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { MyEnterpriseService } from 'src/app/infrastructure/backend/my-enterprise.service';
 import {
   CreateOrderCashierCommand,
@@ -46,14 +46,14 @@ import {
 } from 'src/app/domain/backend/Commands';
 import { PortalContainerComponent } from 'src/app/ui/components/utility/portal-container/portal-container.component';
 import { SearchInputBarcodeComponent } from 'src/app/ui/components/search/search-input-barcode/search-input-barcode.component';
-import { MatListModule } from '@angular/material/list';
+import { MatLegacyListModule as MatListModule } from '@angular/material/legacy-list';
 import { PosCashierSearchComponent } from './components/pos-cashier-search/pos-cashier-search.component';
-import { MatButtonModule } from '@angular/material/button';
+import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { CashierEventDiscChange, CashierEventQtyChange, CashierEventToggleWholesalerChange, PosCashierItemComponent } from './components/pos-cashier-item/pos-cashier-item.component';
 import { MatIconModule } from '@angular/material/icon';
 import { InputCurrencyComponent } from 'src/app/ui/components/form/input-currency/input-currency.component';
-import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatLegacyFormFieldModule as MatFormFieldModule } from '@angular/material/legacy-form-field';
 import { QueueComponent } from './components/queue/queue.component';
 export type ReceiptItem = {
   qty: string;

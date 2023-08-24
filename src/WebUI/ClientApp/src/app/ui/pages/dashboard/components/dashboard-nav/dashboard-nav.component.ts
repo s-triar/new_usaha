@@ -8,11 +8,11 @@ import { Router, RouterModule } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { CommonModule } from '@angular/common';
-import { MatListModule } from '@angular/material/list';
+import { MatLegacyListModule as MatListModule } from '@angular/material/legacy-list';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { ButtonBackDirective } from 'src/app/ui/directives/button-back/button-back.directive';
 import { DataNavList } from 'src/app/core/types';
-import { MatButtonModule } from '@angular/material/button';
+import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
 import { MatIconModule } from '@angular/material/icon';
 
 @UntilDestroy()

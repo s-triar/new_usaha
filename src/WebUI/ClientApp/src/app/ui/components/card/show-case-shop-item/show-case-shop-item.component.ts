@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { MatCardModule } from '@angular/material/card';
+import { MatLegacyCardModule as MatCardModule } from '@angular/material/legacy-card';
 import { ShowCaseRatingComponent } from '../../utility/show-case-rating/show-case-rating.component';
 import { MatIconModule } from '@angular/material/icon';
 import { PRODUCT_DEFAULT } from 'src/app/core/constant';

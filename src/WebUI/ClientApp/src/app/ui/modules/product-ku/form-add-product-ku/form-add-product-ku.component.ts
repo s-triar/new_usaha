@@ -17,12 +17,12 @@ import {
 } from '@angular/forms';
 // import {STEPPER_GLOBAL_OPTIONS} from '@angular/cdk/stepper';
 import {
-  MatSelect,
-  MatSelectChange,
-  MatSelectModule,
-} from '@angular/material/select';
+  MatLegacySelect as MatSelect,
+  MatLegacySelectChange as MatSelectChange,
+  MatLegacySelectModule as MatSelectModule,
+} from '@angular/material/legacy-select';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { GroupProductKuDialogComponent } from '../group-product-ku-dialog/group-product-ku-dialog.component';
 import { MemberGroupProductKuDialogComponent } from '../member-group-product-ku-dialog/member-group-product-ku-dialog.component';
 import {
@@ -49,17 +49,17 @@ import { ScannerDialogComponent } from 'src/app/ui/components/pop-up/scanner-dia
 import { DuplicateBarcodeValidator } from '../../../../core/form-validators/DuplicateBarcodeValidator';
 import { PopUpNotifService } from 'src/app/ui/components/pop-up/pop-up-notif/pop-up-notif.service';
 import { CommonModule } from '@angular/common';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
-import { MatListModule } from '@angular/material/list';
+import { MatLegacyFormFieldModule as MatFormFieldModule } from '@angular/material/legacy-form-field';
+import { MatLegacyInputModule as MatInputModule } from '@angular/material/legacy-input';
+import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
+import { MatLegacyListModule as MatListModule } from '@angular/material/legacy-list';
 import { MatStepperModule } from '@angular/material/stepper';
-import { MatOptionModule } from '@angular/material/core';
+import { MatLegacyOptionModule as MatOptionModule } from '@angular/material/legacy-core';
 import { MatIconModule } from '@angular/material/icon';
 import { ButtonUploadFileComponent } from 'src/app/ui/components/form/button-upload-file/button-upload-file.component';
-import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatLegacyCheckboxModule as MatCheckboxModule } from '@angular/material/legacy-checkbox';
 import { InputCurrencyComponent } from 'src/app/ui/components/form/input-currency/input-currency.component';
-import { MatTableModule } from '@angular/material/table';
+import { MatLegacyTableModule as MatTableModule } from '@angular/material/legacy-table';
 import { MyGoodsService } from '../services/my-goods.service';
 
 @UntilDestroy()

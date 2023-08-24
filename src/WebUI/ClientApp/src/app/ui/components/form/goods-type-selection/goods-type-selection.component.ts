@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, forwardRef, HostBinding, Inject, Input, OnDestroy, OnInit, Optional, Output, Self } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatSelectChange, MatSelectModule } from '@angular/material/select';
-import { MatFormField, MatFormFieldControl, MatFormFieldModule, MAT_FORM_FIELD } from '@angular/material/form-field';
+import { MatLegacySelectChange as MatSelectChange, MatLegacySelectModule as MatSelectModule } from '@angular/material/legacy-select';
+import { MatLegacyFormField as MatFormField, MatLegacyFormFieldControl as MatFormFieldControl, MatLegacyFormFieldModule as MatFormFieldModule, MAT_LEGACY_FORM_FIELD as MAT_FORM_FIELD } from '@angular/material/legacy-form-field';
 import { ControlValueAccessor, FormBuilder, FormGroup, FormsModule, NgControl, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
 import { GoodsTypeDto } from 'src/app/domain/backend/Dtos';
 import { Subject } from 'rxjs';

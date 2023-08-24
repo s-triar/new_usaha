@@ -5,8 +5,8 @@ import { Component, OnInit, ChangeDetectionStrategy, Input, OnDestroy, HostBindi
 import { FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AbstractControl, ControlValueAccessor, FormBuilder, FormGroup, NgControl } from '@angular/forms';
-import { MatFormField, MatFormFieldControl, MAT_FORM_FIELD, MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
+import { MatLegacyFormField as MatFormField, MatLegacyFormFieldControl as MatFormFieldControl, MAT_LEGACY_FORM_FIELD as MAT_FORM_FIELD, MatLegacyFormFieldModule as MatFormFieldModule } from '@angular/material/legacy-form-field';
+import { MatLegacyInputModule as MatInputModule } from '@angular/material/legacy-input';
 import { number } from 'echarts';
 import { Subject } from 'rxjs';
 import { CurrencyConversionService } from 'src/app/core/utility/currency-conversion.service';
