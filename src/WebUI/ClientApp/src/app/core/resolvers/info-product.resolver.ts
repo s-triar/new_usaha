@@ -1,9 +1,5 @@
 import { Injectable } from '@angular/core';
-import {
-  Resolve,
-  RouterStateSnapshot,
-  ActivatedRouteSnapshot
-} from '@angular/router';
+import { RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
 import { Observable} from 'rxjs';
 import { InfoOfGoodsForUpdatingDto } from 'src/app/domain/backend/Dtos';
 import { MyGoodsService } from 'src/app/ui/modules/product-ku/services/my-goods.service';
@@ -14,7 +10,7 @@ import { WS_PRODUCT } from '../constant/routes';
   providedIn: 'root',
 })
 
-export class InfoProductResolver implements Resolve<InfoOfGoodsForUpdatingDto> {
+export class InfoProductResolver  {
 
   constructor(private goodsService: MyGoodsService){}
 

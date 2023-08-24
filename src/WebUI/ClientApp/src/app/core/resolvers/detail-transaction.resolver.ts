@@ -1,9 +1,5 @@
 import { Injectable } from '@angular/core';
-import {
-  Resolve,
-  RouterStateSnapshot,
-  ActivatedRouteSnapshot,
-} from '@angular/router';
+import { RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 import { DetailOrderDto } from 'src/app/domain/backend/Dtos';
 import { TransactionService } from 'src/app/infrastructure/backend/transaction.service';
@@ -13,7 +9,7 @@ import { DASHBOARD_ROUTE, DB_TRANS_ROUTE } from '../constant/routes';
 @Injectable({
   providedIn: 'root'
 })
-export class DetailTransactionResolver implements Resolve<DetailOrderDto> {
+export class DetailTransactionResolver  {
   constructor(
     private transactionService: TransactionService
   ) { }

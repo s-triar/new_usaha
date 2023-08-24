@@ -1,9 +1,5 @@
 import { Injectable } from '@angular/core';
-import {
-  Resolve,
-  RouterStateSnapshot,
-  ActivatedRouteSnapshot
-} from '@angular/router';
+import { RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 import { EnterpriseRoleDetailDto } from 'src/app/domain/backend/Dtos';
 import { RoleService } from 'src/app/ui/pages/dashboard/pages/employee/role.service';
@@ -12,7 +8,7 @@ import { DB_EMPY_ROLE_ROUTE } from '../constant/routes';
 @Injectable({
   providedIn: 'root'
 })
-export class InfoRoleResolver implements Resolve<EnterpriseRoleDetailDto> {
+export class InfoRoleResolver  {
   constructor(private roleService: RoleService) {
 
   }

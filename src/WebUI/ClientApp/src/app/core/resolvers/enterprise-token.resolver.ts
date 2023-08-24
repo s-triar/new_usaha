@@ -1,9 +1,5 @@
 import { Injectable } from '@angular/core';
-import {
-  Resolve,
-  RouterStateSnapshot,
-  ActivatedRouteSnapshot
-} from '@angular/router';
+import { RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
 import { EnterpriseTokenService } from 'src/app/core/enterprise-jwt/enterprise-token.service';
 import { WORKSPACE_ROUTE } from '../constant/routes';
 import { EnterpriseAuthService, EnterpriseTokenResponseDto } from '../enterprise-jwt/enterprise-auth.service';
@@ -14,7 +10,7 @@ import { EnterpriseAuthService, EnterpriseTokenResponseDto } from '../enterprise
   providedIn: 'root'
 })
 
-export class EnterpriseTokenResolver implements Resolve<void> {
+export class EnterpriseTokenResolver  {
 
   constructor(
     private readonly _myenterpriseService: EnterpriseAuthService,
