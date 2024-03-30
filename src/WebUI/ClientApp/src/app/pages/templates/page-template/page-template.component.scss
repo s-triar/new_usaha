@@ -1,0 +1,25 @@
+.page-template-layout {
+    min-height: 100vh;
+  }
+
+
+.header-page-template{
+    position: fixed;
+    width: 100%;
+    z-index: 9999;
+}
+
+.header-title-page{
+  margin-left: 1em;
+  color: white;
+  font-weight: 600;
+  font-size: larger;
+}
+
+.footer-page-template{
+  border-top: 1px solid gray;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}

@@ -39,6 +39,7 @@ public class MyGoodsInfoDto : IMapFrom<Goods>
 {
     public Guid Id { get; set; }
     public Guid EnterpriseId { get; set; }
+    public Guid GoodsContainerId { get; set; }
     public string Barcode { get; set; }
     public string Name { get; set; }
     public int GoodsTypeId { get; set; }
@@ -97,11 +98,11 @@ public class MyInfoOfGoodsConverter : ITypeConverter<Goods, MyGoodsInfoDto>
         return new MyGoodsInfoDto
         {
             Id = source.Id,
-            EnterpriseId = source.EnterpriseId,
+            EnterpriseId = source.GoodsContainer.EnterpriseId,
+            GoodsContainerId = source.GoodsContainerId,
             Name = source.Name,
             Barcode = source.Barcode,
-            GoodsTypeId = source.GoodsTypeId,
-            Description = source.Description,
+            GoodsTypeId = source.GoodsContainer.GoodsTypeId,
             Photo = source.GoodsPhotos.LastOrDefault()?.Url,
             AvailableOnline = source.AvailableOnline,
             Contain = source.Contain,

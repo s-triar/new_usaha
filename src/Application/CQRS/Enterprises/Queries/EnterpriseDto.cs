@@ -15,7 +15,7 @@ public class EnterpriseDto : IMapFrom<Enterprise>
     public string Code { get; set; }
     public string Name { get; set; }
     public string? Description { get; set; }
-    public string EnterpriseType { get; set; }
+    public string EnterpriseType { get; set; } = null!;
     public string? Photo { get; set; }
     public string Phone { get; set; }
     public string Email { get; set; }

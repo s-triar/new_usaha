@@ -34,7 +34,7 @@ public class OrderValidator<T>: AbstractValidator<T>
     {
         var idItems = Items.Select(x => x.GoodsId);
         return await this._context.Goodses
-            .AllAsync(x => x.EnterpriseId.ToString() == this._currentEnterprise.EnterpriseId && idItems.Contains(x.Id));
+            .AllAsync(x => x.GoodsContainer.EnterpriseId.ToString() == this._currentEnterprise.EnterpriseId && idItems.Contains(x.Id));
     }
     public async Task<bool> CheckCalculation(decimal Total, decimal Payment, decimal Return, IList<ItemOrdered> Items, CancellationToken cancellationToken)
     {

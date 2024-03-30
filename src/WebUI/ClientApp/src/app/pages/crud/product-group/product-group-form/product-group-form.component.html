@@ -1,0 +1,33 @@
+<form
+  nz-form
+  [formGroup]="form"
+  class="app-form-flex form-container"
+  [nzLayout]="'vertical'"
+>
+  <nz-form-item>
+    <nz-form-label>Nama Grup Produk</nz-form-label>
+    <nz-form-control nzErrorTip="Masukkan nama grup produk!">
+      <nz-input-group>
+        <input nz-input formControlName="Name" placeholder="Nama Grup Produk" />
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label>Deskripsi Grup Produk</nz-form-label>
+    <nz-form-control nzErrorTip="Masukkan deskripsi grup produk!">
+      <nz-input-group>
+        <input nz-input formControlName="Description" placeholder="Deskripsi Grup Produk" />
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item>
+  <button
+    nz-button
+    nzType="primary"
+    type="submit"
+    (click)="submitForm()"
+    [disabled]="!form.valid"
+  >
+    <span>Submit</span>
+    <span nz-icon [nzType]="'loading'"></span>
+  </button>
+</form>

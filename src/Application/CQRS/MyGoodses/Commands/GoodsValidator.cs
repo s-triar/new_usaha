@@ -22,7 +22,7 @@ public class GoodsValidator<T> : AbstractValidator<T>
     public async Task<bool> CheckId(Guid Id, CancellationToken cancellationToken)
     {
         return await _context.Goodses
-            .AnyAsync(l => l.Id == Id && l.EnterpriseId.ToString() == _currentEnterprise.EnterpriseId);
+            .AnyAsync(l => l.Id == Id && l.GoodsContainer.EnterpriseId.ToString() == _currentEnterprise.EnterpriseId);
     }
     public async Task<bool> BeExistBarcode(string Barcode, CancellationToken cancellationToken)
     {
@@ -42,12 +42,12 @@ public class GoodsValidator<T> : AbstractValidator<T>
             return true;
         }
         return await _context.Goodses
-            .AnyAsync(l => l.EnterpriseId.ToString() == _currentEnterprise.EnterpriseId && ParentBarcode == l.Barcode && SelfBarcode != l.Barcode);
+            .AnyAsync(l => l.GoodsContainer.EnterpriseId.ToString() == _currentEnterprise.EnterpriseId && ParentBarcode == l.Barcode && SelfBarcode != l.Barcode);
     }
     public async Task<bool> BeUniqueBarcode(string Barcode, CancellationToken cancellationToken)
     {
         return !await _context.Goodses
-            .AnyAsync(l => l.EnterpriseId.ToString() == _currentEnterprise.EnterpriseId && Barcode == l.Barcode);
+            .AnyAsync(l => l.GoodsContainer.EnterpriseId.ToString() == _currentEnterprise.EnterpriseId && Barcode == l.Barcode);
     }
     public async Task<bool> BeExistGoodsType(int GoodsTypeId, CancellationToken cancellationToken)
     {

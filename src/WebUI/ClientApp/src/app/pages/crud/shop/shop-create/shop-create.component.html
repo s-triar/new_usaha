@@ -1,0 +1,220 @@
+<app-page-template title="Buat Toko">
+  <div class="app-page-container-top-bottom">
+    <form
+      nz-form
+      [formGroup]="form"
+      class="app-form-flex form-container"
+      [nzLayout]="'vertical'"
+    >
+      <nz-divider nzText="Informasi Toko" nzOrientation="center"></nz-divider>
+      <div
+        class="form-field-container"
+        id="Info"
+        [formGroup]="form.controls.Info"
+      >
+        <nz-form-item>
+          <nz-form-label>Nama Toko</nz-form-label>
+          <nz-form-control nzErrorTip="Please input your username!">
+            <nz-input-group>
+              <input nz-input formControlName="Name" placeholder="Nama Toko" />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label>Kode Toko</nz-form-label>
+          <nz-form-control nzErrorTip="Please input your username!">
+            <nz-input-group>
+              <input
+                nz-input
+                formControlName="Code"
+                placeholder="Kode Toko"
+                [nzAutocomplete]="autoCode"
+              />
+              <nz-autocomplete
+                [nzDataSource]="codeOptionsSg()"
+                nzBackfill
+                #autoCode
+              ></nz-autocomplete>
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label>Jenis Toko</nz-form-label>
+          <nz-form-control nzErrorTip="Please input your username!">
+            <nz-input-group>
+              <nz-select
+                formControlName="ShopTypeId"
+                nzPlaceHolder="Jenis Toko"
+              >
+              @for (item of shopTypeOptionsSg(); track $index) {
+                <nz-option [nzValue]="item.value" [nzLabel]="item.label"></nz-option>
+              }
+              </nz-select>
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label>Deskripsi Toko</nz-form-label>
+          <nz-form-control nzErrorTip="Please input your username!">
+            <nz-input-group>
+              <textarea
+                nz-input
+                formControlName="Description"
+                placeholder="Deskripsi Toko"
+                [nzAutosize]="{ minRows: 2 }"
+              ></textarea>
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-label>Nomor Telepon Toko</nz-form-label>
+          <nz-form-control nzErrorTip="Please input your username!">
+            <nz-input-group>
+              <input
+                nz-input
+                formControlName="Phone"
+                placeholder="Nomor Telepon Toko"
+              />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label>Email Toko</nz-form-label>
+          <nz-form-control nzErrorTip="Please input your username!">
+            <nz-input-group>
+              <input
+                nz-input
+                formControlName="Email"
+                placeholder="Email Toko"
+              />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+
+      <nz-divider nzText="Alamat Toko" nzOrientation="center"></nz-divider>
+      <div
+        class="form-field-container"
+        id="Address"
+        [formGroup]="form.controls.Address"
+      >
+        <nz-form-item>
+          <nz-form-label>Provinsi</nz-form-label>
+          <nz-form-control nzErrorTip="Please input your username!">
+            <nz-input-group>
+              <input
+                nz-input
+                formControlName="Province"
+                placeholder="Provinsi"
+              />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label>Kabupaten/Kota</nz-form-label>
+          <nz-form-control nzErrorTip="Please input your username!">
+            <nz-input-group>
+              <input nz-input formControlName="City" placeholder="Kota" />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-label>Kecamatan</nz-form-label>
+          <nz-form-control nzErrorTip="Please input your username!">
+            <nz-input-group>
+              <input
+                nz-input
+                formControlName="District"
+                placeholder="Kecamatan"
+              />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-label>Desa</nz-form-label>
+          <nz-form-control nzErrorTip="Please input your username!">
+            <nz-input-group>
+              <input
+                nz-input
+                formControlName="SubDistrict"
+                placeholder="Desa"
+              />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-label>Jalan</nz-form-label>
+          <nz-form-control nzErrorTip="Please input your username!">
+            <nz-input-group>
+              <input nz-input formControlName="Street" placeholder="Jalan" />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-label>Kode Pos</nz-form-label>
+          <nz-form-control nzErrorTip="Please input your username!">
+            <nz-input-group>
+              <input
+                nz-input
+                formControlName="PostalCode"
+                placeholder="Kode Pos"
+              />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+
+      <nz-divider nzText="Foto Toko" nzOrientation="center"></nz-divider>
+      <div
+        class="form-field-container"
+        id="Photo"
+        [formGroup]="form.controls.Photo"
+      >
+        <nz-upload
+          nzType="drag"
+          [nzMultiple]="true"
+          [nzBeforeUpload]="beforeUpload"
+          (nzChange)="handleChange($event)"
+          [nzPreview]="handlePreview"
+        >
+          <p class="ant-upload-drag-icon">
+            <span nz-icon nzType="inbox"></span>
+          </p>
+          <p class="ant-upload-text">
+            Klik atau seret file untuk menambahkan.
+          </p>
+          <p class="ant-upload-hint">
+            Hanya untuk 1 file.
+          </p>
+        </nz-upload>
+
+        <div style="padding: 2rem;">
+            <img [src]="previewImage == '' ? defaultPreviewImage: previewImage" width="100%">
+        </div>
+      </div>
+
+      <nz-divider></nz-divider>
+      <div class="app-form-action">
+        <button nz-button nzType="primary" type="button">
+          <span>Reset</span>
+        </button>
+        <button
+          nz-button
+          nzType="primary"
+          type="submit"
+          (click)="submitForm()"
+          [disabled]="!form.valid"
+        >
+          <span>Submit</span>
+          <span nz-icon [nzType]="'loading'"></span>
+        </button>
+      </div>
+      
+    </form>
+  </div>
+</app-page-template>

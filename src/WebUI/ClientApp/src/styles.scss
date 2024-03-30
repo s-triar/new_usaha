@@ -1,163 +1,81 @@
-// Custom Theming for Angular Material
-// For more information: https://material.angular.io/guide/theming
-@use '@angular/material'as mat;
-// Plus imports for other components in your app.
+@import "ng-zorro-antd/ng-zorro-antd.min.css";
 
-// Include the common styles for Angular Material. We include this here so that you only
-// have to load a single css file for Angular Material in your app.
-// Be sure that you only ever include this mixin once!
-// TODO(v15): As of v15 mat.legacy-core no longer includes default typography styles.
-//  The following line adds:
-//    1. Default typography styles for all components
-//    2. Styles for typography hierarchy classes (e.g. .mat-headline-1)
-//  If you specify typography styles for the components you use elsewhere, you should delete this line.
-//  If you don't need the default component typographies but still want the hierarchy styles,
-//  you can delete this line and instead use:
-//    `@include mat.legacy-typography-hierarchy(mat.define-legacy-typography-config());`
-@include mat.all-legacy-component-typographies();
-@include mat.legacy-core();
 
-// Define the palettes for your theme using the Material Design palettes available in palette.scss
-// (imported above). For each palette, you can optionally specify a default, lighter, and darker
-// hue. Available color palettes: https://material.io/design/color/
-$usahaku-app-primary: mat.define-palette(mat.$brown-palette, 700, A200, 800);
-$usahaku-app-accent: mat.define-palette(mat.$teal-palette, 500, A200, 800);
+.form-field-confirm-password {
+  .ant-form-item-extra {
+    word-wrap: break-word !important;
+    color: #ff4d4f !important;
+  }
+}
 
-// The warn palette is optional (defaults to red).
-$usahaku-app-warn: mat.define-palette(mat.$deep-orange-palette, A400);
+.dummy {
+  .p {
+    padding: 100px;
+  }
+}
 
-// Create the theme object. A theme consists of configurations for individual
-// theming systems such as "color" or "typography".
-$usahaku-app-theme: mat.define-light-theme((color: (primary: $usahaku-app-primary,
-      accent: $usahaku-app-accent,
-      warn: $usahaku-app-warn,
-    )));
+html {
 
-// Include theme styles for core and each component used in your app.
-// Alternatively, you can import and @include the theme mixins for each component
-// that you are using.
-@include mat.all-legacy-component-themes($usahaku-app-theme);
-// @include mat.core-theme($app-theme-light);
+  @media screen and (max-width: 599.98px) and (orientation: portrait),
+  (max-width: 959.98px) and (orientation: landscape) {
+    font-size: 14px !important;
+  }
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-// @import "./styles/fonts.scss";
-// @import "./assets/icon-fonts/font-awesome/css/all.css";
+}
 
 html,
 body {
-  // @apply tw-w-full;
-  // @apply tw-h-full;
+  min-height: 100%;
+  min-width: 100%;
 
-  width: 100%;
-  height: 100%;
 }
 
 body {
-  // @apply tw-bg-white;
-  // @apply tw-m-0;
-  background-color: white;
   margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
-.app-w-full{
-  width: 100%;
-}
-.app-h-full{
-  height: 100%;
+.app-spacer-horizontal {
+  flex: 1 1 auto;
 }
 
-// [type='text']:focus, 
-// [type='email']:focus, 
-// [type='url']:focus, 
-// [type='password']:focus, 
-// [type='number']:focus, 
-// [type='date']:focus, p
-// [type='datetime-local']:focus, 
-// [type='month']:focus, 
-// [type='search']:focus, 
-// [type='tel']:focus, 
-// [type='time']:focus, 
-// [type='week']:focus, 
-// [multiple]:focus, 
-// textarea:focus, 
-// select:focus {
-//     outline: 2px solid transparent;
-//     outline-offset: 2px;
-//     --tw-ring-inset: var(--tw-empty,/*!*/ /*!*/);
-//     --tw-ring-offset-width: 0px;
-//     --tw-ring-offset-color: #fff;
-//     --tw-ring-color: transparent;
-//     --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
-//     --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color);
-//     box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
-//     border-color: #2563eb;
-// }
-
-.color-white {
-  color: white !important;
+.app-title {
+  // color: mat.get-color-from-palette($usahaku-app-primary, 700);
+  font-size: 1.875rem
+    /* 30px */
+  ;
+  line-height: 2.25rem
+    /* 36px */
+  ;
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-weight: 400;
+  margin-left: 1rem;
 }
 
-.bg-color-white {
-  background-color: white;
+.app-page-container-top-bottom {
+  display: block;
+  padding-top: 4rem;
+  padding-bottom: 4.5rem;
+  min-height: calc(100vh);
+
+  &.main {
+    padding-bottom: 5.5rem;
+  }
+
+
 }
 
-.color-primary {
-  color: mat.get-color-from-palette($usahaku-app-primary, 700);
+.app-page-container-top {
+  display: block;
+  padding-top: 4rem;
+  padding-bottom: 4.5rem;
 }
 
-.color-primary-lighter {
-  color: mat.get-color-from-palette($usahaku-app-primary, A200);
-}
-
-.color-primary-darker {
-  color: mat.get-color-from-palette($usahaku-app-primary, 800);
-}
-
-.color-accent {
-  color: mat.get-color-from-palette($usahaku-app-accent, 500);
-}
-
-.color-accent-lighter {
-  color: mat.get-color-from-palette($usahaku-app-accent, A200);
-}
-
-.color-accent-darker {
-  color: mat.get-color-from-palette($usahaku-app-accent, 800);
-}
-
-.color-warn {
-  color: mat.get-color-from-palette($usahaku-app-warn);
-}
-
-.bg-color-primary {
-  background-color: mat.get-color-from-palette($usahaku-app-primary, 700) !important;
-}
-
-.bg-color-primary-lighter {
-  background-color: mat.get-color-from-palette($usahaku-app-primary, A200) !important;
-}
-
-.bg-color-primary-darker {
-  background-color: mat.get-color-from-palette($usahaku-app-primary, 800) !important;
-}
-
-.bg-color-accent {
-  background-color: mat.get-color-from-palette($usahaku-app-accent, 500) !important;
-}
-
-.bg-color-accent-lighter {
-  background-color: mat.get-color-from-palette($usahaku-app-accent, A200) !important;
-}
-
-.bg-color-accent-darker {
-  background-color: mat.get-color-from-palette($usahaku-app-accent, 800) !important;
-}
-
-.bg-color-warn {
-  background-color: mat.get-color-from-palette($usahaku-app-warn) !important;
+.app-container {
+  margin-top: 1rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  margin-bottom: 1rem;
 }
 
 .app-center-container {
@@ -174,7 +92,17 @@ body {
 
 .app-form-flex {
   display: flex;
-  
+
+  align-content: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+
+  >* {
+    width: 100%;
+  }
+
   &.vertical {
     flex-direction: column;
   }
@@ -183,25 +111,27 @@ body {
     flex-direction: row;
   }
 
-  >.app-form-title{
+  >.app-form-title {
     font-size: x-large;
     font-weight: 500;
     text-align: center;
     margin-bottom: 2rem;
-    @extend .color-primary;
-    // color: mat.get-color-from-palette($usahaku-app-primary, 700);
   }
-  >.app-form-message{
+
+  >.app-form-message {
     margin-top: 0.5rem;
     text-align: left;
     margin-bottom: 0.5rem;
   }
+
   >.app-form-action {
-    margin-top: 1rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
     display: flex;
     justify-items: center;
     align-items: center;
     align-content: center;
+    justify-content: space-around;
 
     &.vertical {
       flex-direction: column;
@@ -233,352 +163,6 @@ body {
   }
 }
 
-
-.app-title {
-  color: mat.get-color-from-palette($usahaku-app-primary, 700);
-  font-size: 1.875rem
-    /* 30px */
-  ;
-  line-height: 2.25rem
-    /* 36px */
-  ;
-  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  font-weight: 400;
-  margin-left: 1rem;
-}
-
-.app-container {
-  margin-top: 1rem;
-  margin-left: 1rem;
-  margin-right: 1rem;
-  margin-bottom: 1rem;
-}
-
-.app-showcase-items-container {
-  min-height: 100%;
-  display: grid !important;
-  grid-template-rows: 1fr auto;
-}
-
-.app-showcase-items {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  align-items: stretch;
-  align-content: flex-start;
-  // a{
-  //     text-decoration: none;
-  // }
-  // .show-case-shop-item-ku{
-  //     -webkit-tap-highlight-color: transparent;
-  //     width: calc((100% / 4) - 14px);
-  //     margin: 7px;
-  //     &.handset{
-  //         width: calc((100% / 2) - 14px);
-  //         img{
-  //             height: 272px;
-  //             object-fit: cover;
-  //         }
-  //     }
-  //     &.tablet{
-  //         width: calc((100% / 3) - 14px);
-  //         img{
-  //             height: 316px;
-  //             object-fit: cover;
-  //         }
-  //     }
-  //     img{
-  //         height: 284px;
-  //         object-fit: cover;
-  //     }
-  // }
-}
-
-.showcase-card-item {
-  width: calc((100% / 4) - 46px);
-  margin: 7px;
-
-  &.phone {
-    width: calc((100% / 2) - 46px);
-  }
-
-  &.tablet {
-    width: calc((100% / 3) - 46px);
-  }
-}
-
-.app-showcase-items-pagination {
-  // margin-top: 1rem;
-  // margin-bottom: 1rem;
-}
-
-.nav-page-action {
-  margin-left: 4px;
-}
-
-.nav-page-title {
-  font-size: larger;
-  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  font-weight: 400;
-  margin-left: 4px;
-}
-
-.app-sidenav-layout-container {
-  height: 100%;
-  width: 100%;
-
-}
-
-.app-sidenav-container {
-  width: 400px;
-  height: 100%;
-  background-color: white;
-
-  &.handset {
-    width: 100%;
-  }
-
-  .side-nav-header {
-    position: sticky;
-    top: 0;
-    left: 0;
-    right: 0;
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    justify-items: center;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    margin-bottom: 1rem;
-  }
-}
-
-.app-sidenav-content-list {
-  overflow-x: auto;
-  overflow-y: auto;
-}
-
-.app-sidenav-content {
-  background-color: rgba(255, 255, 255, 1);
-  height: 100%;
-  // width: 100%;
-  overflow-y: auto;
-  overflow-x: hidden;
-  display: grid !important;
-  grid-template-rows: auto 1fr auto;
-  // &#workspace{
-  //     grid-template-rows: auto auto 1fr auto;
-  // }
-}
-
-// .app-sidenav-content-header > .workspace-page-nav{
-//     width: 100%;
-//     height: 100%;
-//     background-color: white;
-//     display: flex;
-//     flex-direction: row;
-//     justify-content: space-between;
-//     justify-items: center;
-// }
-.app-sidenav-content-header {
-  z-index: 20;
-  background-color: rgba(255, 255, 255, 1);
-  width: 100%;
-  border-bottom-width: 1px;
-  height: 4rem
-    /* 64px */
-  ;
-  border-color: rgba(209, 213, 219, 1);
-  box-shadow: 0px -3px 10px 0px;
-
-  >* {
-    background-color: rgba(255, 255, 255, 1);
-  }
-}
-
-.app-sidenav-content-utility {
-  background-color: rgb(255, 255, 255);
-  width: 100%;
-}
-
-.app-sidenav-content-route {
-  width: 100%;
-  overflow-x: hidden;
-  background-color: rgba(255, 255, 255, 1);
-
-
-}
-
-.app-sidenav-content-footer {
-  z-index: 20;
-  background-color: rgba(255, 255, 255, 1);
-  width: 100%;
-  border-top-width: 1px;
-  height: 4rem
-    /* 64px */
-  ;
-  border-color: rgb(178, 179, 180);
-  box-shadow: 0px 3px 10px 0px;
-
-  >* {
-    background-color: rgba(255, 255, 255, 1);
-  }
-}
-
-.btn-fab-stick {
-  position: absolute !important;
-  right: 1rem;
-  bottom: 5rem;
-  z-index: 21;
-}
-
-.app-tooltip {
-  font-size: large;
-}
-
-.no-content {
-  width: 100%;
-
-  display: flex;
-  flex-direction: column;
-  justify-items: center;
-  justify-content: center;
-  align-items: center;
-  align-content: center;
-  font-size: x-large;
-  color: gray;
-  text-align: center;
-  overflow-y: hidden;
-}
-
-
-
-
-
-
-.el-prefix,
-.el-suffix {
-  display: inline-block;
-  padding: 0 0.15rem;
-}
-
-
-
-.scrollbar-thin::-webkit-scrollbar {
-  height: 5px;
-  cursor: pointer;
-  width: 5px;
-  /*background-color: rgba(229, 231, 235, var(--bg-opacity));*/
-
-}
-
-.scrollbar-thin::-webkit-scrollbar-track {
-  background-color: rgba(229, 231, 235, 0.7);
-  cursor: pointer;
-  /*background: red;*/
-}
-
-.scrollbar-thin::-webkit-scrollbar-thumb {
-  cursor: pointer;
-  background-color: #a0aec0;
-  /*outline: 1px solid slategrey;*/
-}
-
-#barcode-camera {
-  margin-top: -1.3rem;
-  height: calc(100% - 90px + 1.28rem);
-}
-
-#barcode-camera>video {
-  height: 100%;
-}
-
-.img-preview {
-  max-height: 480px;
-  background-size: cover;
-  position: relative;
-  margin-left: auto;
-  margin-right: auto;
-  background-position: center;
-}
-
-
-
-.img-preview>app-button-upload-file {
-  position: absolute;
-  right: 1rem;
-  bottom: -1rem;
-}
-
-.form-input-container {
-
-  // margin-top: 1rem;
-  >.mat-form-field {
-    // width: 100%;
-    margin-top: 16px;
-    margin-left: 1rem;
-    margin-right: 1rem;
-    display: block;
-  }
-}
-
-.form-action-container {
-  // width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-  justify-self: center;
-  margin-top: 1.2rem;
-  margin-bottom: 2rem;
-}
-
-.group-product-container {
-  >.group-product-list-container {
-    max-height: 180px;
-    overflow-y: auto;
-  }
-}
-
-.group-product-label {
-  margin-bottom: 10px;
-}
-
-.app-btn-add {
-  position: absolute !important;
-  right: 1.5rem;
-  bottom: 5.5rem;
-  z-index: 20;
-}
-
-.app-search-list-page-container{
-  height: 100%;
-  overflow-y: auto;
-  overflow-x: hidden;
-  display: grid !important;
-  grid-template-rows: auto 1fr auto;
-}
-
-.app-list-container {
-  width: 100%;
-  padding-bottom: 5rem;
-}
-
-.app-item-list-continer {
-  border-top: 1px solid rgb(230, 230, 230);
-  border-bottom: 1px solid rgb(230, 230, 230);
-  height: 100% !important;
-  width: 100%;
-}
-
-.app-item-list-content {
-  width: 100%;
-  height: 100%;
-}
-
 .app-no-item-container {
   width: 100%;
   height: 100%;
@@ -592,14 +176,149 @@ body {
   justify-items: center;
 }
 
-.app-list-page {
-  position: relative;
-  width: 100%;
-  height: 100%;
+.app-paginator {
+  &.center {
+    .mat-mdc-paginator-container {
+      justify-content: center;
+    }
+  }
+}
+
+.app-btn-add {
+  position: absolute !important;
+  right: 1.5rem;
+  bottom: 3.5rem;
+  z-index: 20;
+}
+
+.app-page-list-container {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
+.app-list-search-container {
+  z-index: 99999;
+  padding: 0.5rem;
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
-  justify-items: center;
-  align-content: center;
+  flex-wrap: nowrap;
+  justify-content: center;
   align-items: center;
+  position: fixed;
+  top: 4rem;
+  left: 0;
+  right: 0;
+  background-color: #f0f2f5;
+}
+
+.app-pagination-container {
+  padding: 0.5rem;
+  align-content: center;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  bottom: 5.5rem;
+  left: 0;
+  right: 0;
+  background-color: #f0f2f5;
+}
+
+
+.app-list-search-container {
+  &.list {
+    left: 200px;
+    transition: all .2s;
+  }
+}
+
+.app-page-list-container {
+
+  &.list {
+    padding-top: 0rem;
+    padding-bottom: 0rem;
+  }
+}
+
+
+.app-pagination-container {
+  &.list {
+    bottom: 0;
+    left: 200px;
+    transition: all .2s;
+  }
+}
+
+
+
+
+.ant-layout-sider.ant-layout-sider-collapsed~.ant-layout .app-list-search-container.list {
+  left: 0;
+
+}
+
+.ant-layout-sider.ant-layout-sider-collapsed~.ant-layout .app-pagination-container.list {
+  left: 0;
+}
+
+
+
+
+
+.app-list-container {
+  .ant-list-item {
+    padding: 0px 0px;
+    border: 0px;
+    height: 100%;
+    
+    .app-item-list:active {
+      background-color: #a4cff8;
+    }    
+
+    .app-item-list {
+      border-top: solid 0.5px #a4a4a4;
+      border-bottom: solid 0.5px #a4a4a4;
+      width: 100%;
+      padding: 0.5rem 0.5rem;
+      display: flex;
+      flex-wrap: wrap;
+
+      .app-item-list-info{
+        display: flex;
+        flex-direction: column;
+        flex: 1 1 auto;
+        padding-right: 1rem;
+
+        .app-item-list-info-main{
+
+
+          .app-item-list-info-sub-title{
+            color: #1890ff;
+            font-weight: 300;
+          }
+          .app-item-list-info-title{
+            font-weight: 500;
+            font-size: medium;
+          }
+        }
+
+        .app-item-list-info-extra{
+          display: flex;
+          flex-direction: row;
+          flex-wrap: wrap;
+        }
+        
+
+      }
+
+      .app-item-list-extra{
+        display: flex;
+        flex-direction: column;
+      }
+
+    }
+  }
+
 }

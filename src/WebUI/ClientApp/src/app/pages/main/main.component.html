@@ -1,0 +1,64 @@
+<nz-layout class="layout-main">
+  <nz-header class="header-main">
+    <span class="header-title-page">Toko</span>
+  </nz-header>
+  <nz-content id="content-main">
+    <router-outlet></router-outlet>
+  </nz-content>
+  <nz-footer class="footer-navigation-main">
+    <div nz-row nzJustify="space-around" nzAlign="middle">
+      <div nz-col>
+        <a
+          nz-button
+          nzSize="large"
+          nzShape="circle"
+          [nzType]="rla_home.isActive ? 'primary' : 'default'"
+          [routerLink]="'/main/home'"
+          routerLinkActive="active"
+          #rla_home="routerLinkActive"
+          [routerLinkActiveOptions]="{ exact: true }"
+          aria-label="Menu Home"
+          role="navigation"
+        >
+          <span nz-icon nzType="home"></span>
+          <!-- <span>Home</span> -->
+        </a>
+      </div>
+      <div nz-col>
+        <a
+          nz-button
+          nzSize="large"
+          nzShape="circle"
+          [nzType]="rla_profile.isActive ? 'primary' : 'default'"
+          [routerLink]="'/main/profile'"
+          routerLinkActive="active"
+          #rla_profile="routerLinkActive"
+          [routerLinkActiveOptions]="{ exact: true }"
+          aria-label="Menu Profile"
+          role="navigation"
+        >
+          <span nz-icon nzType="user"></span>
+          <!-- <span>Profile</span> -->
+        </a>
+      </div>
+      <div nz-col>
+        <a
+          nz-button
+          nzSize="large"
+          nzType="default"
+          nzShape="circle"
+          [nzType]="rla_shop.isActive ? 'primary' : 'default'"
+          [routerLink]="'/main/my-shop-list'"
+          routerLinkActive="active"
+          #rla_shop="routerLinkActive"
+          [routerLinkActiveOptions]="{ exact: true }"
+          aria-label="Menu Daftar Toko"
+          role="navigation"
+        >
+          <span nz-icon nzType="shop"></span>
+          <!-- <span>Daftar Toko</span> -->
+        </a>
+      </div>
+    </div>
+  </nz-footer>
+</nz-layout>

@@ -1,0 +1,18 @@
+.price{
+    
+    font-weight: 500;
+    span:first-child{
+        margin-right: 0.5rem;
+    }
+}
+
+.stock-info{
+    font-size: small;
+
+    span{
+        margin-right: 0.4rem;
+    }
+    span:last-child{
+        margin-right: 0px;
+    }
+}

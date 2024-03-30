@@ -22,15 +22,12 @@ public class Goods : AuditableEntity
 
     }
     public Guid Id { get; set; }
-    public Guid EnterpriseId { get; set; }
-    public virtual Enterprise Enterprise { get; set; } 
-    public string Name { get; set; } 
-    public string? Description { get; set; }
-    public int GoodsTypeId { get; set; }
-    public virtual GoodsType GoodsType { get; set; } 
+    public Guid GoodsContainerId { get; set; }
+    public virtual GoodsContainer GoodsContainer { get; set; }
+    public string Name { get; set; }
     public string Barcode { get; set; } 
+    public virtual GoodsStock GoodsStock { get; set; }
     public bool AvailableOnline { get; set; }
-    public virtual GoodsStock GoodsStock { get; set; } 
     public int Contain { get; set; } // smaller goods
     public bool IsWholesalerPriceAuto { get; set; }
     public Guid? ParentGoodsId { get; set; }

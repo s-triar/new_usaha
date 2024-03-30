@@ -13,6 +13,7 @@ public class MyGoodsForCashierDto : IMapFrom<Goods>
 {
     public Guid Id { get; set; }
     public Guid EnterpriseId { get; set; }
+    public Guid GoodsContainerId { get; set; }
     public string Barcode { get; set; }
     public string Name { get; set; }
     public decimal Price { get; set; }
@@ -40,7 +41,8 @@ public class MyGoodsCashierConverter : ITypeConverter<Goods, MyGoodsForCashierDt
         return new MyGoodsForCashierDto
         {
             Id = source.Id,
-            EnterpriseId = source.EnterpriseId,
+            EnterpriseId = source.GoodsContainer.EnterpriseId,
+            GoodsContainerId = source.GoodsContainerId,
             Barcode = source.Barcode,
             Name = source.Name,
             Price = source.GoodsPrices.Where(x=>x.End==null).OrderBy(x=>x.CreatedAt).LastOrDefault()!.Price,

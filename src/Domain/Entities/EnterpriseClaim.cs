@@ -20,5 +20,5 @@ public class EnterpriseClaim : AuditableEntity
     public string Feature { get; set; }  // e.g Pegawai, Kasir
     public string Action { get; set; }  // e.g Ubah, Buat
     public string Description { get; set; }  // e.g Hak untuk menhapus role
-    public ICollection<EnterpriseRoleClaim> EnterpriseRoleClaims { get; set; }
+    public virtual ICollection<EnterpriseRoleClaim> EnterpriseRoleClaims { get; set; }
 }

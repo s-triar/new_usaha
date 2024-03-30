@@ -109,7 +109,7 @@ public class CreateMyEnterpriseCommandHandler : IRequestHandler<CreateMyEnterpri
 
         }
         await _context.SaveChangesAsync(cancellationToken);
-        this._context.CommitTransactionAsync();
+        await this._context.CommitTransactionAsync();
         return Unit.Value;
         //return new ResultWithMessage(true, new List<string> { }, "Berhasil membuat usaha baru");
     }

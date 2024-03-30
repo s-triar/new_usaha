@@ -1,0 +1,324 @@
+<form
+    nz-form
+    [formGroup]="form"
+    class="app-form-flex form-container"
+    [nzLayout]="'vertical'"
+>
+    <nz-divider nzText="Informasi Produk" nzOrientation="center"></nz-divider>
+    <div
+    class="form-field-container"
+    id="Info"
+    [formGroup]="form.controls.Info"
+    >
+    <nz-form-item>
+        <nz-form-label>Nama Produk</nz-form-label>
+        <nz-form-control nzErrorTip="Masukkan nama produk!">
+        <nz-input-group>
+            <input nz-input formControlName="Name" placeholder="Nama Produk" />
+        </nz-input-group>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-label>Barcode Product</nz-form-label>
+        <nz-form-control nzErrorTip="Masukkan barcode produk!">
+        <nz-input-group nzSearch [nzAddOnAfter]="suffixBarcodeScanButton">
+            <input nz-input formControlName="Barcode" placeholder="Barcode Produk" />
+        </nz-input-group>
+        <ng-template #suffixBarcodeScanButton>
+            <button nz-button nzType="primary" nzSearch><span nz-icon nzType="scan"></span></button>
+          </ng-template>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-label>Jenis Produk</nz-form-label>
+        <nz-form-control nzErrorTip="Masukkan jenis produk!">
+        <nz-tree-select
+            [nzNodes]="productTypeOptionsSg()"
+            nzShowSearch
+            nzPlaceHolder="Jenis Produk"
+            nzVirtualHeight="350px"
+            nzHideUnMatched="true"
+        ></nz-tree-select>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-label>Deskripsi Produk</nz-form-label>
+        <nz-form-control nzErrorTip="Masukkan Deskripsi produk!">
+        <nz-input-group>
+            <textarea
+            nz-input
+            formControlName="Description"
+            placeholder="Deskripsi Toko"
+            [nzAutosize]="{ minRows: 2 }"
+            ></textarea>
+        </nz-input-group>
+        </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+        <nz-form-label>Jumlah Item Di Dalam Kemasan</nz-form-label>
+        <nz-form-control nzErrorTip="Masukkan isi produk!">
+        <nz-input-group>
+            <nz-input-number 
+            nz-input
+            formControlName="Contain"  
+            [nzMin]="1" [nzStep]="1">
+            </nz-input-number>
+        </nz-input-group>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-label>Jual Online?</nz-form-label>
+        <nz-form-control>
+        <nz-input-group>
+            <nz-switch formControlName="AvailableOnline" nzCheckedChildren="Ya" nzUnCheckedChildren="Tidak"></nz-switch>
+        </nz-input-group>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-label>Auto Harga Grosir Jika Memenuhi</nz-form-label>
+        <nz-form-control>
+        <nz-input-group>
+            <nz-switch formControlName="IsWholesalerPriceAuto" nzCheckedChildren="Ya" nzUnCheckedChildren="Tidak"></nz-switch>
+        </nz-input-group>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-label>Barcode Product Yang Sama Namun Dengan Packing Lebih Besar</nz-form-label>
+        <nz-form-control nzErrorTip="Masukkan barcode produk yang sama namun dengan packing lebih besar!">
+        <nz-input-group  nzSearch [nzAddOnAfter]="suffixBarcodeParentSearchButton">
+            <input nz-input formControlName="ParentBarcode" placeholder="Barcode Produk Lebih Besar" />
+        </nz-input-group>
+        <ng-template #suffixBarcodeParentSearchButton>
+            <button nz-button nzType="primary" nzSearch><span nz-icon nzType="search"></span></button>
+          </ng-template>
+        </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+        <nz-form-label>Grup Produk</nz-form-label>
+        <button nz-button nzType="primary" type="button" class="width-full-content" (click)="toogleModalProductGroupName()">
+            <span>Tambah Grup</span>
+            <span nz-icon [nzType]="'plus'"></span>
+        </button>
+        <br>
+
+        <nz-list class="height-list-content" nzBordered>
+            <nz-list-item *ngFor="let item of this.form.controls['Info'].controls['ProductGroups'].value">
+                <nz-list-item-meta>
+                    <nz-list-item-meta-title>
+                    {{item.Name}}
+                    </nz-list-item-meta-title>
+                </nz-list-item-meta>
+                <ul  nz-list-item-actions>
+                    <nz-list-item-action>
+                        <button nz-button nzType="primary" type="button" class="width-full-content" nzShape="circle">
+                            <span nz-icon [nzType]="'info'"></span>
+                        </button>
+                    </nz-list-item-action>
+                    <nz-list-item-action>
+                        <button nz-button nzType="primary" type="button" class="width-full-content" nzDanger nzShape="circle">
+                            <span nz-icon [nzType]="'delete'"></span>
+                        </button>
+                    </nz-list-item-action>
+                </ul >
+            </nz-list-item>
+
+            <nz-list-empty *ngIf="this.form.controls['Info'].controls['ProductGroups'].value.length === 0"></nz-list-empty>
+        </nz-list>
+        
+    </nz-form-item>
+    </div>
+
+    <nz-divider nzText="Harga Produk" nzOrientation="center"></nz-divider>
+    <div
+    class="form-field-container"
+    id="Pricing"
+    [formGroup]="form.controls.Pricing"
+    >
+    <nz-form-item>
+        <nz-form-label>Gunakan Grup Harga Beli?</nz-form-label>
+        <nz-form-control>
+        <nz-input-group>
+            <nz-switch formControlName="IsBuyPriceUsingGroup" nzCheckedChildren="Ya" nzUnCheckedChildren="Tidak"></nz-switch>
+        </nz-input-group>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-label>Harga Beli</nz-form-label>
+        <nz-form-control nzErrorTip="Masukkan harga beli produk!">
+        <nz-input-group>
+            <nz-input-number
+            formControlName="BuyPrice"
+            [nzMin]="0"
+            [nzStep]="0.1"
+            [nzPlaceHolder]="'Harga Beli Produk'"
+            ></nz-input-number>
+        </nz-input-group>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-label>Nama </nz-form-label>
+        <nz-form-control nzErrorTip="Masukkan barcode produk yang sama namun dengan packing lebih besar!">
+        <nz-input-group  nzSearch [nzAddOnAfter]="suffixBarcodeParentSearchButton">
+            <input nz-input formControlName="ParentBarcode" placeholder="Barcode Produk Lebih Besar" />
+        </nz-input-group>
+        <ng-template #suffixBarcodeParentSearchButton>
+            <button nz-button nzType="primary" nzSearch><span nz-icon nzType="search"></span></button>
+          </ng-template>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-label>Gunakan Grup Harga Jual?</nz-form-label>
+        <nz-form-control>
+        <nz-input-group>
+            <nz-switch formControlName="IsPriceUsingGroup" nzCheckedChildren="Ya" nzUnCheckedChildren="Tidak"></nz-switch>
+        </nz-input-group>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-label>Harga Jual</nz-form-label>
+        <nz-form-control nzErrorTip="Masukkan harga jual produk!">
+        <nz-input-group>
+            <nz-input-number
+            formControlName="Price"
+            [nzMin]="0"
+            [nzStep]="0.1"
+            [nzPlaceHolder]="'Harga Jual Produk'"
+            ></nz-input-number>
+        </nz-input-group>
+        </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+        <nz-form-label>Harga Jual Grosir</nz-form-label>
+        <button nz-button nzType="primary" type="button" class="width-full-content">
+        <span>Tambah Harga Jual Grosir</span>
+        <span nz-icon [nzType]="'plus'"></span>
+        </button>
+        <br>
+        <nz-list class="height-list-content" nzBordered>
+            <nz-list-item *ngFor="let item of this.form.controls['Pricing'].controls['WholesalesPrices'].value">
+                <nz-list-item-meta>
+                    <nz-list-item-meta-title>
+                        <div><span>Minimal: {{item.WholesalerMin}}</span></div>
+                        <div><span>Harga Jual: Rp. {{item.WholesalerPrice}}</span> </div>
+                    </nz-list-item-meta-title>
+                </nz-list-item-meta>
+                <ul  nz-list-item-actions>
+                    <nz-list-item-action>
+                        <button nz-button nzType="primary" type="button" class="width-full-content" nzShape="circle">
+                            <span nz-icon [nzType]="'info'"></span>
+                        </button>
+                    </nz-list-item-action>
+                    <nz-list-item-action>
+                        <button nz-button nzType="primary" type="button" class="width-full-content" nzDanger nzShape="circle">
+                            <span nz-icon [nzType]="'delete'"></span>
+                        </button>
+                    </nz-list-item-action>
+                </ul >
+            </nz-list-item>
+
+            <nz-list-empty *ngIf="this.form.controls['Pricing'].controls['WholesalesPrices'].value.length === 0"></nz-list-empty>
+        </nz-list>
+    </nz-form-item>
+    </div>
+    
+    <nz-divider nzText="Stok Produk" nzOrientation="center"></nz-divider>
+    <div
+    class="form-field-container"
+    id="Stock"
+    [formGroup]="form.controls.Stock"
+    >
+    <nz-form-item>
+        <nz-form-label>Jumlah Stok Sekarang</nz-form-label>
+        <nz-form-control nzErrorTip="Masukkan jumlah stok produk sekarang!">
+        <nz-input-group>
+            <nz-input-number
+            formControlName="N"
+            [nzMin]="0"
+            [nzStep]="1"
+            [nzPlaceHolder]="'Jumlah Stok Produk Sekarang'"
+            ></nz-input-number>
+        </nz-input-group>
+        </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+        <nz-form-label>Batas Minimum Stok Produk</nz-form-label>
+        <nz-form-control nzErrorTip="Masukkan batas minimum stok produk!">
+        <nz-input-group>
+            <nz-input-number
+            formControlName="Threshold"
+            [nzMin]="0"
+            [nzStep]="1"
+            [nzPlaceHolder]="'Batas Minimum Stok Produk'"
+            ></nz-input-number>
+        </nz-input-group>
+        </nz-form-control>
+    </nz-form-item>
+
+    </div>
+
+    <nz-divider nzText="Foto Produk" nzOrientation="left"></nz-divider>
+    <div
+    class="form-field-container"
+    id="Photo"
+    [formGroup]="form.controls.Photo"
+    >
+    <nz-upload
+        nzType="drag"
+        [nzMultiple]="true"
+        [nzBeforeUpload]="beforeUpload"
+        (nzChange)="handleChange($event)"
+        [nzPreview]="handlePreview"
+    >
+        <p class="ant-upload-drag-icon">
+        <span nz-icon nzType="inbox"></span>
+        </p>
+        <p class="ant-upload-text">
+        Klik atau seret file untuk menambahkan.
+        </p>
+        <p class="ant-upload-hint">
+        Hanya untuk 1 file.
+        </p>
+    </nz-upload>
+
+    <div style="padding: 2rem;">
+        <img [src]="previewImage == '' ? defaultPreviewImage: previewImage" width="100%">
+    </div>
+    </div>
+
+    <nz-divider></nz-divider>
+    <div class="app-form-action">
+    <button nz-button nzType="primary" type="button">
+        <span>Reset</span>
+    </button>
+    <button
+        nz-button
+        nzType="primary"
+        type="submit"
+        (click)="submitForm()"
+        [disabled]="!form.valid"
+    >
+        <span>Submit</span>
+        <span nz-icon [nzType]="'loading'"></span>
+    </button>
+    </div>
+    
+</form>
+
+
+<nz-modal [nzVisible]="productGroupModalShowingSg()" nzTitle="Daftar Grup Produk" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+    <ng-container *nzModalContent>
+        
+        <!-- <app-product-group-form></app-product-group-form> -->
+    </ng-container>
+</nz-modal>
+
+
+<nz-modal [nzFooter]="null" [nzVisible]="false" nzTitle="Buat Grup Produk Baru" (nzOnCancel)="handleCancel()">
+    <ng-container *nzModalContent>
+        <app-product-group-form></app-product-group-form>
+    </ng-container>
+</nz-modal>

@@ -32,12 +32,12 @@ public class GetMyGoodsesQueryHandler : IRequestHandler<GetMyGoodsesQuery, Searc
     {
         request.Search = request.Search == null ? "" : request.Search.Trim().ToLower();
         var entities = await _context.Goodses
-                                        .Include(x => x.GoodsType)
+                                        .Include(x => x.GoodsContainer).ThenInclude(z=>z.GoodsType)
                                         .Include(x => x.GoodsPrices)
                                         .Include(x => x.GoodsStock)
                                         .Include(x => x.ParentGoods).ThenInclude(z => z.GoodsStock)
                                         .Include(x => x.ChildrenGoods).ThenInclude(z => z.GoodsStock)
-                                        .Where(x => x.EnterpriseId.ToString() == this._currentEnterpriseService.EnterpriseId)
+                                        .Where(x => x.GoodsContainer.EnterpriseId.ToString() == this._currentEnterpriseService.EnterpriseId)
                                         .Where(x => x.Barcode.ToLower().Contains(request.Search) || (x.Name).ToLower().Contains(request.Search))
                                         .OrderBy(x => x.Name)
                                         .ToSearchPageResponseAsync(request.PageNumber, request.PageSize);

@@ -20,9 +20,8 @@ namespace new_usaha.Application.CQRS.MyGoodses.Commands;
 
 public class CreateMyGoodsCommand : IRequest<Unit>
 {
+    public Guid GoodsContainerId { get; set; }
     public string Name { get; set; }
-    public string? Description { get; set; }
-    public int GoodsTypeId { get; set; }
     public string Barcode { get; set; }
     public string? Photo { get; set; }
     public string? PhotoString { get; set; }
@@ -48,11 +47,6 @@ public class CreateMyGoodsCommandValidator : GoodsValidator<CreateMyGoodsCommand
             .NotEmpty().WithMessage("Nama produk harus diisi.")
             .MaximumLength(255).WithMessage("Nama produk tidak melebihi 255 karakter");
 
-        RuleFor(v => v.GoodsTypeId)
-            .NotEmpty().WithMessage("Kategori produk harus diisi.")
-            .MustAsync(BeExistGoodsType).WithMessage("Kategori produk tidak ditemukan");
-
-
         RuleFor(v => v.Barcode)
             .MustAsync((model, barcode, cancelToken) => { return BeExistBarcode(barcode, cancelToken); })
             .WithMessage("Produk tidak ada barcodenya.");
@@ -67,10 +61,8 @@ public class CreateMyGoodsCommandValidator : GoodsValidator<CreateMyGoodsCommand
 
         RuleFor(v => v.GoodsGroups)
            .MustAsync((model, GoodsGroups, cancelToken) => { return BeExistGroup(GoodsGroups, cancelToken); })
-           .WithMessage("Terdapat group yang tidak ada.");
-        //RuleFor(v => v.GoodsGroups)
-        //   .MustAsync((model, GoodsGroups, cancelToken) => { return BeExistGroup(GoodsGroups, cancelToken); })
-        //   .WithMessage("Terdapat group yang tidak ada.");
+           .WithMessage("Group tidak ada.");
+
         RuleFor(v => v.PhotoFile)
            .Must((model, PhotoFile) => { return FileMustBeImage(PhotoFile?.ContentType); })
            .WithMessage("Gambar harus berformat .jpg, .jpeg, atau .png");
@@ -126,12 +118,10 @@ public class CreateMyGoodsCommandHandler : AlterGoodsCommand, IRequestHandler<Cr
             AvailableOnline = request.AvailableOnline == 1,
             Barcode = request.Barcode,
             Contain = request.Contain,
-            Description = request.Description,
             Name = request.Name,
             IsWholesalerPriceAuto = request.IsWholesalerPriceAuto == 1,
-            GoodsTypeId = request.GoodsTypeId,
-            EnterpriseId = Guid.Parse(_ce.EnterpriseId),
-            ParentGoodsId = string.IsNullOrEmpty(request.ParentBarcode) ? null : this._context.Goodses.FirstOrDefault(x => x.EnterpriseId.ToString() == this._ce.EnterpriseId && x.Barcode == request.Barcode).Id
+            GoodsContainerId = request.GoodsContainerId,
+            ParentGoodsId = string.IsNullOrEmpty(request.ParentBarcode) ? null : this._context.Goodses.FirstOrDefault(x => x.GoodsContainer.EnterpriseId.ToString() == this._ce.EnterpriseId && x.Barcode == request.Barcode).Id
         };
         _context.Goodses.Add(entity);
         await _context.SaveChangesAsync(cancellationToken);

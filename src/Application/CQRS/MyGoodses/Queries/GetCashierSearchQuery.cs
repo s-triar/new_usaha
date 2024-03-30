@@ -32,7 +32,7 @@ public class GetCashierSearchQueryHandler : IRequestHandler<GetCashierSearchQuer
         var entities = await _context.Goodses
                                        .Include(x => x.GoodsPrices)
                                        .Include(x=>x.GoodsWholesalePrices)
-                                       .Where(x => x.EnterpriseId == request.EnterpriseId)
+                                       .Where(x => x.GoodsContainer.EnterpriseId == request.EnterpriseId)
                                        .Where(x => x.Barcode.ToLower().Contains(request.Search) || x.Name.ToLower().Contains(request.Search))
                                        .OrderBy(x => x.Name)
                                        .ToListAsync(cancellationToken);

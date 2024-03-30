@@ -18,9 +18,9 @@ public class MyGoodsDto : IMapFrom<Goods>
 {
     public Guid Id { get; set; }
     public Guid EnterpriseId { get; set; }
+    public Guid GoodsContainerId { get; set; }
     public string Barcode { get; set; }
     public string Name { get; set; }
-    public string? Description { get; set; }
     public string? Photo { get; set; }
     public string GoodsType { get; set; }
     public int Contain { get; set; }
@@ -32,7 +32,7 @@ public class MyGoodsDto : IMapFrom<Goods>
     {
         profile.CreateMap<Goods, MyGoodsDto>()
                //.ConvertUsing<MyGoodsConverter>()
-               .ForMember(dest => dest.GoodsType, opts => opts.MapFrom(x => x.GoodsType.Name))
+               .ForMember(dest => dest.GoodsType, opts => opts.MapFrom(x => x.GoodsContainer.GoodsType.Name))
                .ForMember(dest => dest.N, opts => opts.MapFrom(x => x.GoodsStock.N))
                //.ForMember(dest => dest.Stock, opts => opts.MapFrom(x => $"Stok: {x.GoodsStock.N}"))
                .ForMember(dest => dest.Stock, opts => opts.MapFrom<MyGoodsStockResolver>())
@@ -129,11 +129,11 @@ public class MyGoodsConverter : ITypeConverter<Goods, MyGoodsDto>
         return new MyGoodsDto
         {
             Id = source.Id,
-            EnterpriseId = source.EnterpriseId,
+            EnterpriseId = source.GoodsContainer.EnterpriseId,
+            GoodsContainerId = source.GoodsContainerId,
             Barcode = source.Barcode,
             Contain = source.Contain,
-            Description = source.Description,
-            GoodsType = source.GoodsType.Name,
+            GoodsType = source.GoodsContainer.GoodsType.Name,
             N = source.GoodsStock.N,
             Name = source.Name,
             Photo = source.GoodsPhotos.Count() > 0 ? source.GoodsPhotos.OrderBy(y => y.CreatedAt).LastOrDefault()!.Url : null,

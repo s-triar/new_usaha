@@ -30,6 +30,7 @@ public class GetAllEnterpriseClaimsQueryHandler : IRequestHandler<GetAllEnterpri
     {
         var enterprise = await this.context.Enterprises.FirstOrDefaultAsync(x => x.Id.ToString() == this.currentEnterprise.EnterpriseId);
         var entities = await this.context.EnterpriseClaims
+                            .Include(x => x.EnterpriseType)
                             .Where(x => x.EnterpriseTypeId == enterprise!.EnterpriseTypeId)
                             .ProjectTo<EnterpriseClaimDto>(this.mapper.ConfigurationProvider)
                             .ToListAsync(cancellationToken: cancellationToken);

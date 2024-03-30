@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>net8.0</TargetFramework>
         <RootNamespace>new_usaha.Application</RootNamespace>
         <AssemblyName>new_usaha.Application</AssemblyName>
         <ImplicitUsings>enable</ImplicitUsings>
@@ -9,12 +9,27 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
-        <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.1.0" />
-        <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
+      <Compile Remove="CQRS\MyGoodsGroups\**" />
+      <Compile Remove="CQRS\MyGoodsPhotos\**" />
+      <EmbeddedResource Remove="CQRS\MyGoodsGroups\**" />
+      <EmbeddedResource Remove="CQRS\MyGoodsPhotos\**" />
+      <None Remove="CQRS\MyGoodsGroups\**" />
+      <None Remove="CQRS\MyGoodsPhotos\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="AutoMapper" Version="13.0.1" />
+        <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.9.0" />
+        <PackageReference Include="MediatR.Contracts" Version="2.0.1" />
+        <PackageReference Include="MediatR.Extensions.Autofac.DependencyInjection" Version="12.0.0" />
         <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.17" />
         <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.11" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.2" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.2">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.0" />
     </ItemGroup>
 
     <ItemGroup>
@@ -25,10 +40,7 @@
       <Folder Include="CQRS\Enterprises\Commands\" />
       <Folder Include="CQRS\Goodses\Commands\" />
       <Folder Include="CQRS\Goodses\Queries\" />
-      <Folder Include="CQRS\MyGoodsGroups\Commands\" />
-      <Folder Include="CQRS\MyGoodsGroups\Queries\" />
-      <Folder Include="CQRS\MyGoodsPhotos\Commands\" />
-      <Folder Include="CQRS\MyGoodsPhotos\Queries\" />
+      <Folder Include="CQRS\MyGoodsContainers\Queries\" />
     </ItemGroup>
 
 </Project>

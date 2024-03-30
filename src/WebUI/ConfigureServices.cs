@@ -1,4 +1,5 @@
-﻿using FluentValidation.AspNetCore;
+﻿using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
 using new_usaha.Application.Common.Interfaces;
 using new_usaha.Infrastructure.Persistence;
@@ -28,8 +29,14 @@ namespace Microsoft.Extensions.DependencyInjection
                 .AddDbContextCheck<ApplicationDbContext>("App Db");
 
             services.AddControllersWithViews(options =>
-                options.Filters.Add<ApiExceptionFilterAttribute>())
-                    .AddFluentValidation(x => x.AutomaticValidationEnabled = false);
+                options.Filters.Add<ApiExceptionFilterAttribute>());
+        /*        .AddFluentValidation(x => x.AutomaticValidationEnabled = false)*/;
+
+            // After migration:
+            services.AddFluentValidationAutoValidation();
+            services.AddFluentValidationClientsideAdapters();
+            //services.AddValidatorsFromAssemblyContaining<Assemb>();
+
 
             services.AddRazorPages();
 

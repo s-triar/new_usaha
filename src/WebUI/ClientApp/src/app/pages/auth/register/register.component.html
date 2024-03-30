@@ -1,0 +1,192 @@
+<div class="app-center-container form-container">
+  @if( stateSg() == 'Error'){
+  <nz-alert
+    nzType="error"
+    nzMessage="Tidak dapat mendaftar"
+    class="form-alert"
+  ></nz-alert>
+  }
+
+  <form nz-form [formGroup]="form" class="" (ngSubmit)="submitForm()">
+    <nz-form-item>
+      <nz-form-control
+        [nzErrorTip]="
+          form.getError('required', 'Fullname')
+            ? 'Nama Lengkap harus diisi'
+            : form.getError('maxlength', 'Fullname')
+            ? 'Nama Lengkap harus kurang dari 256 karakter'
+            : ''
+        "
+      >
+        <nz-input-group nzPrefixIcon="user">
+          <input
+            type="text"
+            nz-input
+            formControlName="Fullname"
+            placeholder="Nama Lengkap"
+          />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-control
+        [nzErrorTip]="
+          form.getError('required', 'Email')
+            ? 'Email harus diisi'
+            : form.getError('email', 'Email')
+            ? 'Email harus valid'
+            : form.getError('maxlength', 'Email')
+            ? 'Email harus kurang dari 256 karakter'
+            : form.getError('duplicateUserEmail', 'Email')
+            ? 'Email sudah terdaftar'
+            : ''
+        "
+      >
+        <nz-input-group nzPrefixIcon="mail">
+          <input
+            type="email"
+            nz-input
+            formControlName="Email"
+            placeholder="Email"
+          />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-control
+        [nzErrorTip]="
+          form.getError('required', 'Phone')
+            ? 'Nomor Telepon harus diisi'
+            : form.getError('maxlength', 'Phone')
+            ? 'Nomor Telepon terlalu banyak'
+            : form.getError('duplicateUserPhone', 'Phone')
+            ? 'Nomor Telepon sudah terdaftar'
+            : ''
+        "
+      >
+        <nz-input-group nzPrefixIcon="phone">
+          <input
+            type="phone"
+            nz-input
+            formControlName="Phone"
+            placeholder="Nomor Telepon"
+          />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-control
+        [nzErrorTip]="
+          form.getError('required', 'Password')
+            ? 'Password harus diisi'
+            : form.getError('minlength', 'Password')
+            ? 'Password harus lebih dari 5 karakter'
+            : form.getError('maxlength', 'Password')
+            ? 'Password harus kurang dari 26 karakter'
+            : ''
+        "
+      >
+        <nz-input-group
+          nzPrefixIcon="lock"
+          nzSearch
+          [nzAddOnAfter]="suffixTogglePasswordButton"
+        >
+          <input
+            [type]="displayPasswordSg() ? 'text' : 'password'"
+            nz-input
+            formControlName="Password"
+            placeholder="Password"
+            autocomplete="current-password"
+          />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+
+    <ng-template #suffixTogglePasswordButton>
+      <button
+        nz-button
+        nzType="default"
+        type="button"
+        (click)="togglePassword()"
+        nzSearch
+      >
+        <span
+          nz-icon
+          [nzType]="displayPasswordSg() ? 'eye' : 'eye-invisible'"
+        ></span>
+      </button>
+    </ng-template>
+
+    <nz-form-item>
+      <nz-form-control
+        [nzErrorTip]="
+          form.getError('required', 'ConfirmPassword')
+            ? 'Konfirmasi Password harus diisi'
+            : ''
+        "
+        [nzExtra]="
+          form.getError('notMatchPassword')
+            ? 'Konfirmasi Password tidak cocok'
+            : ''
+        "
+        class="form-field-confirm-password"
+      >
+        <nz-input-group
+          nzPrefixIcon="lock"
+          nzSearch
+          [nzAddOnAfter]="suffixToggleConfirmPasswordButton"
+        >
+          <input
+            [type]="displayConfirmPasswordSg() ? 'text' : 'password'"
+            nz-input
+            formControlName="ConfirmPassword"
+            placeholder="Konfirmasi Password"
+          />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+
+    <ng-template #suffixToggleConfirmPasswordButton>
+      <button
+        nz-button
+        nzType="default"
+        type="button"
+        (click)="toggleConfirmPassword()"
+        nzSearch
+      >
+        <span
+          nz-icon
+          [nzType]="displayConfirmPasswordSg() ? 'eye' : 'eye-invisible'"
+        ></span>
+      </button>
+    </ng-template>
+
+    <div nz-row class="form-action-margin" nzJustify="center">
+      <div nz-col [nzSpan]="24">
+        <div nz-row nzJustify="center">
+          <button
+            nz-button
+            class=""
+            [nzType]="'primary'"
+            [disabled]="this.stateSg() == 'Processing'"
+          >
+            @if(this.stateSg() == 'Processing'){
+            <span nz-icon [nzType]="'loading'"></span><span>Mengirim...</span>
+            } @else {
+            <span>Daftar</span>
+            }
+          </button>
+        </div>
+        <div nz-row nzJustify="center">
+          <span>atau</span>
+        </div>
+        <div nz-row nzJustify="center">
+          Sudah punya akun? &nbsp; <a [routerLink]="'/auth/login'">masuk</a>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

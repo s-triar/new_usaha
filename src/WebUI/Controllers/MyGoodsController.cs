@@ -17,7 +17,7 @@ public class MyGoodsController : ApiControllerBase
     {
         return await Mediator.Send(query);
     }
-    [EnterpriseAuthorize("Workspace", "Goods", "Read")]
+    //[EnterpriseAuthorize("Workspace", "Goods", "Read")]
     [HttpGet]
     public async Task<SearchPageResponse<MyGoodsDto>> GetMyGoodses([FromQuery] GetMyGoodsesQuery query)
     {

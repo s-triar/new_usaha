@@ -1,0 +1,87 @@
+<nz-layout class="layout-workspace">
+  <nz-sider
+    nzCollapsible
+    nzBreakpoint="lg"
+    [nzCollapsed]="isCollapsed()"
+    (nzCollapsedChange)="siderCollapseChange($event)"
+    [nzCollapsedWidth]="0"
+    [nzTrigger]="null"
+    class="sider-workspace"
+  >
+    <div class="sider-content">
+      <div class="sider-title">
+          <span>Workspace</span>
+      </div>
+      <ul nz-menu nzTheme="dark" nzMode="inline">
+        
+        <li nz-menu-item class="item-back-to-main">
+        <a 
+          [routerLink]="'/main/my-shop-list'"
+          >
+          <span nz-icon nzType="left"></span>
+          <span>Halaman Utama</span>
+        </a>
+          
+        </li>
+        <li nz-menu-item [nzSelected]="rla_ws.isActive">
+          <a 
+          [routerLink]="'/workspace/123/pos-cashier'"
+          routerLinkActive="active"
+          #rla_ws="routerLinkActive"
+          >
+            <span nz-icon nzType="user"></span>
+            <span>Pos Kasir</span>
+          </a>
+        </li>
+        <li nz-menu-item [nzSelected]="rlb_ws.isActive">
+          <a 
+          [routerLink]="'/workspace/123/product-list'"
+          routerLinkActive="active"
+          #rlb_ws="routerLinkActive"
+          >
+            <span nz-icon nzType="user"></span>
+            <span>Produk</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="sider-footer">
+      <div>
+        <span nz-icon nzType="phone" nzTheme="outline"></span> &nbsp; Sulaiman
+      </div>
+      <div>
+        <span>085755519123</span>
+      </div>
+    </div>
+  </nz-sider>
+  <nz-layout>
+    <nz-header class="header-workspace">
+      <button
+        nz-button
+        nzShape="circle"
+        role="button"
+        (click)="toggleCollapse()"
+        class="button-side-trigger"
+        nzType="primary"
+      >
+        <span
+          class="trigger"
+          nz-icon
+          [nzType]="isCollapsed() ? 'menu-unfold' : 'menu-fold'"
+          nzTheme="outline"
+        ></span>
+      </button>
+
+      <span class="header-title-page">Workspace</span>
+      
+    </nz-header>
+    <nz-content id="content-workspace">
+      <router-outlet></router-outlet>
+    </nz-content>
+    <!-- <nz-footer class="footer-navigation-workspace">
+        <div style="text-align: center;">
+            <span ><span nz-icon nzType="phone" nzTheme="outline"></span> &nbsp; Sulaiman - 085755519123</span>
+          </div>
+    </nz-footer> -->
+  </nz-layout>
+</nz-layout>

@@ -24,7 +24,8 @@ public class UpdateEnterpriseCommandHandler : IRequestHandler<UpdateEnterpriseCo
     {
         _context = context;
     }
-    public async Task<Unit> Handle(UpdateEnterpriseCommand request, CancellationToken cancellationToken)
+
+    public async Task Handle(UpdateEnterpriseCommand request, CancellationToken cancellationToken)
     {
         var entity = await _context.EnterpriseAddresses
             .Where(p => p.EnterpriseId == request.EnterpriseId)
@@ -44,7 +45,5 @@ public class UpdateEnterpriseCommandHandler : IRequestHandler<UpdateEnterpriseCo
         _context.EnterpriseAddresses.Update(entity);
 
         await _context.SaveChangesAsync(cancellationToken);
-
-        return Unit.Value;
     }
 }

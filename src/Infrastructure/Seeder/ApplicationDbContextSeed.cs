@@ -26,7 +26,7 @@ public static class ApplicationDbContextSeed
                     Name = "Bayar",
                     NoQueue = 1,
                     CreatedBy = "Seeder",
-                    CreatedAt = DateTime.Now
+                    CreatedAt = DateTime.UtcNow
                 },
                 new OrderStatus
                 {
@@ -34,7 +34,7 @@ public static class ApplicationDbContextSeed
                     Name = "Proses",
                     NoQueue = 2,
                     CreatedBy = "Seeder",
-                    CreatedAt = DateTime.Now
+                    CreatedAt = DateTime.UtcNow
                 },
                 new OrderStatus
                 {
@@ -42,7 +42,7 @@ public static class ApplicationDbContextSeed
                     Name = "Diantar",
                     NoQueue = 3,
                     CreatedBy = "Seeder",
-                    CreatedAt = DateTime.Now
+                    CreatedAt = DateTime.UtcNow
                 },
                 new OrderStatus
                 {
@@ -50,7 +50,7 @@ public static class ApplicationDbContextSeed
                     Name = "Diterima",
                     NoQueue = 4,
                     CreatedBy = "Seeder",
-                    CreatedAt = DateTime.Now
+                    CreatedAt = DateTime.UtcNow
                 },
                 new OrderStatus
                 {
@@ -58,7 +58,7 @@ public static class ApplicationDbContextSeed
                     Name = "Selesai",
                     NoQueue = 5,
                     CreatedBy = "Seeder",
-                    CreatedAt = DateTime.Now
+                    CreatedAt = DateTime.UtcNow
                 }
             );
             await context.SaveChangesAsync();
@@ -75,7 +75,7 @@ public static class ApplicationDbContextSeed
                 Id = 1,
                 Name = "Cash",
                 CreatedBy = "Seeder",
-                CreatedAt = DateTime.Now
+                CreatedAt = DateTime.UtcNow
             }
             );
             await context.SaveChangesAsync();
@@ -92,21 +92,21 @@ public static class ApplicationDbContextSeed
                 Name = "Toko",
                 CreatedBy = "Seeder",
                 Provide = ProvideType.Barang,
-                CreatedAt = DateTime.Now
+                CreatedAt = DateTime.UtcNow
             },
             new EnterpriseType
             {
                 Name = "Cafe",
                 CreatedBy = "Seeder",
                 Provide = ProvideType.Barang,
-                CreatedAt = DateTime.Now
+                CreatedAt = DateTime.UtcNow
             },
             new EnterpriseType
             {
                 Name = "Stall",
                 CreatedBy = "Seeder",
                 Provide = ProvideType.Barang,
-                CreatedAt = DateTime.Now
+                CreatedAt = DateTime.UtcNow
             }
             );
             await context.SaveChangesAsync();
@@ -129,7 +129,7 @@ public static class ApplicationDbContextSeed
                         Name = o.Name,
                         ParentGoodsTypeId = o.ParentGoodsTypeId,
                         CreatedBy = "Seeder",
-                        CreatedAt = DateTime.Now
+                        CreatedAt = DateTime.UtcNow
                     }
                 );
             }
@@ -152,7 +152,7 @@ public static class ApplicationDbContextSeed
                         Name = oc.Name,
                         ParentGoodsTypeId = oc.ParentGoodsTypeId,
                         CreatedBy = "Seeder",
-                        CreatedAt = DateTime.Now
+                        CreatedAt = DateTime.UtcNow
                     }
                 );
             }

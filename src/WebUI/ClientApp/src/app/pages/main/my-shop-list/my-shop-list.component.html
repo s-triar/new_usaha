@@ -1,0 +1,103 @@
+<div class="app-page-list-container">
+  <div class="app-list-search-container">
+    <nz-input-group [nzPrefix]="prefixIconSearch">
+      <input
+        type="text"
+        nz-input
+        placeholder="input search text"
+        [formControl]="searchField"
+      />
+    </nz-input-group>
+    <ng-template #prefixIconSearch>
+      <span nz-icon nzType="search"></span>
+    </ng-template>
+    <a
+      [routerLink]="'/my-shop/create'"
+      style="margin-left: 0.5rem"
+      nz-button
+      [nzSize]="'default'"
+      nzType="primary"
+    >
+      <span nz-icon nzType="plus" nzTheme="outline"></span>
+    </a>
+  </div>
+  <div class="app-list-content-container">
+    <nz-list nzItemLayout="vertical">
+      
+      @for (item of dataSg().items; track $index) {
+      <nz-list-item >
+        <nz-list-item-meta>
+          <nz-list-item-meta-avatar></nz-list-item-meta-avatar>
+          <nz-list-item-meta-title>
+            <a href="#">Judul {{ item.name }} + {{ item.code }}</a>
+          </nz-list-item-meta-title>
+          <nz-list-item-meta-description>
+            <span>alamat {{ item.address }}</span>
+          </nz-list-item-meta-description>
+        </nz-list-item-meta>
+        <div>
+          <div class="">
+            <span class="group-item-info">
+              <span nz-icon nzType="user" style="margin-right: 8px"></span>
+              <span>126</span>
+            </span>
+            <span class="group-item-info">
+              <span nz-icon nzType="dropbox" style="margin-right: 8px"></span>
+              <span>156</span>
+            </span>
+            <span class="group-item-info">
+              <span nz-icon nzType="team" style="margin-right: 8px"></span>
+              <span>223</span>
+            </span>
+          </div>
+          <div class="my-shop-list-item-button-action-container">
+            <a
+              style="margin-left: 0.5rem"
+              type="button"
+              nz-button
+              [nzSize]="'default'"
+              nzType="primary"
+              [routerLink]="'/dashboard/123/overview'"
+            >
+              <span
+                nz-icon
+                nzType="fund-projection-screen"
+                nzTheme="outline"
+              ></span>
+              <span>Dashboard</span>
+            </a>
+
+            <a
+              style="margin-left: 0.5rem"
+              type="button"
+              nz-button
+              [nzSize]="'default'"
+              nzType="primary"
+              [routerLink]="'/workspace/123/pos-cashier'"
+            >
+              <span nz-icon nzType="laptop" nzTheme="outline"></span>
+              <span>Ruang Kerja</span>
+            </a>
+          </div>
+        </div>
+        <nz-list-item-extra>
+          <img
+            width="272"
+            alt="logo"
+            src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png"
+          />
+        </nz-list-item-extra>
+      </nz-list-item>
+    }
+    </nz-list>
+  </div>
+  <div class="app-pagination-container">
+    <nz-pagination
+      [nzPageIndex]="dataSg().pageNumber"
+      [nzTotal]="dataSg().totalCount"
+      [nzPageSize]="formSg().PageSize"
+      nzSimple="true"
+      (nzPageIndexChange)="changeIndexPagination($event)"
+    ></nz-pagination>
+  </div>
+</div>

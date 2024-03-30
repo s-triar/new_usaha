@@ -71,13 +71,13 @@ public class EnterpriseClaimFilter : IAuthorizationFilter
                 //{
                 //    context.Result = new ForbidResult();
                 //}
-                var userId = tokenS.Claims.First(claim => claim.Type == EnteerpriseClaimType.UserId).Value;
+                var userId = tokenS?.Claims.First(claim => claim.Type == EnteerpriseClaimType.UserId).Value;
                 if (userId != this.currentUser.UserId)
                 {
                     throw new Exception();
                 }
-                var enterpriseId = tokenS.Claims.First(claim => claim.Type == EnteerpriseClaimType.EnterpriseId).Value;
-                var roleId = tokenS.Claims.First(claim => claim.Type == EnteerpriseClaimType.RoleId).Value;
+                var enterpriseId = tokenS?.Claims.First(claim => claim.Type == EnteerpriseClaimType.EnterpriseId).Value;
+                var roleId = tokenS?.Claims.First(claim => claim.Type == EnteerpriseClaimType.RoleId).Value;
                 var enterprise = this.context.Enterprises.FirstOrDefault(x => x.Id.ToString() == enterpriseId);
                 if (roleId != EnteerpriseClaimValueDefault.RoleOwner)
                 {

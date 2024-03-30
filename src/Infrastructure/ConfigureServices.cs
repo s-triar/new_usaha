@@ -20,8 +20,8 @@ namespace Microsoft.Extensions.DependencyInjection
 {
     public static class ConfigureServices
     {
-        private static readonly string connectionStringApp = "MySqlConnectionApp";
-        private static readonly string connectionStringIdentity = "MySqlConnectionIdentity";
+        private static readonly string connectionStringApp = "PgSqlConnectionApp";
+        private static readonly string connectionStringIdentity = "PgSqlConnectionIdentity";
         public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddScoped<AuditableEntitySaveChangesInterceptor>();
@@ -52,9 +52,9 @@ namespace Microsoft.Extensions.DependencyInjection
            .AddDefaultTokenProviders();
 
             services.AddDbContext<AppIdentityDbContext>(options =>
-                   options.UseMySql(configuration.GetConnectionString(connectionStringIdentity), new MySqlServerVersion(new Version(10, 1, 40))));
+                   options.UseNpgsql(configuration.GetConnectionString(connectionStringIdentity)));
             services.AddDbContext<ApplicationDbContext>(options =>
-                   options.UseMySql(configuration.GetConnectionString(connectionStringApp), new MySqlServerVersion(new Version(10, 1, 40))));
+                   options.UseNpgsql(configuration.GetConnectionString(connectionStringApp)));
 
             services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());
             //services.AddScoped<AppIdentityDbContext>(provider => provider.GetRequiredService<AppIdentityDbContext>());
@@ -113,12 +113,12 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddTransient<IEmailSender, EmailSenderService>();
             services.Configure<EmailSenderOption>(options =>
             {
-                options.Host_Address = configuration["ExternalProviders:MailKit:SMTP:Address"];
+                options.Host_Address = configuration["ExternalProviders:MailKit:SMTP:Address"]!;
                 options.Host_Port = Convert.ToInt32(configuration["ExternalProviders:MailKit:SMTP:Port"]);
-                options.Host_Username = configuration["ExternalProviders:MailKit:SMTP:Account"];
-                options.Host_Password = configuration["ExternalProviders:MailKit:SMTP:Password"];
-                options.Sender_EMail = configuration["ExternalProviders:MailKit:SMTP:SenderEmail"];
-                options.Sender_Name = configuration["ExternalProviders:MailKit:SMTP:SenderName"];
+                options.Host_Username = configuration["ExternalProviders:MailKit:SMTP:Account"]!;
+                options.Host_Password = configuration["ExternalProviders:MailKit:SMTP:Password"]!;
+                options.Sender_EMail = configuration["ExternalProviders:MailKit:SMTP:SenderEmail"]!;
+                options.Sender_Name = configuration["ExternalProviders:MailKit:SMTP:SenderName"]!;
             });
             services.AddTransient<ISendEmailTemplateService, SendEmailTemplateService>();
 

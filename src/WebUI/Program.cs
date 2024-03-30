@@ -1,6 +1,7 @@
 using new_usaha.Infrastructure.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
 // Add services to the container.
 builder.Services.AddApplicationServices();
@@ -10,15 +11,19 @@ builder.Services.AddWebUIServices();
 builder.Services.AddEndpointsApiExplorer();
 
 
+
 var app = builder.Build();
+
+
 
 app.UseOpenApi();
 
-app.UseSwaggerUi3(settings =>
+app.UseSwaggerUi(settings =>
 {
 
     settings.Path = "/api";
-    settings.DocumentPath = "/swagger/v1/swagger.json";
+    settings.DocumentPath = "/api/specification.json";
+    //settings.DocumentPath = "/swagger/v1/swagger.json";
 });
 
 // Configure the HTTP request pipeline.
@@ -61,7 +66,6 @@ app.UseCors();
 app.UseAuthentication();
 
 app.UseAuthorization();
-
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller}/{action=Index}/{id?}");

@@ -1,4 +1,5 @@
 ﻿using MediatR;
+
 using new_usaha.Application.Common.Exceptions;
 using new_usaha.Application.Common.Interfaces;
 using new_usaha.Application.Common.Security;
@@ -19,7 +20,7 @@ namespace new_usaha.Application.Common.Behaviours
             _identityService = identityService;
         }
 
-        public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
+        public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
         {
             var authorizeAttributes = request.GetType().GetCustomAttributes<AuthorizeAttribute>();
 

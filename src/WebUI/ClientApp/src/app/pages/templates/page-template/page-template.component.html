@@ -1,0 +1,20 @@
+<nz-layout class="page-template-layout">
+  <nz-header class="header-page-template">
+    <button nz-button nzType="primary" nzShape="circle"
+    appButtonBack
+    [backLink]="linkBack"
+    [replaceUrl]="replaceUrl"
+    >
+      <span nz-icon [nzType]="backIcon" nzTheme="outline"></span>
+    </button>
+    <span aria-lable="Judul halaman" class="header-title-page">{{ title }}</span>
+  </nz-header>
+  <nz-content id="content-page-template">
+    <ng-content #ContentPageTemplate></ng-content>
+  </nz-content>
+  <nz-footer class="footer-page-template">
+    <div style="text-align: center;">
+      <span ><span nz-icon nzType="phone" nzTheme="outline"></span> &nbsp; Sulaiman - 085755519123</span>
+    </div>
+  </nz-footer>
+</nz-layout>

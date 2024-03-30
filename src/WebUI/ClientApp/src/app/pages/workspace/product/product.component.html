@@ -1,0 +1,83 @@
+<div class="app-page-list-container list">
+  <div class="app-list-search-container list">
+    <nz-input-group [nzPrefix]="prefixIconSearch">
+      <input
+        type="text"
+        nz-input
+        placeholder="input search text"
+        [formControl]="searchField"
+      />
+    </nz-input-group>
+    <ng-template #prefixIconSearch>
+      <span nz-icon nzType="search"></span>
+    </ng-template>
+    <a
+    [routerLink]="'/workspace/123/product/create'"
+      style="margin-left: 0.5rem"
+      nz-button
+      [nzSize]="'default'"
+      nzType="primary"
+    >
+      <span nz-icon nzType="plus" nzTheme="outline"></span>
+    </a>
+  </div>
+  <div class="app-list-content-container">
+    <nz-list nzItemLayout="vertical" class="app-list-container">
+      @for (item of dataSg().items; track $index) {
+      <nz-list-item>
+        <div class="app-item-list">
+          <div class="app-item-list-info">
+            <div class="app-item-list-info-main">
+              <div class="app-item-list-info-sub-title">
+                <span>141864164916491</span>
+              </div>
+              <div class="app-item-list-info-title">
+                <span
+                  >Indomie mi goreng 40gr dengan expired yang masih lama yaitu
+                  bulan november tahun 2023</span
+                >
+              </div>
+            </div>
+            <div class="app-item-list-info-extra">
+              <div class="stock-info">
+                <span>Total Stok: 23</span>
+                <span>Total Stok: 24</span>
+                <span>Total Stok: 25</span>
+                <span>Total Stok: 25</span>
+                <span>Total Stok: 25</span>
+                <span>Total Stok: 25</span>
+              </div>
+            </div>
+          </div>
+          <div class="app-item-list-extra">
+            <div class="price">
+              <span>Harga</span>
+              <span>Rp. 20000</span>
+            </div>
+            <div class="price">
+              <span>Harga Grosir</span>
+              <span>Rp. 20000</span>
+            </div>
+            <div class="app-list-action">
+              <a href="" nz-button [nzSize]="'small'" nzType="primary"
+                >Detail</a
+              >
+            </div>
+          </div>
+        </div>
+      </nz-list-item>
+      }@empty {
+      <nz-list-empty></nz-list-empty>
+      }
+    </nz-list>
+  </div>
+  <div class="app-pagination-container list">
+    <nz-pagination
+      [nzPageIndex]="dataSg().pageNumber"
+      [nzTotal]="dataSg().totalCount"
+      [nzPageSize]="formSg().PageSize"
+      nzSimple="true"
+      (nzPageIndexChange)="changeIndexPagination($event)"
+    ></nz-pagination>
+  </div>
+</div>

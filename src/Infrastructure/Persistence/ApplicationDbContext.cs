@@ -38,6 +38,7 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
         _dateTime = dateTime;
         _mediator = mediator;
         _auditableEntitySaveChangesInterceptor = auditableEntitySaveChangesInterceptor;
+        //AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
     }
 
     public DbSet<AddStockHistory> AddStockHistories => Set<AddStockHistory>();
@@ -72,7 +73,7 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
             return this.EnterpriseTypes.Where(z => z.DeletedAt != null);
         }
     }
-
+    public DbSet<GoodsContainer> GoodsContainers => Set<GoodsContainer>();
     public DbSet<GoodsGroup> GoodsGroups => Set<GoodsGroup>();
     public DbSet<GoodsGroupMember> GoodsGroupMembers => Set<GoodsGroupMember>();
     public DbSet<Goods> Goodses => Set<Goods>();
@@ -208,13 +209,13 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
             .GetEntityTypes()
             .Where(e => e.GetProperties().Any(x => x.Name == "DeletedAt"))
             .Select(e => e.ClrType);
-        foreach (var entity in entities)
-        {
-            Expression<Func<AuditableEntity, bool>> expression = p => p.DeletedAt == null;
-            var newParam = Expression.Parameter(entity);
-            var newbody = ReplacingExpressionVisitor.Replace(expression.Parameters.Single(), newParam, expression.Body);
-            builder.Entity(entity).HasQueryFilter(Expression.Lambda(newbody, newParam));
-        }
+        //foreach (var entity in entities)
+        //{
+        //    Expression<Func<AuditableEntity, bool>> expression = p => p.DeletedAt == null;
+        //    var newParam = Expression.Parameter(entity);
+        //    var newbody = ReplacingExpressionVisitor.Replace(expression.Parameters.Single(), newParam, expression.Body);
+        //    builder.Entity(entity).HasQueryFilter(Expression.Lambda(newbody, newParam));
+        //}
         builder.Entity<Enterprise>()
                     .HasIndex(p => p.Code)
                     .IsUnique();

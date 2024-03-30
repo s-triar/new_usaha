@@ -1,0 +1,78 @@
+
+  <div class="app-center-container form-container">
+    @if( stateSg() == 'Error'){
+      <nz-alert nzType="error" nzMessage="Tidak dapat masuk" class="form-alert"></nz-alert>
+    }
+    <form
+      nz-form
+      [formGroup]="form"
+      class=""
+      (ngSubmit)="submitForm()"
+    >
+  
+    
+      <nz-form-item>
+        <nz-form-control nzErrorTip="Masukkan email anda!">
+          <nz-input-group nzPrefixIcon="mail">
+            <input
+              type="text"
+              nz-input
+              formControlName="Identifier"
+              placeholder="Email"
+              autocomplete="identifier"
+            />
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+
+
+      
+
+      <nz-form-item>
+        <nz-form-control nzErrorTip="Masukkan password anda!">
+          <nz-input-group nzPrefixIcon="lock" nzSearch [nzAddOnAfter]="suffixToggleButton">
+            <input
+              [type]="displayPasswordSg()?'text':'password'"
+              nz-input
+              formControlName="Password"
+              placeholder="Password"
+              autocomplete="current-password"
+            />
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+
+      <ng-template #suffixToggleButton>
+        <button nz-button nzType="default" type="button" (click)="togglePassword()" nzSearch>
+          <span nz-icon [nzType]="displayPasswordSg()?'eye':'eye-invisible'"></span>
+        </button>
+      </ng-template>
+
+      <div nz-row class="form-field-margin">
+        <div nz-col [nzSpan]="12" [nzOffset]="12">
+          <a disabled class="login-form-forgot">Lupa password</a>
+        </div>
+      </div>
+
+      <div nz-row class="form-action-margin" nzJustify="center">
+        <div nz-col [nzSpan]="24">
+          <div nz-row nzJustify="center">
+            <button nz-button class="" [nzType]="'primary'" [disabled]="this.stateSg() == 'Processing'">
+            @if(this.stateSg() == 'Processing'){
+                <span nz-icon [nzType]="'loading'"></span><span>Mengirim...</span>
+            }
+            @else {
+                <span>Masuk</span>
+            }
+            </button>
+          </div>
+          <div nz-row nzJustify="center">
+            <span>atau</span>
+          </div>
+          <div nz-row nzJustify="center">
+            <a [routerLink]="'/auth/register'">Daftar sekarang!</a>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>

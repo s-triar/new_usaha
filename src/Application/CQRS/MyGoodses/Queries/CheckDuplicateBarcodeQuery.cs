@@ -28,7 +28,7 @@ public class CheckDuplicateBarcodeQueryHandler : IRequestHandler<CheckDuplicateB
     public async Task<bool> Handle(CheckDuplicateBarcodeQuery request, CancellationToken cancellationToken)
     {
         var entity = await _context.Goodses
-                                .Where(x => x.EnterpriseId.ToString() == _currentEnterprise.EnterpriseId)
+                                .Where(x => x.GoodsContainer.EnterpriseId.ToString() == _currentEnterprise.EnterpriseId)
                                 .Where(x => x.Barcode.ToLower() == request.Barcode.Trim().ToLower())
                                 .SingleOrDefaultAsync(cancellationToken);
         return entity != null;

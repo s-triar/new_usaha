@@ -1,3 +1,0 @@
-<mat-select formControlName="GoodsTypeId" #selectGoodType (selectionChange)="selectGoodsType($event)">
-    <mat-option *ngFor="let item of options ; let i = index" [value]="item.id" [ngStyle]="GoodsTypeIdProduct !==null && i ==0 ? {'display':'none'}:{}">{{item.name}}</mat-option>
-</mat-select>

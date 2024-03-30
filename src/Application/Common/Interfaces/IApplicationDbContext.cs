@@ -20,7 +20,7 @@ namespace new_usaha.Application.Common.Interfaces
         public DbSet<EnterpriseClaim> EnterpriseClaims { get; }
         public DbSet<EnterpriseEmployeeRole> EnterpriseEmployeeRoles { get; }
         public DbSet<EnterpriseRoleClaim> EnterpriseRoleClaims { get; }
-
+        public DbSet<GoodsContainer> GoodsContainers { get; }
         public Task BeginTransactionAsync();
         public Task CommitTransactionAsync();
         public void RollbackTransaction();

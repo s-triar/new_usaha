@@ -53,7 +53,7 @@ public class MyEnterpriseController : ApiControllerBase
     {
         var model = await Mediator.Send(query);
 
-        var secret = this._configuration.GetValue<string>("EnterpriseSecret");
+        var secret = this._configuration.GetValue<string>("EnterpriseSecret")!;
         var mySecurityKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secret));
 
         var myIssuer = this._configuration.GetSection("ClientInfo").GetValue<string>("Authority");

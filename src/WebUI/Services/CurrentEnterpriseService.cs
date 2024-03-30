@@ -17,7 +17,7 @@ public class CurrentEnterpriseService : ICurrentEnterpriseService
         this.getUserInfo();
     }
 
-    private async Task getUserInfo()
+    private void getUserInfo()
     {
 
         if (_httpContextAccessor != null && _httpContextAccessor.HttpContext != null)
@@ -27,16 +27,16 @@ public class CurrentEnterpriseService : ICurrentEnterpriseService
             {
                 var handler = new JwtSecurityTokenHandler();
                 var tokenS = handler.ReadToken(accessToken) as JwtSecurityToken;
-                this.UserId = tokenS.Claims.First(claim => claim.Type == EnteerpriseClaimType.UserId).Value;
-                this.EnterpriseId = tokenS.Claims.First(claim => claim.Type == EnteerpriseClaimType.EnterpriseId).Value;
-                this.RoleId = tokenS.Claims.First(claim => claim.Type == EnteerpriseClaimType.RoleId).Value;
+                this.UserId = tokenS?.Claims.First(claim => claim.Type == EnteerpriseClaimType.UserId).Value;
+                this.EnterpriseId = tokenS?.Claims.First(claim => claim.Type == EnteerpriseClaimType.EnterpriseId).Value;
+                this.RoleId = tokenS?.Claims.First(claim => claim.Type == EnteerpriseClaimType.RoleId).Value;
             }
         }
 
     }
-    public string UserId { get; private set; }
+    public string? UserId { get; private set; } = null;
 
-    public string EnterpriseId { get; private set; }
+    public string? EnterpriseId { get; private set; } = null;
 
-    public string RoleId { get; private set; }
+    public string? RoleId { get; private set; } = null;
 }

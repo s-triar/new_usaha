@@ -16,30 +16,30 @@ namespace new_usaha.WebUI.Controllers;
 [Authorize]
 public class OrderController : ApiControllerBase
 {
-    [HttpPost]
-    public async Task<Guid> CreateOrderOnline()
-    {
-        return new Guid("dadada");
-    }
-    [HttpPost]
-    public async Task<Guid> FinishOrder()
-    {
-        return new Guid("dadada");
-    }
+    //[HttpPost]
+    //public async Task<Guid> CreateOrderOnline()
+    //{
+    //    return new Guid("dadada");
+    //}
+    //[HttpPost]
+    //public async Task<Guid> FinishOrder()
+    //{
+    //    return new Guid("dadada");
+    //}
     [HttpPost]
     public async Task<CreateOrderCashierCommandResponse> CreateOrderCashier([FromForm] CreateOrderCashierCommand command)
     {
         return await Mediator.Send(command);
     }
-    [EnterpriseAuthorize("Dashboard", "Order", "Read")]
+    //[EnterpriseAuthorize("Dashboard", "Order", "Read")]
     [HttpGet]
     public async Task<SearchPageResponse<OrderDto>> GetEnterpriseOrder([FromQuery] GetOrderEnterpriseQuery query)
     {
         return await Mediator.Send(query);
     }
-    [EnterpriseAuthorize("Dashboard", "Order", "Read")]
+    //[EnterpriseAuthorize("Dashboard", "Order", "Read")]
     [HttpGet]
-    public async Task<DetailOrderDto> GetEnterpriseOrderDetail([FromQuery] GetDetailOrderEnterpriseQuery query)
+    public async Task<DetailOrderDto?> GetEnterpriseOrderDetail([FromQuery] GetDetailOrderEnterpriseQuery query)
     {
         return await Mediator.Send(query);
     }

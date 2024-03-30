@@ -29,17 +29,17 @@ public static class ApplicationAuthorizationSeeder
                                );
             if (!check)
             {
-                var enterprise = await context.EnterpriseTypes.FirstOrDefaultAsync(x => x.Name == o.EnterpriseType);
+                var enterpriseType = await context.EnterpriseTypes.FirstOrDefaultAsync(x => x.Name == o.EnterpriseType);
                 context.EnterpriseClaims.Add(
                     new EnterpriseClaim
                     {
-                        EnterpriseTypeId = enterprise.Id,
+                        EnterpriseTypeId = enterpriseType!.Id,
                         Context = o.Context!,
                         Feature = o.Feature!,
                         Action = o.Action!,
                         Description = o.Description!,
                         CreatedBy = "Seeder",
-                        CreatedAt = DateTime.Now
+                        CreatedAt = DateTime.UtcNow
                     }
                 );
             }

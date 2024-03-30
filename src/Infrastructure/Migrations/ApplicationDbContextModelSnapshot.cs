@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using new_usaha.Infrastructure.Persistence;
 
 #nullable disable
@@ -16,41 +17,43 @@ namespace new_usaha.Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.11")
-                .HasAnnotation("Relational:MaxIdentifierLength", 64);
+                .HasAnnotation("ProductVersion", "8.0.2")
+                .HasAnnotation("Relational:MaxIdentifierLength", 63);
+
+            NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
             modelBuilder.Entity("new_usaha.Domain.Entities.AddStockHistory", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
+                        .HasColumnType("uuid");
 
                     b.Property<decimal>("BasePrice")
                         .HasColumnType("decimal(18,4)");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("varchar(255)");
 
                     b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("DeletedBy")
                         .HasColumnType("varchar(255)");
 
                     b.Property<Guid>("GoodsStockId")
-                        .HasColumnType("char(36)");
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime?>("LastModifiedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("varchar(255)");
 
                     b.Property<int>("N")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<decimal>("PriceChange")
                         .HasColumnType("decimal(18,4)");
@@ -72,37 +75,37 @@ namespace new_usaha.Infrastructure.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
+                        .HasColumnType("uuid");
 
                     b.Property<int>("Code")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("varchar(255)");
 
                     b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("DeletedBy")
                         .HasColumnType("varchar(255)");
 
                     b.Property<Guid>("EnterpriseId")
-                        .HasColumnType("char(36)");
+                        .HasColumnType("uuid");
 
                     b.Property<Guid>("EnterpriseRoleId")
-                        .HasColumnType("char(36)");
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("ExpiredTime")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<bool>("IsUsed")
-                        .HasColumnType("tinyint(1)");
+                        .HasColumnType("boolean");
 
                     b.Property<DateTime?>("LastModifiedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("varchar(255)");
@@ -124,22 +127,22 @@ namespace new_usaha.Infrastructure.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
+                        .HasColumnType("uuid");
 
                     b.Property<bool>("Approval")
-                        .HasColumnType("tinyint(1)");
+                        .HasColumnType("boolean");
 
                     b.Property<DateTime?>("ApprovalDate")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("varchar(255)");
 
                     b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("DeletedBy")
                         .HasColumnType("varchar(255)");
@@ -148,22 +151,22 @@ namespace new_usaha.Infrastructure.Migrations
                         .HasColumnType("text");
 
                     b.Property<Guid>("EmployeePresenceCode_EndId")
-                        .HasColumnType("char(36)");
+                        .HasColumnType("uuid");
 
                     b.Property<Guid>("EmployeePresenceCode_End_Id")
-                        .HasColumnType("char(36)");
+                        .HasColumnType("uuid");
 
                     b.Property<Guid>("EmployeePresenceCode_StartId")
-                        .HasColumnType("char(36)");
+                        .HasColumnType("uuid");
 
                     b.Property<Guid>("EmployeePresenceCode_Start_Id")
-                        .HasColumnType("char(36)");
+                        .HasColumnType("uuid");
 
                     b.Property<Guid>("EnterpriseEmployeeId")
-                        .HasColumnType("char(36)");
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime?>("LastModifiedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("varchar(255)");
@@ -193,32 +196,32 @@ namespace new_usaha.Infrastructure.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Code")
                         .IsRequired()
                         .HasColumnType("varchar(255)");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("varchar(255)");
 
                     b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("DeletedBy")
                         .HasColumnType("varchar(255)");
 
                     b.Property<Guid>("EnterpriseId")
-                        .HasColumnType("char(36)");
+                        .HasColumnType("uuid");
 
                     b.Property<bool>("IsValid")
-                        .HasColumnType("tinyint(1)");
+                        .HasColumnType("boolean");
 
                     b.Property<DateTime?>("LastModifiedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("varchar(255)");
@@ -227,7 +230,7 @@ namespace new_usaha.Infrastructure.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<Guid>("UserId")
-                        .HasColumnType("char(36)");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("UserName")
                         .IsRequired()
@@ -244,31 +247,31 @@ namespace new_usaha.Infrastructure.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("varchar(255)");
 
                     b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("DeletedBy")
                         .HasColumnType("varchar(255)");
 
                     b.Property<int>("EmployeeScheduleTypeId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    b.Property<ulong>("EnterpriseEmployeeId")
-                        .HasColumnType("bigint unsigned");
+                    b.Property<decimal>("EnterpriseEmployeeId")
+                        .HasColumnType("numeric(20,0)");
 
                     b.Property<Guid>("EnterpriseEmployeeId1")
-                        .HasColumnType("char(36)");
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime?>("LastModifiedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("varchar(255)");
@@ -290,22 +293,24 @@ namespace new_usaha.Infrastructure.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("varchar(255)");
 
                     b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("DeletedBy")
                         .HasColumnType("varchar(255)");
 
                     b.Property<DateTime?>("LastModifiedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("varchar(255)");
@@ -323,20 +328,20 @@ namespace new_usaha.Infrastructure.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Code")
                         .IsRequired()
                         .HasColumnType("varchar(255)");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("varchar(255)");
 
                     b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("DeletedBy")
                         .HasColumnType("varchar(255)");
@@ -349,10 +354,10 @@ namespace new_usaha.Infrastructure.Migrations
                         .HasColumnType("varchar(255)");
 
                     b.Property<int>("EnterpriseTypeId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<DateTime?>("LastModifiedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("varchar(255)");
@@ -386,7 +391,7 @@ namespace new_usaha.Infrastructure.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("City")
                         .IsRequired()
@@ -397,7 +402,7 @@ namespace new_usaha.Infrastructure.Migrations
                         .HasColumnType("varchar(255)");
 
                     b.Property<Guid>("EnterpriseId")
-                        .HasColumnType("char(36)");
+                        .HasColumnType("uuid");
 
                     b.Property<decimal>("Latitude")
                         .HasColumnType("decimal(18,4)");
@@ -432,7 +437,7 @@ namespace new_usaha.Infrastructure.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Action")
                         .IsRequired()
@@ -443,13 +448,13 @@ namespace new_usaha.Infrastructure.Migrations
                         .HasColumnType("varchar(255)");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("varchar(255)");
 
                     b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("DeletedBy")
                         .HasColumnType("varchar(255)");
@@ -459,14 +464,14 @@ namespace new_usaha.Infrastructure.Migrations
                         .HasColumnType("text");
 
                     b.Property<int>("EnterpriseTypeId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<string>("Feature")
                         .IsRequired()
                         .HasColumnType("varchar(255)");
 
                     b.Property<DateTime?>("LastModifiedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("varchar(255)");
@@ -482,28 +487,28 @@ namespace new_usaha.Infrastructure.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("varchar(255)");
 
                     b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("DeletedBy")
                         .HasColumnType("varchar(255)");
 
                     b.Property<Guid>("EnterpriseId")
-                        .HasColumnType("char(36)");
+                        .HasColumnType("uuid");
 
                     b.Property<Guid>("EnterpriseRoleId")
-                        .HasColumnType("char(36)");
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime?>("LastModifiedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("varchar(255)");
@@ -533,28 +538,28 @@ namespace new_usaha.Infrastructure.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("varchar(255)");
 
                     b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("DeletedBy")
                         .HasColumnType("varchar(255)");
 
                     b.Property<Guid>("EnterpriseEmployeeId")
-                        .HasColumnType("char(36)");
+                        .HasColumnType("uuid");
 
                     b.Property<Guid>("EnterpriseRoleId")
-                        .HasColumnType("char(36)");
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime?>("LastModifiedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("varchar(255)");
@@ -572,25 +577,25 @@ namespace new_usaha.Infrastructure.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("varchar(255)");
 
                     b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("DeletedBy")
                         .HasColumnType("varchar(255)");
 
                     b.Property<Guid>("EnterpriseId")
-                        .HasColumnType("char(36)");
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime?>("LastModifiedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("varchar(255)");
@@ -610,28 +615,28 @@ namespace new_usaha.Infrastructure.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("varchar(255)");
 
                     b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("DeletedBy")
                         .HasColumnType("varchar(255)");
 
                     b.Property<Guid>("EnterpriseClaimId")
-                        .HasColumnType("char(36)");
+                        .HasColumnType("uuid");
 
                     b.Property<Guid>("EnterpriseRoleId")
-                        .HasColumnType("char(36)");
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime?>("LastModifiedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("varchar(255)");
@@ -649,28 +654,28 @@ namespace new_usaha.Infrastructure.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("varchar(255)");
 
                     b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("DeletedBy")
                         .HasColumnType("varchar(255)");
 
                     b.Property<DateTime>("End")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<Guid>("EnterpriseId")
-                        .HasColumnType("char(36)");
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime?>("LastModifiedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("varchar(255)");
@@ -679,7 +684,7 @@ namespace new_usaha.Infrastructure.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<DateTime>("Start")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Id");
 
@@ -692,22 +697,24 @@ namespace new_usaha.Infrastructure.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("varchar(255)");
 
                     b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("DeletedBy")
                         .HasColumnType("varchar(255)");
 
                     b.Property<DateTime?>("LastModifiedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("varchar(255)");
@@ -729,44 +736,44 @@ namespace new_usaha.Infrastructure.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
+                        .HasColumnType("uuid");
 
                     b.Property<bool>("AvailableOnline")
-                        .HasColumnType("tinyint(1)");
+                        .HasColumnType("boolean");
 
                     b.Property<string>("Barcode")
                         .IsRequired()
                         .HasColumnType("varchar(255)");
 
                     b.Property<int>("Contain")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("varchar(255)");
 
                     b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("DeletedBy")
                         .HasColumnType("varchar(255)");
 
-                    b.Property<string>("Description")
-                        .HasColumnType("text");
+                    b.Property<Guid?>("EnterpriseId")
+                        .HasColumnType("uuid");
 
-                    b.Property<Guid>("EnterpriseId")
-                        .HasColumnType("char(36)");
+                    b.Property<Guid>("GoodsContainerId")
+                        .HasColumnType("uuid");
 
-                    b.Property<int>("GoodsTypeId")
-                        .HasColumnType("int");
+                    b.Property<int?>("GoodsTypeId")
+                        .HasColumnType("integer");
 
                     b.Property<bool>("IsWholesalerPriceAuto")
-                        .HasColumnType("tinyint(1)");
+                        .HasColumnType("boolean");
 
                     b.Property<DateTime?>("LastModifiedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("varchar(255)");
@@ -776,11 +783,13 @@ namespace new_usaha.Infrastructure.Migrations
                         .HasColumnType("varchar(255)");
 
                     b.Property<Guid?>("ParentGoodsId")
-                        .HasColumnType("char(36)");
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
                     b.HasIndex("EnterpriseId");
+
+                    b.HasIndex("GoodsContainerId");
 
                     b.HasIndex("GoodsTypeId");
 
@@ -793,28 +802,28 @@ namespace new_usaha.Infrastructure.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("varchar(255)");
 
                     b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("DeletedBy")
                         .HasColumnType("varchar(255)");
 
                     b.Property<int>("DeltaStock")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<Guid>("GoodsId")
-                        .HasColumnType("char(36)");
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime?>("LastModifiedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("varchar(255)");
@@ -826,20 +835,20 @@ namespace new_usaha.Infrastructure.Migrations
                     b.ToTable("GoodsAdjustments");
                 });
 
-            modelBuilder.Entity("new_usaha.Domain.Entities.GoodsGroup", b =>
+            modelBuilder.Entity("new_usaha.Domain.Entities.GoodsContainer", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("varchar(255)");
 
                     b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("DeletedBy")
                         .HasColumnType("varchar(255)");
@@ -848,10 +857,56 @@ namespace new_usaha.Infrastructure.Migrations
                         .HasColumnType("text");
 
                     b.Property<Guid>("EnterpriseId")
-                        .HasColumnType("char(36)");
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("GoodsTypeId")
+                        .HasColumnType("integer");
 
                     b.Property<DateTime?>("LastModifiedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EnterpriseId");
+
+                    b.HasIndex("GoodsTypeId");
+
+                    b.ToTable("GoodsContainers");
+                });
+
+            modelBuilder.Entity("new_usaha.Domain.Entities.GoodsGroup", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("DeletedBy")
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("EnterpriseId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("LastModifiedAt")
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("varchar(255)");
@@ -871,28 +926,28 @@ namespace new_usaha.Infrastructure.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("varchar(255)");
 
                     b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("DeletedBy")
                         .HasColumnType("varchar(255)");
 
                     b.Property<Guid>("GoodsGroupId")
-                        .HasColumnType("char(36)");
+                        .HasColumnType("uuid");
 
                     b.Property<Guid>("GoodsId")
-                        .HasColumnType("char(36)");
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime?>("LastModifiedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("varchar(255)");
@@ -910,7 +965,7 @@ namespace new_usaha.Infrastructure.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
+                        .HasColumnType("uuid");
 
                     b.Property<decimal>("DiscountItem")
                         .HasColumnType("decimal(18,4)");
@@ -919,20 +974,20 @@ namespace new_usaha.Infrastructure.Migrations
                         .HasColumnType("decimal(18,4)");
 
                     b.Property<Guid>("GoodsId")
-                        .HasColumnType("char(36)");
+                        .HasColumnType("uuid");
 
                     b.Property<bool>("IsWholesalerPrice")
-                        .HasColumnType("tinyint(1)");
+                        .HasColumnType("boolean");
 
                     b.Property<int>("N")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("varchar(255)");
 
                     b.Property<Guid>("OrderId")
-                        .HasColumnType("char(36)");
+                        .HasColumnType("uuid");
 
                     b.Property<decimal>("PricePerItem")
                         .HasColumnType("decimal(18,4)");
@@ -962,25 +1017,25 @@ namespace new_usaha.Infrastructure.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("varchar(255)");
 
                     b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("DeletedBy")
                         .HasColumnType("varchar(255)");
 
                     b.Property<Guid>("GoodsId")
-                        .HasColumnType("char(36)");
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime?>("LastModifiedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("varchar(255)");
@@ -1000,28 +1055,28 @@ namespace new_usaha.Infrastructure.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("varchar(255)");
 
                     b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("DeletedBy")
                         .HasColumnType("varchar(255)");
 
                     b.Property<DateTime?>("End")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<Guid>("GoodsId")
-                        .HasColumnType("char(36)");
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime?>("LastModifiedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("varchar(255)");
@@ -1030,7 +1085,7 @@ namespace new_usaha.Infrastructure.Migrations
                         .HasColumnType("decimal(18,4)");
 
                     b.Property<DateTime>("Start")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Id");
 
@@ -1043,16 +1098,16 @@ namespace new_usaha.Infrastructure.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
+                        .HasColumnType("uuid");
 
                     b.Property<Guid>("GoodsId")
-                        .HasColumnType("char(36)");
+                        .HasColumnType("uuid");
 
                     b.Property<int>("N")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("Threshold")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -1066,22 +1121,24 @@ namespace new_usaha.Infrastructure.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("varchar(255)");
 
                     b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("DeletedBy")
                         .HasColumnType("varchar(255)");
 
                     b.Property<DateTime?>("LastModifiedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("varchar(255)");
@@ -1091,7 +1148,7 @@ namespace new_usaha.Infrastructure.Migrations
                         .HasColumnType("varchar(255)");
 
                     b.Property<int?>("ParentGoodsTypeId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -1104,37 +1161,37 @@ namespace new_usaha.Infrastructure.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("varchar(255)");
 
                     b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("DeletedBy")
                         .HasColumnType("varchar(255)");
 
                     b.Property<DateTime?>("End")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<Guid>("GoodsId")
-                        .HasColumnType("char(36)");
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime?>("LastModifiedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("varchar(255)");
 
                     b.Property<DateTime>("Start")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<int>("WholesalerMin")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<decimal>("WholesalerPrice")
                         .HasColumnType("decimal(18,4)");
@@ -1150,28 +1207,28 @@ namespace new_usaha.Infrastructure.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("varchar(255)");
 
                     b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("DeletedBy")
                         .HasColumnType("varchar(255)");
 
                     b.Property<Guid>("EnterpriseId")
-                        .HasColumnType("char(36)");
+                        .HasColumnType("uuid");
 
                     b.Property<bool>("IsOnline")
-                        .HasColumnType("tinyint(1)");
+                        .HasColumnType("boolean");
 
                     b.Property<DateTime?>("LastModifiedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("varchar(255)");
@@ -1179,8 +1236,8 @@ namespace new_usaha.Infrastructure.Migrations
                     b.Property<decimal>("Payment")
                         .HasColumnType("decimal(18,4)");
 
-                    b.Property<uint>("PaymentMethodId")
-                        .HasColumnType("int unsigned");
+                    b.Property<long>("PaymentMethodId")
+                        .HasColumnType("bigint");
 
                     b.Property<decimal>("Return")
                         .HasColumnType("decimal(18,4)");
@@ -1192,7 +1249,7 @@ namespace new_usaha.Infrastructure.Migrations
                         .HasColumnType("decimal(18,4)");
 
                     b.Property<Guid?>("UserOrderId")
-                        .HasColumnType("char(36)");
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
@@ -1207,31 +1264,31 @@ namespace new_usaha.Infrastructure.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("varchar(255)");
 
                     b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("DeletedBy")
                         .HasColumnType("varchar(255)");
 
                     b.Property<DateTime?>("LastModifiedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("varchar(255)");
 
                     b.Property<Guid>("OrderId")
-                        .HasColumnType("char(36)");
+                        .HasColumnType("uuid");
 
-                    b.Property<uint>("OrderStatusId")
-                        .HasColumnType("int unsigned");
+                    b.Property<long>("OrderStatusId")
+                        .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
@@ -1244,24 +1301,26 @@ namespace new_usaha.Infrastructure.Migrations
 
             modelBuilder.Entity("new_usaha.Domain.Entities.OrderStatus", b =>
                 {
-                    b.Property<uint>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int unsigned");
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("varchar(255)");
 
                     b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("DeletedBy")
                         .HasColumnType("varchar(255)");
 
                     b.Property<DateTime?>("LastModifiedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("varchar(255)");
@@ -1271,7 +1330,7 @@ namespace new_usaha.Infrastructure.Migrations
                         .HasColumnType("varchar(255)");
 
                     b.Property<int>("NoQueue")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -1280,24 +1339,26 @@ namespace new_usaha.Infrastructure.Migrations
 
             modelBuilder.Entity("new_usaha.Domain.Entities.PaymentMethod", b =>
                 {
-                    b.Property<uint>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int unsigned");
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("varchar(255)");
 
                     b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("DeletedBy")
                         .HasColumnType("varchar(255)");
 
                     b.Property<DateTime?>("LastModifiedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("varchar(255)");
@@ -1315,25 +1376,25 @@ namespace new_usaha.Infrastructure.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("varchar(255)");
 
                     b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("DeletedBy")
                         .HasColumnType("varchar(255)");
 
                     b.Property<Guid>("GoodsId")
-                        .HasColumnType("char(36)");
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime?>("LastModifiedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("varchar(255)");
@@ -1343,7 +1404,7 @@ namespace new_usaha.Infrastructure.Migrations
                         .HasColumnType("varchar(255)");
 
                     b.Property<int>("Value")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -1395,7 +1456,7 @@ namespace new_usaha.Infrastructure.Migrations
                         .HasForeignKey("EmployeePresenceCode_StartId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("FK_EmployeePresences_EmployeePresenceCodes_EmployeePresenceCod~1");
+                        .HasConstraintName("FK_EmployeePresences_EmployeePresenceCodes_EmployeePresenceCo~1");
 
                     b.HasOne("new_usaha.Domain.Entities.EnterpriseEmployee", "EnterpriseEmployee")
                         .WithMany("EmployeePresences")
@@ -1554,25 +1615,25 @@ namespace new_usaha.Infrastructure.Migrations
 
             modelBuilder.Entity("new_usaha.Domain.Entities.Goods", b =>
                 {
-                    b.HasOne("new_usaha.Domain.Entities.Enterprise", "Enterprise")
+                    b.HasOne("new_usaha.Domain.Entities.Enterprise", null)
                         .WithMany("Goodses")
-                        .HasForeignKey("EnterpriseId")
+                        .HasForeignKey("EnterpriseId");
+
+                    b.HasOne("new_usaha.Domain.Entities.GoodsContainer", "GoodsContainer")
+                        .WithMany("ListGoods")
+                        .HasForeignKey("GoodsContainerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("new_usaha.Domain.Entities.GoodsType", "GoodsType")
+                    b.HasOne("new_usaha.Domain.Entities.GoodsType", null)
                         .WithMany("Goodses")
-                        .HasForeignKey("GoodsTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("GoodsTypeId");
 
                     b.HasOne("new_usaha.Domain.Entities.Goods", "ParentGoods")
                         .WithMany("ChildrenGoods")
                         .HasForeignKey("ParentGoodsId");
 
-                    b.Navigation("Enterprise");
-
-                    b.Navigation("GoodsType");
+                    b.Navigation("GoodsContainer");
 
                     b.Navigation("ParentGoods");
                 });
@@ -1586,6 +1647,25 @@ namespace new_usaha.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Goods");
+                });
+
+            modelBuilder.Entity("new_usaha.Domain.Entities.GoodsContainer", b =>
+                {
+                    b.HasOne("new_usaha.Domain.Entities.Enterprise", "Enterprise")
+                        .WithMany()
+                        .HasForeignKey("EnterpriseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("new_usaha.Domain.Entities.GoodsType", "GoodsType")
+                        .WithMany()
+                        .HasForeignKey("GoodsTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Enterprise");
+
+                    b.Navigation("GoodsType");
                 });
 
             modelBuilder.Entity("new_usaha.Domain.Entities.GoodsGroup", b =>
@@ -1807,6 +1887,11 @@ namespace new_usaha.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("GoodsWholesalePrices");
+                });
+
+            modelBuilder.Entity("new_usaha.Domain.Entities.GoodsContainer", b =>
+                {
+                    b.Navigation("ListGoods");
                 });
 
             modelBuilder.Entity("new_usaha.Domain.Entities.GoodsGroup", b =>

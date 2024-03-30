@@ -8,7 +8,7 @@ using new_usaha.Domain.Common;
 
 namespace new_usaha.Domain.Entities;
 
-[Obsolete("GoodsRelatedPackaging is not used anymore", true)]
+//[Obsolete("GoodsRelatedPackaging is not used anymore", true)]
 public class GoodsPackaging : AuditableEntity
 {
 
